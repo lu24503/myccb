@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.pay.CerePayLogDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.pay.CerePayLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="order_formid" jdbcType="VARCHAR" property="orderFormid" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="out_refund_no" jdbcType="VARCHAR" property="outRefundNo" />
+    <result column="total_fee" jdbcType="DECIMAL" property="totalFee" />
+    <result column="refund_fee" jdbcType="DECIMAL" property="refundFee" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="payment_mode" jdbcType="BIT" property="paymentMode" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shop_id, order_formid, out_trade_no, transaction_id, out_refund_no, total_fee,
+    refund_fee, user_id, `state`, remark, payment_mode, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_pay_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_pay_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shop.cereshop.commons.domain.pay.CerePayLog" useGeneratedKeys="true">
+    insert into cere_pay_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="orderFormid != null">
+        order_formid,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="transactionId != null">
+        transaction_id,
+      </if>
+      <if test="outRefundNo != null">
+        out_refund_no,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="refundFee != null">
+        refund_fee,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="paymentMode != null">
+        payment_mode,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="orderFormid != null">
+        #{orderFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="outRefundNo != null">
+        #{outRefundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFee != null">
+        #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMode != null">
+        #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.pay.CerePayLog">
+    update cere_pay_log
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="orderFormid != null">
+        order_formid = #{orderFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null">
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if>
+      <if test="outRefundNo != null">
+        out_refund_no = #{outRefundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFee != null">
+        refund_fee = #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMode != null">
+        payment_mode = #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.pay.CerePayLog">
+    update cere_pay_log
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      order_formid = #{orderFormid,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      out_refund_no = #{outRefundNo,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      refund_fee = #{refundFee,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      payment_mode = #{paymentMode,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

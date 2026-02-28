@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.seckill.CereShopSeckillDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopSeckillDetail">
+    <result column="shop_seckill_id" jdbcType="BIGINT" property="shopSeckillId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="down_price" jdbcType="DECIMAL" property="downPrice" />
+    <result column="seckill_price" jdbcType="DECIMAL" property="seckillPrice" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopSeckillDetail">
+    insert into cere_shop_seckill_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopSeckillId != null">
+        shop_seckill_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="downPrice != null">
+        down_price,
+      </if>
+      <if test="seckillPrice != null">
+        seckill_price,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopSeckillId != null">
+        #{shopSeckillId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="downPrice != null">
+        #{downPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="seckillPrice != null">
+        #{seckillPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateNumber" parameterType="com.shop.cereshop.commons.domain.tool.CereShopSeckillDetail" >
+    UPDATE cere_shop_seckill_detail SET number=#{number} where shop_seckill_id=#{shopSeckillId} and sku_id=#{skuId} and number is not null
+  </update>
+
+  <select id="findSkuDetail" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.tool.CereShopSeckillDetail">
+    SELECT a.* from cere_shop_seckill_detail a
+    LEFT JOIN cere_order_product b ON a.sku_id=b.sku_id
+    LEFT JOIN cere_shop_order c ON b.order_id=c.order_id
+    where c.order_id=#{orderId} and a.shop_seckill_id=#{shopSeckillId}
+  </select>
+
+  <select id="findPriceBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.domain.activity.ActivityData">
+    SELECT a.seckill_price price,a.shop_seckill_id FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where b.state=1 and a.sku_id=#{skuId}
+  </select>
+
+  <select id="findDistinctProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT b.product_id,b.product_name,c.original_price,e.product_image image,
+    c.stock_number,a.seckill_price price,a.sku_id,a.number limitNumber,a.total,b.shop_id from cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN cere_product_sku c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) e
+    ON b.product_id=e.product_id
+    LEFT JOIN cere_product_classify f ON b.classify_id=f.classify_id
+    where a.shop_seckill_id=#{shopSeckillId}
+    GROUP BY a.product_id
+  </select>
+
+  <select id="findNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT ifnull(`number`,0) FROM cere_shop_seckill_detail where shop_seckill_id=#{shopSeckillId} and sku_id=#{skuId}
+  </select>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    update cere_shop_seckill_detail
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="number =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.number!=null">
+            when sku_id=#{i.skuId} and shop_seckill_id=#{i.shopSeckillId} then #{i.number}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      (sku_id=#{i.skuId} and shop_seckill_id=#{i.shopSeckillId})
+    </foreach>
+  </update>
+
+  <update id="rollbackStock">
+    update cere_shop_seckill_detail
+    set number = number + #{buyNumber}
+    where shop_seckill_id = #{seckillId}
+    and sku_id = #{skuId}
+    and number is not null
+  </update>
+
+  <select id="findNumberDetails" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.tool.CereShopSeckillDetail">
+    SELECT c.shop_seckill_id,(c.number+a.number) number,c.sku_id FROM cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN cere_shop_seckill_detail c ON b.shop_seckill_id=c.shop_seckill_id and a.sku_id=c.sku_id
+    where a.order_id=#{orderId} and c.shop_seckill_id=#{shopSeckillId}
+  </select>
+  <select id="selectSkuStockInfo" resultType="com.shop.cereshop.app.page.product.ProductStockInfo">
+    select total, number as stockNumber
+    from cere_shop_seckill_detail
+    where shop_seckill_id = #{shopSeckillId} and sku_id = #{skuId}
+  </select>
+  <select id="findPriceBySeckillIdAndSkuId" resultType="java.math.BigDecimal">
+    select seckill_price
+    from cere_shop_seckill_detail
+    where shop_seckill_id = #{shopSeckillId} and sku_id = #{skuId}
+  </select>
+  <select id="findSkuIdByProductId" resultType="java.lang.Long">
+    select b.sku_id from cere_shop_seckill a join cere_shop_seckill_detail b
+    on b.shop_seckill_id = a.shop_seckill_id and a.state in (0,1)
+    and b.product_id = #{productId}
+    limit 1
+  </select>
+</mapper>

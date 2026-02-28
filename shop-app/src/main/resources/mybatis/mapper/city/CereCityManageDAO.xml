@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.city.CereCityManageDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.city.CereCityManage">
+    <id column="city_id" jdbcType="BIGINT" property="cityId" />
+    <result column="city_pid" jdbcType="BIGINT" property="cityPid" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    city_id, city_pid, city_name, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_city_manage
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_city_manage
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="city_id" keyProperty="cityId" parameterType="com.shop.cereshop.commons.domain.city.CereCityManage" useGeneratedKeys="true">
+    insert into cere_city_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cityPid != null">
+        city_pid,
+      </if>
+      <if test="cityName != null and cityName!=''">
+        city_name,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cityPid != null">
+        #{cityPid,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null and cityName!=''">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.city.CereCityManage">
+    update cere_city_manage
+    <set>
+      <if test="cityPid != null">
+        city_pid = #{cityPid,jdbcType=BIGINT},
+      </if>
+      <if test="cityName != null and cityName!=''">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.city.CereCityManage">
+    update cere_city_manage
+    set city_pid = #{cityPid,jdbcType=BIGINT},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where city_id = #{cityId,jdbcType=BIGINT}
+  </update>
+</mapper>

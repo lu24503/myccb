@@ -1,0 +1,61 @@
+security:
+  #jwt
+  jwt:
+    header: Authorization
+    # 令牌前缀
+    token-start-with: Bearer
+    # 必须使用最少88位的Base64对该令牌进行编码
+    base64-secret: 5bu66KGM55Sf5rS755S15a2Q5ZWG5Z+O57K+6YCJ5bu66KGM55Sf5rS755S15a2Q5ZWG5Z+O57K+6YCJ57K+6YCJ
+    # 令牌过期时间 此处单位/秒 ，默认24小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+    token-validity-in-seconds: 86400
+    # refreshToken 过期时间 此处单位/秒
+    refresh-token-validity-in-seconds: 259200
+    # 在线用户key
+    online-key: online-token-
+    # 验证码
+    code-key: code-key-
+    # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
+    detect: 1800000
+    # 续期时间范围，默认1小时，单位毫秒
+    renew: 3600000
+    #记住我登录 令牌过期时间 单位秒 7天
+    remember-login-validity: 604800
+    # 用户登录存放redis key
+    user-login-key: app_user_token_
+    #一个账户是否允许多个客户端登录
+    multi-login: true
+    #下列为登录拦截器放行请求路径
+    ignore-paths:
+      - /app/**
+      - /shop/**
+      - /canvas/**
+      - /product/*
+      - /classify/*
+      - /advert/*
+      - /seckill/getIndex
+      - /seckill/getProblems
+      - /seckill/getProblem
+      - /seckill/getAnswer
+      - /seckill/getProblemDetail
+      - /order/pay/rolBack
+      - /order/pay/v3RolBack
+      - /order/refund/rolBack
+      - /order/alipay/rolBack
+      - /order/alipayRefund/rolBack
+      - /order/pay
+      - /doc.html
+      - /doc.html#/**
+      - /webjars/**
+      - /swagger-resources/**
+      - /kf/**
+      - /comment/getProductAll
+      - /file/upload
+      - /notice/getById
+      - /platform-seckill
+      - /dict/getByName
+      - /work/getIndex
+      - /product/getSpecificSku
+      - /product/getBroadCastList
+      - /coupon/getChannelActivityCoupon
+      - /renovation/**
+      - /code/**

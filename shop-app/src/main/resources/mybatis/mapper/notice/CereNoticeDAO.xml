@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.notice.CereNoticeDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.notice.CereNotice">
+    <id column="notice_id" jdbcType="BIGINT" property="noticeId" />
+    <result column="notice_type" jdbcType="BIT" property="noticeType" />
+    <result column="jump" jdbcType="BIT" property="jump" />
+    <result column="receive" jdbcType="BIT" property="receive" />
+    <result column="if_read" jdbcType="BIT" property="ifRead" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle" />
+    <result column="notice_content" jdbcType="VARCHAR" property="noticeContent" />
+    <result column="only" jdbcType="BIGINT" property="only" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    notice_id, notice_type,jump,receive,if_read,buyer_user_id, shop_id, notice_title, notice_content,only,image, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_notice
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_notice
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="notice_id" keyProperty="noticeId" parameterType="com.shop.cereshop.commons.domain.notice.CereNotice" useGeneratedKeys="true">
+    insert into cere_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeType != null">
+        notice_type,
+      </if>
+      <if test="jump != null">
+        jump,
+      </if>
+      <if test="receive != null">
+        receive,
+      </if>
+      <if test="ifRead != null">
+        if_read,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="noticeTitle != null">
+        notice_title,
+      </if>
+      <if test="noticeContent != null">
+        notice_content,
+      </if>
+      <if test="only != null">
+        only,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeType != null">
+        #{noticeType,jdbcType=BIT},
+      </if>
+      <if test="jump != null">
+        #{jump,jdbcType=BIT},
+      </if>
+      <if test="receive != null">
+        #{receive,jdbcType=BIT},
+      </if>
+      <if test="ifRead != null">
+        #{ifRead,jdbcType=BIT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="noticeTitle != null">
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null">
+        #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="only != null">
+        #{only,jdbcType=BIGINT},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.notice.CereNotice">
+    update cere_notice
+    <set>
+      <if test="noticeType != null">
+        notice_type = #{noticeType,jdbcType=BIT},
+      </if>
+      <if test="jump != null">
+        jump = #{jump,jdbcType=BIT},
+      </if>
+      <if test="receive != null">
+        receive = #{receive,jdbcType=BIT},
+      </if>
+      <if test="ifRead != null">
+        if_read = #{ifRead,jdbcType=BIT},
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="noticeTitle != null">
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null">
+        notice_content = #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="only != null">
+        only = #{only,jdbcType=BIGINT},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.notice.CereNotice">
+    update cere_notice
+    set notice_type = #{noticeType,jdbcType=BIT},
+    jump = #{jump,jdbcType=BIT},
+    receive = #{receive,jdbcType=BIT},
+    if_read = #{ifRead,jdbcType=BIT},
+    buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+    shop_id = #{shopId,jdbcType=BIGINT},
+    notice_title = #{noticeTitle,jdbcType=VARCHAR},
+    notice_content = #{noticeContent,jdbcType=VARCHAR},
+    only = #{only,jdbcType=BIGINT},
+    image = #{image,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=VARCHAR}
+    where notice_id = #{noticeId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAll"  resultType="com.shop.cereshop.app.page.notice.BuyerNotice">
+    select notice_id,notice_type,notice_title,notice_content,create_time,only,jump,if_read from
+      (
+        SELECT notice_id,notice_type,notice_title,notice_content,create_time,only,jump,if_read from cere_notice
+            where notice_type = 1 and receive in (1,3) and buyer_user_id = #{buyerUserId}
+        union all
+        SELECT a.notice_id,notice_type,notice_title,notice_content,create_time,only,jump,
+               IF(b.buyer_user_id IS NULL, 0, 1) AS if_read from cere_notice a
+            left join cere_buyer_notice b on b.notice_id = a.notice_id and b.buyer_user_id = #{buyerUserId}
+            where a.notice_type in (2,3) and a.receive in (1,3)
+            <if test="createTime != null">
+              <![CDATA[ and create_time >= #{createTime}]]>
+            </if>
+      ) b
+    order by create_time desc
+  </select>
+
+  <select id="getGongGaoAll" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.notice.BuyerNotice">
+    SELECT notice_id,notice_type,notice_title,notice_content,create_time,only,jump,if_read from cere_notice
+    where (buyer_user_id=#{buyerUserId} OR receive=1) and notice_type=2 ORDER BY create_time DESC
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.notice.NoticeDetail">
+    SELECT notice_id,notice_title,notice_content,create_time,image from cere_notice
+    where notice_id=#{noticeId}
+  </select>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_notice (notice_type,jump,receive,if_read,buyer_user_id, shop_id, notice_title, notice_content,only,image, create_time) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.noticeType},
+      #{item.jump},
+      #{item.receive},
+      #{item.ifRead},
+      #{item.buyerUserId},
+      #{item.shopId},
+      #{item.noticeTitle},
+      #{item.noticeContent},
+      #{item.only},
+      #{item.image},
+      #{item.createTime}
+      )
+    </foreach>
+  </insert>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_notice SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <update id="readAll">
+    update cere_notice
+    set if_read = 1
+    where buyer_user_id = #{buyerUserId}
+  </update>
+
+  <select id="getNotRead" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    select a.cc + b.cc from
+        (SELECT COUNT(*) as cc FROM cere_notice
+            where buyer_user_id = #{buyerUserId} and notice_type = 1 and receive in (1,3)
+            and if_read=0) a,
+        (SELECT count(*) as cc FROM cere_notice a
+            left join cere_buyer_notice b on b.notice_id = a.notice_id and b.buyer_user_id = #{buyerUserId}
+            where a.notice_type in (2,3) and a.receive in (1,3)  and b.buyer_user_id is null
+            <if test="createTime != null">
+              <![CDATA[ and a.create_time >= #{createTime}]]>
+            </if>
+            ) b
+  </select>
+
+  <select id="getRead" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_notice a
+    LEFT JOIN cere_buyer_notice b ON a.notice_id=b.notice_id and b.buyer_user_id=#{buyerUserId}
+    where a.notice_type in (2,3) and b.buyer_user_id IS NULL
+  </select>
+
+  <select id="findIdsByOrderId" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT notice_id FROM cere_notice where jump=2 and only=#{orderId}
+  </select>
+
+  <select id="getNotices" resultType="com.shop.cereshop.app.page.notice.BuyerNotice">
+    SELECT notice_id,notice_type,notice_title,notice_content,create_time,only,jump from cere_notice
+    where notice_type=2 ORDER BY create_time DESC
+  </select>
+  <select id="selectNotReadMessage" resultType="com.shop.cereshop.app.page.notice.BuyerNotice">
+    SELECT a.notice_id, notice_type,jump,receive,if_read,b.buyer_user_id, shop_id, notice_title, notice_content,only,image FROM cere_notice a
+    left join cere_buyer_notice b on b.notice_id = a.notice_id and b.buyer_user_id = #{buyerUserId}
+    where a.notice_type in (2,3) and a.receive in (1,3) and b.buyer_user_id is null
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.util.List">
+    DELETE FROM cere_notice where notice_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <delete id="deleteBuyerNotice" parameterType="java.lang.Object">
+    DELETE FROM cere_notice where buyer_user_id=#{buyerUserId} and notice_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+</mapper>

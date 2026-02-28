@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.platformtool.CereBuyerPoliteRecordDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.platformtool.CereBuyerPoliteRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="polite_id" jdbcType="BIGINT" property="politeId" />
+    <result column="polite_type" jdbcType="INTEGER" property="politeType" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="discount" jdbcType="DECIMAL" property="discount" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, buyer_user_id, order_id, polite_id, polite_type, growth, credit, discount, create_time, update_time
+  </sql>
+
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shop.cereshop.commons.domain.platformtool.CereBuyerPoliteRecord" useGeneratedKeys="true">
+    insert into cere_buyer_polite_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="politeId != null">
+        polite_id,
+      </if>
+      <if test="politeType != null">
+        polite_type,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="politeId != null">
+        #{politeId,jdbcType=BIGINT},
+      </if>
+      <if test="politeType != null">
+        #{politeType,jdbcType=INTEGER},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectPoliteRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_buyer_polite_record
+    where buyer_user_id = #{buyerUserId}
+    and order_id = #{orderId}
+    order by polite_type asc
+  </select>
+</mapper>

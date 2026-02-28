@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.order.CereOrderProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.order.CereOrderProduct">
+    <id column="order_product_id" jdbcType="BIGINT" property="orderProductId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="SKU" jdbcType="VARCHAR" property="SKU" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="activity_type" jdbcType="INTEGER" property="activityType"/>
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="use_credit" jdbcType="INTEGER" property="useCredit"/>
+    <result column="use_credit_amount" jdbcType="DECIMAL" property="useCreditAmount"/>
+  </resultMap>
+
+  <select id="findOrderProductSku" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,a.product_name,a.product_price price,
+    a.weight,a.number,a.product_price*number total,a.image,a.SKU,
+    b.`value`,c.comment_id,IF(c.add_time IS NULL OR c.add_time='',0,1) ifAdd,
+    IF(d.product_id IS NULL or d.after_state = 6,1,0) ifAfter,
+    d.after_state,
+    a.use_credit, a.use_credit_amount, a.activity_type, a.actual_price,
+    a.logistics_price
+    FROM cere_order_product a
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,order_product_id from cere_order_product_attribute
+    GROUP BY order_product_id) b ON a.order_product_id=b.order_product_id
+    LEFT JOIN cere_shop_comment c ON a.order_id=c.order_id and a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,b.after_state, b.create_time FROM cere_after_product a
+    LEFT JOIN cere_order_after b ON a.after_id=b.after_id
+    where b.after_state<![CDATA[!= ]]>9 and b.order_id=#{orderId}
+    GROUP BY a.product_id) d ON a.product_id=d.product_id
+    where a.order_id=#{orderId}
+  </select>
+  <select id="findByOrderIds" resultMap="BaseResultMap">
+    select order_id, product_id, sku_id, product_name, `number`, product_price, image, SKU, weight,
+        activity_type, activity_id, use_credit, use_credit_amount
+    from cere_order_product
+    where order_id in
+    <foreach collection="list" item="orderId" open="(" separator="," close=")">
+      #{orderId}
+    </foreach>
+  </select>
+  <select id="findProductStatsByOrderIds" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    select product_id, sku_id, `number`, b.shop_id
+    from cere_order_product a join cere_shop_order b on b.order_id = a.order_id
+    where a.order_id in
+    <foreach collection="list" item="orderId" open="(" separator="," close=")">
+      #{orderId}
+    </foreach>
+  </select>
+</mapper>

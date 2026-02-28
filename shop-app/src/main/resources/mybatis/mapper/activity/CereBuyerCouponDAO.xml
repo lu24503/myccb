@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.activity.CereBuyerCouponDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    <id column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="discount_mode" jdbcType="BIT" property="discountMode" />
+    <result column="discount_programme" jdbcType="BIT" property="discountProgramme" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
+    <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney" />
+    <result column="coupon_code" jdbcType="VARCHAR" property="couponCode" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="ProductCouponMap" type="com.shop.cereshop.app.page.product.ProductCoupon">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId"/>
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+    <result column="discount_mode" jdbcType="INTEGER" property="discountMode"/>
+    <result column="couponType" jdbcType="INTEGER" property="couponType"/>
+    <result column="start_time" jdbcType="VARCHAR" property="startTime"/>
+    <result column="end_time" jdbcType="VARCHAR" property="endTime"/>
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney"/>
+    <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney"/>
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber"/>
+    <result column="if_add" jdbcType="INTEGER" property="ifAdd"/>
+    <collection property="ids" ofType="java.lang.Long">
+      <result column="product_id"/>
+    </collection>
+  </resultMap>
+
+  <select id="findByActivity" parameterType="com.shop.cereshop.app.page.product.ProductCoupon" resultType="java.lang.Integer">
+    SELECT IF(state IS NULL,3,state) from cere_buyer_coupon
+    where activity_id=#{activityId} and buyer_user_id=#{buyerUserId}
+    and full_money=#{fullMoney} and reduce_money=#{reduceMoney}
+  </select>
+
+  <select id="getCoupons" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT *,discount_mode couponType FROM cere_buyer_coupon where buyer_user_id=#{buyerUserId}
+    <if test="state!=null">
+      and state=#{state}
+    </if>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="getCouponProducts" parameterType="com.shop.cereshop.app.param.coupon.ActivityParam" resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT a.shop_id,d.shop_name,a.product_id,a.product_name,c.product_image image,
+    b.price,b.sku_id,b.original_price,IF(SUM(f.number) IS NULL, a.fictitious_number, SUM(f.number) + a.fictitious_number) from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN cere_order_product f ON b.sku_id=f.sku_id
+    LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+    where a.product_id in (SELECT b.product_id from cere_activity_sign a,cere_sign_product b
+    where a.sign_id=b.sign_id and a.activity_id=#{activityId})
+    and a.shelve_state=1
+    GROUP BY a.product_id
+  </select>
+
+  <select id="getShopCouponProducts" parameterType="com.shop.cereshop.app.param.coupon.ActivityParam" resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT a.shop_id,d.shop_name,a.product_id,a.product_name,c.product_image image,
+    b.price,b.sku_id,b.original_price,IF(SUM(f.number) IS NULL, a.fictitious_number, SUM(f.number) + a.fictitious_number) from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN cere_order_product f ON b.sku_id=f.sku_id
+    LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+    where a.product_id in (SELECT product_id from cere_shop_coupon_detail where shop_coupon_id=#{shopCouponId})
+    and a.shelve_state=1
+    GROUP BY a.product_id
+  </select>
+
+  <select id="findCouponByProduct" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT *, discount_mode as couponType from cere_buyer_coupon a
+    LEFT JOIN cere_activity_sign b ON a.activity_id=b.activity_id and b.state=1
+    LEFT JOIN cere_sign_product c ON b.sign_id=c.sign_id
+    where a.buyer_user_id=#{buyerUserId}
+    and a.full_money &lt;= #{price} and c.product_id=#{productId} and a.state=0
+  </select>
+
+  <update id="updateState" parameterType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    UPDATE cere_buyer_coupon SET state=#{state},update_time=#{updateTime}
+    where activity_id=#{activityId} and buyer_user_id=#{buyerUserId} and full_money=#{fullMoney} and create_time=#{createTime}
+  </update>
+
+  <select id="findByCouponId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    SELECT * FROM cere_buyer_coupon WHERE coupon_id=#{couponId} and buyer_user_id=#{buyerUserId} and state=0 LIMIT 1
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_coupon SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <update id="updateByUserIdAndCouponId" parameterType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon" >
+    UPDATE cere_buyer_coupon SET state=#{state},update_time=#{updateTime}
+    where buyer_user_id=#{buyerUserId} and coupon_id=#{couponId}
+  </update>
+
+  <select id="findCount" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_buyer_coupon where buyer_user_id=#{buyerUserId} and activity_id=#{activityId}
+  </select>
+
+  <select id="findLatestUsedCoupon" resultType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    SELECT * FROM cere_buyer_coupon WHERE coupon_id = #{couponId} and buyer_user_id = #{buyerUserId} and state = 1
+    order by update_time desc limit 1
+  </select>
+
+  <select id="findCouponMatchCondition" resultMap="ProductCouponMap">
+    SELECT *, discount_mode as couponType from cere_buyer_coupon a
+    LEFT JOIN cere_activity_sign b ON a.activity_id = b.activity_id and b.sign_type = 1 and b.state = 1
+    LEFT JOIN cere_sign_product c ON b.sign_id = c.sign_id
+    where a.buyer_user_id = #{buyerUserId} and c.product_id in
+    <foreach collection="productIdList" item="productId" open="(" separator="," close=")">
+      #{productId}
+    </foreach>
+    and a.full_money &lt;= #{fullMoneyUpperLimit}
+    and a.start_time &lt; #{nowTime} and a.end_time > #{nowTime}
+    and a.state = 0
+  </select>
+
+  <select id="selectTakeCount" resultType="com.shop.cereshop.app.page.coupon.CommonCoupon">
+    select coupon_id as couponId, count(*) as userTakeCount
+    from cere_buyer_coupon where buyer_user_id = #{buyerUserId}
+    and coupon_id in
+    <foreach collection="couponIdList" item="couponId" open="(" separator="," close=")">
+      #{couponId}
+    </foreach>
+    group by coupon_id
+  </select>
+</mapper>

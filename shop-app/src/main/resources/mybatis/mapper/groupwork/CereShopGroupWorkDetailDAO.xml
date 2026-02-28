@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.groupwork.CereShopGroupWorkDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopGroupWorkDetail">
+    <result column="shop_group_work_id" jdbcType="BIGINT" property="shopGroupWorkId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopGroupWorkDetail">
+    insert into cere_shop_group_work_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopGroupWorkId != null">
+        shop_group_work_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopGroupWorkId != null">
+        #{shopGroupWorkId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findPriceBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.domain.activity.ActivityData">
+    SELECT a.price,a.shop_group_work_id FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where b.state=1 and a.sku_id=#{skuId}
+  </select>
+
+  <select id="findDistinctProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT b.product_id,b.product_name,c.original_price,e.product_image image,
+    c.stock_number,a.price,a.sku_id,c.total,b.shop_id,g.workUsers from cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN cere_product_sku c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id GROUP BY a.product_id) e
+    ON b.product_id=e.product_id
+    LEFT JOIN cere_product_classify f ON b.classify_id=f.classify_id
+	LEFT JOIN (SELECT a.product_id,COUNT(*) workUsers FROM (SELECT a.product_id,d.buyer_user_id FROM cere_order_product a
+	LEFT JOIN cere_collage_order_detail b ON a.order_id=b.order_id and b.state=1
+	LEFT JOIN cere_collage_order c ON b.collage_id=c.collage_id and c.state=1
+	LEFT JOIN cere_shop_order d ON a.order_id=d.order_id
+	where c.shop_group_work_id=#{shopGroupWorkId}
+	GROUP BY a.product_id,d.buyer_user_id) a
+	GROUP BY a.product_id) g ON a.product_id=g.product_id
+    where a.shop_group_work_id=#{shopGroupWorkId}
+    GROUP BY a.product_id
+  </select>
+  <select id="findPriceByGroupWorkIdAndSkuId" resultType="java.math.BigDecimal">
+    select price from cere_shop_group_work_detail
+    where shop_group_work_id = #{shopGroupWorkId} and sku_id = #{skuId}
+  </select>
+  <select id="findSkuIdByProductId" resultType="java.lang.Long">
+    select b.sku_id from cere_shop_group_work a join cere_shop_group_work_detail b
+    on b.shop_group_work_id = a.shop_group_work_id and a.state in (0,1)
+    and b.product_id = #{productId}
+    limit 1
+  </select>
+</mapper>

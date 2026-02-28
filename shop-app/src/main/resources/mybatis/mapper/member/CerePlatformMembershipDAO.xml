@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.member.CerePlatformMembershipDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.member.CerePlatformMembership">
+    <id column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="member_icon" jdbcType="VARCHAR" property="memberIcon" />
+    <result column="member_reason" jdbcType="VARCHAR" property="memberReason" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    member_id, member_name, member_icon, member_reason, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_membership
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_membership
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="member_id" keyProperty="memberId" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMembership" useGeneratedKeys="true">
+    insert into cere_platform_membership
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="memberIcon != null">
+        member_icon,
+      </if>
+      <if test="memberReason != null">
+        member_reason,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberIcon != null">
+        #{memberIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="memberReason != null">
+        #{memberReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMembership">
+    update cere_platform_membership
+    <set>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberIcon != null">
+        member_icon = #{memberIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="memberReason != null">
+        member_reason = #{memberReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMembership">
+    update cere_platform_membership
+    set member_name = #{memberName,jdbcType=VARCHAR},
+      member_icon = #{memberIcon,jdbcType=VARCHAR},
+      member_reason = #{memberReason,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByMemberLevelId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_platform_membership
+    where member_id in (${memberIds})
+  </select>
+</mapper>

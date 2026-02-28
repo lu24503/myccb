@@ -1,0 +1,78 @@
+package com.shop.cereshop.app.param.seckill;
+
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+/**
+ * 平台端或商家端查询出来的相关信息
+ */
+@Data
+public class SeckillRelateProductInfo {
+
+    /**
+     * 秒杀id
+     */
+    private Long seckillId;
+
+    /**
+     * 商品id
+     */
+    private Long productId;
+
+    /**
+     * skuId
+     */
+    private Long skuId;
+
+    /**
+     * 活动开始时间(商家秒杀)
+     */
+    private String startTime;
+
+    /**
+     * 活动结束时间(商家秒杀)
+     */
+    private String endTime;
+
+    /**
+     * 秒杀降价多少元(平台秒杀) 或 商品降价后的价格(商家秒杀)
+     */
+    private BigDecimal seckillMoney;
+
+    /**
+     * 是否预热(商家秒杀)
+     */
+    private Integer ifEnable;
+
+    /**
+     * 活动开始前几小时预热(商家秒杀)
+     */
+    private Integer enableTime;
+
+    /**
+     * 剩余库存
+     */
+    private Integer number;
+
+    /**
+     * 秒杀活动库存总量
+     */
+    private Integer total;
+
+    /**
+     * 是否限购 1-不限购 2-限购
+     */
+    private Integer ifLimit;
+
+    /**
+     * 限购数量
+     */
+    private Integer limitNumber;
+
+    /**
+     * 优惠券是否叠加
+     */
+    private Integer ifAdd;
+
+}

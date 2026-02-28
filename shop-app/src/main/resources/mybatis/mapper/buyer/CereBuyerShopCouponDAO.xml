@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerShopCouponDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="shop_operate_id" jdbcType="BIGINT" property="shopOperateId" />
+    <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="coupon_type" jdbcType="BIT" property="couponType" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
+    <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <resultMap id="ProductCouponMap" type="com.shop.cereshop.app.page.product.ProductCoupon">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId"/>
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+    <result column="discount_mode" jdbcType="INTEGER" property="discountMode"/>
+    <result column="coupon_type" jdbcType="INTEGER" property="couponType"/>
+    <result column="apply_type" jdbcType="INTEGER" property="applyType"/>
+    <result column="start_time" jdbcType="VARCHAR" property="startTime"/>
+    <result column="end_time" jdbcType="VARCHAR" property="endTime"/>
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney"/>
+    <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney"/>
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber"/>
+    <result column="if_add" jdbcType="INTEGER" property="ifAdd"/>
+    <collection property="ids" ofType="java.lang.Long">
+      <result column="product_id"/>
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,shop_operate_id, shop_coupon_id, buyer_user_id, coupon_name, start_time, end_time, coupon_type,
+    `state`, full_money, reduce_money, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_shop_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_shop_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon" useGeneratedKeys="true">
+    insert into cere_buyer_shop_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopOperateId != null">
+        shop_operate_id,
+      </if>
+      <if test="shopCouponId != null">
+        shop_coupon_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="couponType != null">
+        coupon_type,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="fullMoney != null">
+        full_money,
+      </if>
+      <if test="reduceMoney != null">
+        reduce_money,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopOperateId != null">
+        #{shopOperateId,jdbcType=BIGINT},
+      </if>
+      <if test="shopCouponId != null">
+        #{shopCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        #{couponType,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="fullMoney != null">
+        #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="reduceMoney != null">
+        #{reduceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    update cere_buyer_shop_coupon
+    <set>
+      <if test="shopOperateId != null">
+        shop_operate_id = #{shopOperateId,jdbcType=BIGINT},
+      </if>
+      <if test="shopCouponId != null">
+        shop_coupon_id = #{shopCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null">
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        coupon_type = #{couponType,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="fullMoney != null">
+        full_money = #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="reduceMoney != null">
+        reduce_money = #{reduceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    update cere_buyer_shop_coupon
+    set shop_operate_id = #{shopOperateId,jdbcType=BIGINT},
+      shop_coupon_id = #{shopCouponId,jdbcType=BIGINT},
+      buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      coupon_type = #{couponType,jdbcType=BIT},
+      `state` = #{state,jdbcType=BIT},
+      full_money = #{fullMoney,jdbcType=DECIMAL},
+      reduce_money = #{reduceMoney,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateState" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    update cere_buyer_shop_coupon SET `state` = #{state},update_time = #{updateTime} where id=#{id}
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_buyer_shop_coupon (shop_coupon_id, buyer_user_id, coupon_name,
+    start_time, end_time, coupon_type,
+    `state`, full_money, reduce_money,
+    create_time) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.shopCouponId},
+      #{item.buyerUserId},
+      #{item.couponName},
+      #{item.startTime},
+      #{item.endTime},
+      #{item.couponType},
+      #{item.state},
+      #{item.fullMoney},
+      #{item.reduceMoney},
+      #{item.createTime}
+      )
+    </foreach>
+  </insert>
+
+  <select id="findCouponByProduct" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT a.id,a.start_time,a.end_time,a.full_money,a.coupon_type,a.coupon_type as discountMode,a.reduce_money,a.state,c.if_add,a.shop_coupon_id FROM cere_buyer_shop_coupon a
+    LEFT JOIN cere_shop_coupon_detail b ON a.shop_coupon_id=b.shop_coupon_id
+    LEFT JOIN cere_shop_coupon c ON a.shop_coupon_id=c.shop_coupon_id
+    where a.buyer_user_id=#{buyerUserId} and b.product_id=#{productId} and a.full_money&lt;=#{total} and a.state=0
+  </select>
+
+  <select id="findById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    SELECT * FROM cere_buyer_shop_coupon where id=#{id}
+  </select>
+
+  <select id="findCount" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_buyer_shop_coupon where buyer_user_id=#{buyerUserId} and shop_coupon_id=#{shopCouponId}
+  </select>
+
+  <select id="getCoupons" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT id,shop_coupon_id,buyer_user_id,coupon_name activityName,coupon_type,
+    start_time,end_time,full_money,reduce_money,state, create_time FROM cere_buyer_shop_coupon where buyer_user_id=#{buyerUserId}
+    <if test="state!=null">
+      and state=#{state}
+    </if>
+    ORDER BY create_time DESC
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_shop_coupon SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <select id="findProductIds" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT product_id FROM cere_shop_coupon_detail where shop_coupon_id=#{shopCouponId}
+  </select>
+
+  <select id="findByIds" parameterType="java.util.List" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerShopCoupon">
+    SELECT * FROM cere_buyer_shop_coupon where id in (
+    <foreach collection="list" item="item" index="index" separator=",">
+      #{item.id}
+    </foreach>
+    )
+  </select>
+
+  <select id="findCouponMatchCondition" resultMap="ProductCouponMap">
+    SELECT a.id, a.start_time, a.end_time, a.full_money, a.reduce_money, a.coupon_type, a.coupon_type as discount_mode,
+        a.state, c.if_add, a.shop_coupon_id, c.apply_type, 0 as product_id
+    FROM cere_buyer_shop_coupon a
+    JOIN cere_shop_coupon c ON a.shop_coupon_id = c.shop_coupon_id and c.apply_type = 1
+    where a.buyer_user_id = #{buyerUserId}
+    and a.full_money &lt;= #{fullMoneyUpperLimit}
+    and a.start_time &lt; #{nowTime} and a.end_time > #{nowTime}
+    and a.state = 0 and c.state = 1
+    UNION ALL
+    SELECT a.id, a.start_time, a.end_time, a.full_money, a.reduce_money, a.coupon_type, a.coupon_type as discount_mode,
+        a.state, c.if_add, a.shop_coupon_id, c.apply_type, b.product_id
+    FROM cere_buyer_shop_coupon a
+    JOIN cere_shop_coupon c ON a.shop_coupon_id = c.shop_coupon_id and c.apply_type in (2,3)
+    JOIN cere_shop_coupon_detail b ON a.shop_coupon_id = b.shop_coupon_id
+    where a.buyer_user_id = #{buyerUserId} and b.product_id in
+      <foreach collection="productIdList" item="productId" open="(" separator="," close=")">
+        #{productId}
+      </foreach>
+    and a.full_money &lt;= #{fullMoneyUpperLimit}
+    and a.start_time &lt; #{nowTime} and a.end_time > #{nowTime}
+    and a.state = 0 and c.state = 1
+  </select>
+
+  <select id="selectTakeCount" resultType="com.shop.cereshop.app.page.coupon.CommonCoupon">
+    select shop_coupon_id as couponId, count(*) as userTakeCount
+    from cere_buyer_shop_coupon where buyer_user_id = #{buyerUserId}
+    and shop_coupon_id in
+    <foreach collection="couponIdList" item="couponId" open="(" separator="," close=")">
+      #{couponId}
+    </foreach>
+    group by shop_coupon_id
+  </select>
+</mapper>

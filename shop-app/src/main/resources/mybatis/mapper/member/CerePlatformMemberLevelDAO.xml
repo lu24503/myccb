@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.member.CerePlatformMemberLevelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    <id column="member_level_id" jdbcType="BIGINT" property="memberLevelId" />
+    <result column="member_level_name" jdbcType="VARCHAR" property="memberLevelName" />
+    <result column="member_level_icon" jdbcType="VARCHAR" property="memberLevelIcon" />
+    <result column="member_level_background" jdbcType="VARCHAR" property="memberLevelBackground" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="member_ids" jdbcType="VARCHAR" property="memberIds" />
+    <result column="member_level_reason" jdbcType="VARCHAR" property="memberLevelReason" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    member_level_id, member_level_name, member_level_icon, member_level_background, growth,
+    member_ids, member_level_reason, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_member_level
+    where member_level_id = #{memberLevelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_member_level
+    where member_level_id = #{memberLevelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="member_level_id" keyProperty="memberLevelId" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel" useGeneratedKeys="true">
+    insert into cere_platform_member_level
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberLevelName != null">
+        member_level_name,
+      </if>
+      <if test="memberLevelIcon != null">
+        member_level_icon,
+      </if>
+      <if test="memberLevelBackground != null">
+        member_level_background,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="memberIds != null">
+        member_ids,
+      </if>
+      <if test="memberLevelReason != null">
+        member_level_reason,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberLevelName != null">
+        #{memberLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelIcon != null">
+        #{memberLevelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelBackground != null">
+        #{memberLevelBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="memberIds != null">
+        #{memberIds,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelReason != null">
+        #{memberLevelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    update cere_platform_member_level
+    <set>
+      <if test="memberLevelName != null">
+        member_level_name = #{memberLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelIcon != null">
+        member_level_icon = #{memberLevelIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelBackground != null">
+        member_level_background = #{memberLevelBackground,jdbcType=VARCHAR},
+      </if>
+      <if test="growth != null">
+        growth = #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="memberIds != null">
+        member_ids = #{memberIds,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelReason != null">
+        member_level_reason = #{memberLevelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where member_level_id = #{memberLevelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    update cere_platform_member_level
+    set member_level_name = #{memberLevelName,jdbcType=VARCHAR},
+      member_level_icon = #{memberLevelIcon,jdbcType=VARCHAR},
+      member_level_background = #{memberLevelBackground,jdbcType=VARCHAR},
+      growth = #{growth,jdbcType=INTEGER},
+      member_ids = #{memberIds,jdbcType=VARCHAR},
+      member_level_reason = #{memberLevelReason,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where member_level_id = #{memberLevelId,jdbcType=BIGINT}
+  </update>
+  <select id="selectNextLevel" resultType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_member_level
+    where growth > (select growth from cere_platform_member_level where member_level_id = #{memberLevelId})
+    order by growth limit 1
+  </select>
+  <select id="selectFirstLevel" resultType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_member_level
+    order by growth limit 1
+  </select>
+  <select id="findAll" resultType="com.shop.cereshop.commons.domain.member.CerePlatformMemberLevel">
+    SELECT * FROM cere_platform_member_level
+  </select>
+</mapper>

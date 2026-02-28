@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.order.CereOrderDileverDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.after.CereOrderDilever">
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="express" jdbcType="BIGINT" property="express" />
+    <result column="deliver_formid" jdbcType="VARCHAR" property="deliverFormid" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.after.CereOrderDilever">
+    insert into cere_order_dilever
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="express != null">
+        express,
+      </if>
+      <if test="deliverFormid != null and deliverFormid!=''">
+        deliver_formid,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="express != null">
+        #{express,jdbcType=BIGINT},
+      </if>
+      <if test="deliverFormid != null and deliverFormid!=''">
+        #{deliverFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

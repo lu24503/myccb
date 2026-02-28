@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.compose.CereShopComposeDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopCompose">
+    <id column="compose_id" jdbcType="BIGINT" property="composeId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="compose_name" jdbcType="VARCHAR" property="composeName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="compose_type" jdbcType="BIT" property="composeType" />
+    <result column="promote" jdbcType="DECIMAL" property="promote" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    compose_id, shop_id, compose_name, start_time, end_time, compose_type, promote, price, `state`,
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_compose
+    where compose_id = #{composeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_compose
+    where compose_id = #{composeId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="compose_id" keyProperty="composeId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCompose" useGeneratedKeys="true">
+    insert into cere_shop_compose
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="composeName != null">
+        compose_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="composeType != null">
+        compose_type,
+      </if>
+      <if test="promote != null">
+        promote,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="composeName != null">
+        #{composeName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="composeType != null">
+        #{composeType,jdbcType=BIT},
+      </if>
+      <if test="promote != null">
+        #{promote,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCompose">
+    update cere_shop_compose
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="composeName != null">
+        compose_name = #{composeName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="composeType != null">
+        compose_type = #{composeType,jdbcType=BIT},
+      </if>
+      <if test="promote != null">
+        promote = #{promote,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where compose_id = #{composeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCompose">
+    update cere_shop_compose
+    set shop_id = #{shopId,jdbcType=BIGINT},
+        compose_name = #{composeName,jdbcType=VARCHAR},
+        start_time = #{startTime,jdbcType=VARCHAR},
+        end_time = #{endTime,jdbcType=VARCHAR},
+        compose_type = #{composeType,jdbcType=BIT},
+        promote = #{promote,jdbcType=DECIMAL},
+        price = #{price,jdbcType=DECIMAL},
+        `state` = #{state,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+    where compose_id = #{composeId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectOnGoingByComposeId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_compose
+    where compose_id = #{composeId} and state = 1
+  </select>
+
+  <select id="selectComposeIdListContainsProductId" resultType="java.lang.Long">
+    select distinct a.compose_id
+    from cere_shop_compose a
+    join cere_compose_product b on b.compose_id = a.compose_id
+    where a.state = 1
+    and a.start_time &lt; now() and a.end_time > now()
+    and b.product_id = #{productId}
+  </select>
+
+  <select id="selectByComposeIdList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_compose
+    where compose_id in
+    <foreach collection="list" item="composeId" open="(" separator="," close=")">
+      #{composeId}
+    </foreach>
+  </select>
+  <select id="selectByShopIdList" resultType="com.shop.cereshop.app.param.compose.CereShopComposeDTO">
+    select a.shop_id, a.compose_id, a.compose_name, a.compose_type, a.promote, b.product_id from cere_shop_compose a
+    join cere_compose_product b on b.compose_id = a.compose_id
+    where a.shop_id in
+    <foreach collection="list" item="shopId" open="(" separator="," close=")">
+      #{shopId}
+    </foreach>
+    and a.state = 1
+  </select>
+</mapper>

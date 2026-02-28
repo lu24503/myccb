@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerUserDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    <id column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="wechat_open_id" jdbcType="VARCHAR" property="wechatOpenId" />
+    <result column="wechat_union_id" jdbcType="VARCHAR" property="wechatUnionId" />
+    <result column="wechat_name" jdbcType="VARCHAR" property="wechatName" />
+    <result column="wechat_number" jdbcType="VARCHAR" property="wechatNumber" />
+    <result column="ali_user_id" jdbcType="VARCHAR" property="aliUserId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_black" jdbcType="BIT" property="ifBlack" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    buyer_user_id, `name`, sex, birthday, wechat_open_id, wechat_union_id, wechat_name,
+    wechat_number, ali_user_id, phone, `password`, head_image, `state`,if_black, remark,
+    token, member_level_id, growth, credit, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_user
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_user
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="buyer_user_id" keyProperty="buyerUserId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser" useGeneratedKeys="true">
+    insert into cere_buyer_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null and name!=''">
+        `name`,
+      </if>
+      <if test="sex != null and sex!=''">
+        sex,
+      </if>
+      <if test="birthday != null and birthday!=''">
+        birthday,
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        wechat_open_id,
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        wechat_union_id,
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        wechat_name,
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        wechat_number,
+      </if>
+      <if test="aliUserId != null and aliUserId!=''">
+        ali_user_id,
+      </if>
+      <if test="phone != null and phone!=''">
+        phone,
+      </if>
+      <if test="password != null and password!=''">
+        `password`,
+      </if>
+      <if test="headImage != null and headImage!=''">
+        head_image,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifBlack != null">
+        if_black,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="token != null and token!=''">
+        token,
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id,
+      </if>
+      <if test="growth != null">
+        growth,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null and name!=''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!=''">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!=''">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        #{wechatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        #{wechatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="aliUserId != null and aliUserId!=''">
+        #{aliUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone!=''">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password!=''">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null and headImage!=''">
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBlack != null">
+        #{ifBlack,jdbcType=BIT},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null and token!=''">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelId != null">
+        #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="growth != null">
+        #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    update cere_buyer_user
+    <set>
+      <if test="name != null and name!=''">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null and sex!=''">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null and birthday!=''">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatOpenId != null and wechatOpenId!=''">
+        wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatUnionId != null and wechatUnionId!=''">
+        wechat_union_id = #{wechatUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null and wechatName!=''">
+        wechat_name = #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatNumber != null and wechatNumber!=''">
+        wechat_number = #{wechatNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="aliUserId != null and aliUserId!=''">
+        ali_user_id = #{aliUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone!=''">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password!=''">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null and headImage!=''">
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="ifBlack != null">
+        if_black = #{ifBlack,jdbcType=BIT},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null and token!=''">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id = #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="growth != null">
+        growth = #{growth,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    update cere_buyer_user
+    set `name` = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      wechat_union_id = #{wechatUnionId,jdbcType=VARCHAR},
+      wechat_name = #{wechatName,jdbcType=VARCHAR},
+      wechat_number = #{wechatNumber,jdbcType=VARCHAR},
+      ali_user_id = #{aliUserId,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=BIT},
+      if_black = #{ifBlack,jdbcType=BIT},
+      remark = #{remark,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      member_level_id = #{memberLevelId,jdbcType=BIGINT},
+      growth = #{growth,jdbcType=INTEGER},
+      credit = #{credit,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByToken" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    SELECT buyer_user_id,IF(wechat_name IS NULL,`name`,wechat_name) wechat_name,
+    wechat_open_id,ali_user_id,phone,head_image,member_level_id,growth,credit, if_black
+    from cere_buyer_user where token=#{token}
+  </select>
+
+  <select id="findByOpenid" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.login.BuyerUser">
+    SELECT buyer_user_id,IF(wechat_name IS NULL,`name`,wechat_name) wechat_name,token,phone,head_image,member_level_id,
+    growth, credit, if_black FROM cere_buyer_user where wechat_open_id=#{openid}
+  </select>
+
+  <select id="findByAliUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.login.BuyerUser">
+    SELECT buyer_user_id,ali_user_id,phone,head_image,token,member_level_id,growth,credit, if_black FROM cere_buyer_user where ali_user_id=#{aliUserId}
+  </select>
+
+  <select id="getByOpenid" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    SELECT buyer_user_id,IF(wechat_name IS NULL,`name`,wechat_name) wechat_name,token,member_level_id,growth,credit, if_black FROM cere_buyer_user where wechat_open_id=#{wechatOpenId}
+  </select>
+
+  <select id="findByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.login.BuyerUser">
+    SELECT buyer_user_id,IF(wechat_name IS NULL,`name`,wechat_name) wechat_name,token,state,if_black,phone,member_level_id,growth,credit FROM cere_buyer_user where phone=#{phone}
+  </select>
+
+  <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_user
+    where phone = #{phone}
+  </select>
+
+  <update id="relievePhone" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    UPDATE cere_buyer_user SET phone=NULL where buyer_user_id=#{buyerUserId}
+  </update>
+
+  <update id="updateGrowth">
+    update cere_buyer_user
+    set growth = growth + #{growth}
+    where buyer_user_id = #{buyerUserId}
+  </update>
+
+  <update id="increaseCredit">
+    update cere_buyer_user
+    set credit = credit + #{credit}
+    where buyer_user_id = #{buyerUserId}
+  </update>
+
+  <update id="decreaseCredit">
+    update cere_buyer_user
+    set credit = credit - #{credit}
+    where buyer_user_id = #{buyerUserId}
+  </update>
+
+  <select id="getUser" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.buyer.MyUser">
+    SELECT a.buyer_user_id, `name`, `sex`, birthday, phone,a.create_time, head_image, member_level_id, growth,
+    a.credit, sum(b.credit) as totalCredit FROM cere_buyer_user a
+    left join cere_credit_record b on b.buyer_user_id = a.buyer_user_id and b.record_type = 1
+    where a.buyer_user_id = #{buyerUserId}
+  </select>
+
+  <select id="getCanvas" parameterType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas" resultType="com.shop.cereshop.commons.domain.canvas.CerePlatformCanvas">
+    SELECT * FROM cere_platform_canvas WHERE terminal=#{terminal}
+    and type = #{type}
+    <if test="shopId!=null">
+      and shop_id=#{shopId}
+    </if>
+  </select>
+
+  <select id="checkPhoneWx" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    SELECT buyer_user_id,wechat_open_id,token,head_image FROM cere_buyer_user where phone=#{phone} and wechat_open_id IS NOT NULL and wechat_open_id<![CDATA[!= ]]>''
+  </select>
+
+  <select id="checkPhoneAli" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    SELECT buyer_user_id,ali_user_id,token,head_image FROM cere_buyer_user where phone=#{phone} and ali_user_id IS NOT NULL and ali_user_id <![CDATA[!= ]]> '' and buyer_user_id != #{buyerUserId}
+  </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.order.CereOrderReturnDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.order.CereOrderReturn">
+    <id column="return_id" jdbcType="BIGINT" property="returnId" />
+    <result column="return_formid" jdbcType="VARCHAR" property="returnFormid" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    return_id, return_formid, order_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_order_return
+    where return_id = #{returnId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_order_return
+    where return_id = #{returnId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="return_id" keyProperty="returnId" parameterType="com.shop.cereshop.commons.domain.order.CereOrderReturn" useGeneratedKeys="true">
+    insert into cere_order_return
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="returnFormid != null and returnFormid!=''">
+        return_formid,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="returnFormid != null and returnFormid!=''">
+        #{returnFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.order.CereOrderReturn">
+    update cere_order_return
+    <set>
+      <if test="returnFormid != null and returnFormid!=''">
+        return_formid = #{returnFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where return_id = #{returnId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.order.CereOrderReturn">
+    update cere_order_return
+    set return_formid = #{returnFormid,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where return_id = #{returnId,jdbcType=BIGINT}
+  </update>
+</mapper>

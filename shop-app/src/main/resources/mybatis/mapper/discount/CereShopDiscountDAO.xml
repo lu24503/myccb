@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.discount.CereShopDiscountDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopDiscount">
+    <id column="shop_discount_id" jdbcType="BIGINT" property="shopDiscountId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="discount_name" jdbcType="VARCHAR" property="discountName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="if_limit" jdbcType="BIT" property="ifLimit" />
+    <result column="limit_number" jdbcType="INTEGER" property="limitNumber" />
+    <result column="if_number" jdbcType="BIT" property="ifNumber" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="if_enable" jdbcType="BIT" property="ifEnable" />
+    <result column="enable_time" jdbcType="INTEGER" property="enableTime" />
+    <result column="if_add" jdbcType="BIT" property="ifAdd" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_discount_id, shop_id, discount_name, remark, start_time, end_time, if_limit,
+    limit_number,if_number,number, if_enable, enable_time, if_add, `state`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_discount
+    where shop_discount_id = #{shopDiscountId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_discount
+    where shop_discount_id = #{shopDiscountId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="shop_discount_id" keyProperty="shopDiscountId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopDiscount" useGeneratedKeys="true">
+    insert into cere_shop_discount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="discountName != null">
+        discount_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="ifLimit != null">
+        if_limit,
+      </if>
+      <if test="limitNumber != null">
+        limit_number,
+      </if>
+      <if test="ifNumber != null">
+        if_number,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="ifEnable != null">
+        if_enable,
+      </if>
+      <if test="enableTime != null">
+        enable_time,
+      </if>
+      <if test="ifAdd != null">
+        if_add,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="discountName != null">
+        #{discountName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifLimit != null">
+        #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifNumber != null">
+        #{ifNumber,jdbcType=BIT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="ifEnable != null">
+        #{ifEnable,jdbcType=BIT},
+      </if>
+      <if test="enableTime != null">
+        #{enableTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopDiscount">
+    update cere_shop_discount
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="discountName != null">
+        discount_name = #{discountName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifLimit != null">
+        if_limit = #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifNumber != null">
+        if_number = #{ifNumber,jdbcType=BIT},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="ifEnable != null">
+        if_enable = #{ifEnable,jdbcType=BIT},
+      </if>
+      <if test="enableTime != null">
+        enable_time = #{enableTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        if_add = #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_discount_id = #{shopDiscountId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopDiscount">
+    update cere_shop_discount
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      discount_name = #{discountName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      if_limit = #{ifLimit,jdbcType=BIT},
+      limit_number = #{limitNumber,jdbcType=INTEGER},
+      if_number = #{ifNumber,jdbcType=BIT},
+      number = #{number,jdbcType=INTEGER},
+      if_enable = #{ifEnable,jdbcType=BIT},
+      enable_time = #{enableTime,jdbcType=INTEGER},
+      if_add = #{ifAdd,jdbcType=BIT},
+      `state` = #{state,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_discount_id = #{shopDiscountId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.discount.DiscountIndex">
+    SELECT shop_id,shop_name,shop_logo from cere_platform_shop where shop_id=#{shopId}
+  </select>
+
+  <select id="findProducts" parameterType="com.shop.cereshop.app.param.discount.DiscountParam" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT b.shop_discount_id,b.shop_id,c.product_name,c.product_id,d.sku_id,e.product_image image,
+    d.price original_price,a.price,b.number limitNumber,a.total,d.stock_number,a.number limitStockNumber FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    LEFT JOIN cere_shop_product c ON a.product_id=c.product_id
+    LEFT JOIN cere_product_sku d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) e ON a.product_id=e.product_id
+    LEFT JOIN cere_product_classify f ON c.classify_id=f.classify_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+    cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where (b.state=1 or b.state=0)
+    <if test="shopDiscountId!=null">
+      and a.shop_discount_id=#{shopDiscountId}
+    </if>
+    <if test="shopId!=null">
+      and b.shop_id=#{shopId}
+    </if>
+    <if test="search!=null and search!=''">
+      and c.product_name like concat('%',#{search},'%')
+    </if>
+    <if test="classifyId!=null">
+      <choose>
+        <when test="classifyLevel != null">
+          <if test="classifyLevel == 1">
+            and a.classify_id1 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 2">
+            and a.classify_id2 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 3">
+            and a.classify_id3 = #{classifyId}
+          </if>
+        </when>
+        <otherwise>
+          and (
+            a.classify_id1 = #{classifyId}
+            OR a.classify_id2 = #{classifyId}
+            OR a.classify_id3 = #{classifyId}
+          )
+        </otherwise>
+      </choose>
+    </if>
+    GROUP BY c.product_id
+    ORDER BY
+    <if test='type=="1"'>
+      a.price,
+    </if>
+    <if test='type=="2"'>
+      a.price DESC,
+    </if>
+    <if test='volume=="1"'>
+      f.number,
+    </if>
+    <if test='volume=="2"'>
+      f.number DESC,
+    </if>
+    c.update_time DESC,c.create_time DESC
+  </select>
+
+  <select id="findBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductDetail">
+    SELECT a.shop_id,a.product_id,a.product_name,a.product_text text,b.original_price,d.price,
+    c.shop_name,c.shop_logo,a.product_brief,a.classify_id,d.number surplusNumber,d.total,g.users,x.number from cere_shop_product a
+    LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+    LEFT JOIN cere_platform_shop c ON a.shop_id=c.shop_id
+    LEFT JOIN cere_shop_discount_detail d ON b.sku_id=d.sku_id
+    LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM cere_order_product a,cere_shop_order b
+    where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY a.product_id) g ON a.product_id=g.product_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.product_id from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where a.sku_id=#{skuId} and b.state in (2,3,4)) x ON a.product_id=x.product_id
+    where b.sku_id=#{skuId} and d.shop_discount_id=#{shopDiscountId}
+  </select>
+
+  <select id="findByProductId" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT a.shop_discount_id FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where a.sku_id=#{skuId} and b.state=1
+    GROUP BY a.shop_discount_id
+  </select>
+
+  <select id="getDiscounts" parameterType="com.shop.cereshop.app.param.renovation.RenovationParam" resultType="com.shop.cereshop.app.page.discount.ShopDiscountDetail">
+    SELECT shop_discount_id, shop_id, discount_name, remark, start_time, end_time, if_limit,
+    limit_number, if_enable, enable_time, if_add, `state`,if_add,if_number,number,shop_id FROM cere_shop_discount
+    WHERE shop_id=#{shopId} and state in (0,1)
+    <if test="ids!=null and ids.size()>0">
+      and shop_discount_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+  <select id="selectByShopIdList" resultType="com.shop.cereshop.app.param.seckill.ShopBusinessDiscount">
+    select a.shop_discount_id as discount_id, a.shop_id, a.if_limit, a.limit_number, b.product_id, b.sku_id, b.discount,
+        b.price, b.number, b.total, a.if_add
+    from cere_shop_discount a join cere_shop_discount_detail b  on b.shop_discount_id = a.shop_discount_id
+    where a.shop_id in
+    <foreach collection="list" item="shopId" open="(" separator="," close=")">
+      #{shopId}
+    </foreach>
+    and a.state = 1
+  </select>
+  <select id="selectByProductId" resultType="com.shop.cereshop.commons.domain.tool.CereShopDiscount">
+    select a.shop_discount_id, shop_id, discount_name, remark, start_time, end_time, if_limit,
+           limit_number, if_number, a.number, if_enable, enable_time, if_add, `state`, create_time, update_time
+    from cere_shop_discount a join cere_shop_discount_detail b on b.shop_discount_id = a.shop_discount_id
+    and a.state in (0,1) and b.product_id = #{productId}
+    limit 1
+  </select>
+
+  <select id="selectRelateInfoBySkuId"
+            resultType="com.shop.cereshop.app.param.discount.DiscountRelateProductInfo">
+    select a.shop_discount_id as discountId,
+            start_time as startTime,
+            end_time as endTime,
+            if_enable,
+            enable_time,
+            b.product_id,
+            b.sku_id,
+            b.discount,
+            b.total,
+            b.number,
+            a.if_limit,
+            a.limit_number,
+            a.if_add
+    from cere_shop_discount a join cere_shop_discount_detail b on b.shop_discount_id = a.shop_discount_id
+    and a.state in (0,1) and b.sku_id = #{skuId}
+    limit 1
+  </select>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.log.CerePlatformLogDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.log.CerePlatformLog">
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="platform_user_id" jdbcType="BIGINT" property="platformUserId" />
+    <result column="module" jdbcType="VARCHAR" property="module" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
+    <result column="operation_describtion" jdbcType="VARCHAR" property="operationDescribtion" />
+    <result column="only" jdbcType="VARCHAR" property="only" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, platform_user_id, `module`, `operation`, operation_describtion, only, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="log_id" keyProperty="logId" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformLog" useGeneratedKeys="true">
+    insert into cere_platform_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="platformUserId != null">
+        platform_user_id,
+      </if>
+      <if test="module != null and module!=''">
+        `module`,
+      </if>
+      <if test="operation != null and operation!=''">
+        `operation`,
+      </if>
+      <if test="operationDescribtion != null and operationDescribtion!=''">
+        operation_describtion,
+      </if>
+      <if test="only != null and only!=''">
+        only,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="platformUserId != null">
+        #{platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="module != null and module!=''">
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null and operation!=''">
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDescribtion != null and operationDescribtion!=''">
+        #{operationDescribtion,jdbcType=VARCHAR},
+      </if>
+      <if test="only != null and only!=''">
+        #{only,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformLog">
+    update cere_platform_log
+    <set>
+      <if test="platformUserId != null">
+        platform_user_id = #{platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="module != null and module!=''">
+        `module` = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null and operation!=''">
+        `operation` = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDescribtion != null and operationDescribtion!=''">
+        operation_describtion = #{operationDescribtion,jdbcType=VARCHAR},
+      </if>
+      <if test="only != null and only!=''">
+        only = #{only,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformLog">
+    update cere_platform_log
+    set platform_user_id = #{platformUserId,jdbcType=BIGINT},
+      `module` = #{module,jdbcType=VARCHAR},
+      `operation` = #{operation,jdbcType=VARCHAR},
+      operation_describtion = #{operationDescribtion,jdbcType=VARCHAR},
+      only = #{only,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+</mapper>

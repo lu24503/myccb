@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.seckill.CereProductAnswerDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereProductAnswer">
+    <id column="answer_id" jdbcType="BIGINT" property="answerId" />
+    <result column="problem_id" jdbcType="BIGINT" property="problemId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="if_anonymous" jdbcType="BIT" property="ifAnonymous" />
+    <result column="selected" jdbcType="BIT" property="selected" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    answer_id, problem_id, product_id, buyer_user_id, answer, if_anonymous,selected, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_product_answer
+    where answer_id = #{answerId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_product_answer
+    where answer_id = #{answerId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="answer_id" keyProperty="answerId" parameterType="com.shop.cereshop.commons.domain.tool.CereProductAnswer" useGeneratedKeys="true">
+    insert into cere_product_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="problemId != null">
+        problem_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="ifAnonymous != null">
+        if_anonymous,
+      </if>
+      <if test="selected != null">
+        selected,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="problemId != null">
+        #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="ifAnonymous != null">
+        #{ifAnonymous,jdbcType=BIT},
+      </if>
+      <if test="selected != null">
+        #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereProductAnswer">
+    update cere_product_answer
+    <set>
+      <if test="problemId != null">
+        problem_id = #{problemId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="ifAnonymous != null">
+        if_anonymous = #{ifAnonymous,jdbcType=BIT},
+      </if>
+      <if test="selected != null">
+        selected = #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where answer_id = #{answerId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereProductAnswer">
+    update cere_product_answer
+    set problem_id = #{problemId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      answer = #{answer,jdbcType=VARCHAR},
+      if_anonymous = #{ifAnonymous,jdbcType=BIT},
+      selected = #{selected,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where answer_id = #{answerId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAnswersById" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.seckill.SeckillProductAnswer">
+    SELECT a.answer_id,a.buyer_user_id,a.answer,a.product_id,f.shop_id,f.sku_id,IF(a.if_anonymous=1,'匿名用户',IF(
+    b.wechat_name IS NULL,b.`name`,b.wechat_name)) `name`,a.create_time,b.head_image,a.selected FROM cere_product_answer a
+    LEFT JOIN cere_buyer_user b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN (SELECT a.product_id,b.sku_id,a.shop_id FROM cere_shop_product a,cere_product_sku b where a.product_id=b.product_id
+    GROUP BY b.product_id) f ON a.product_id=f.product_id
+    where a.problem_id=#{problemId}
+  </select>
+
+  <update id="updateSelected" parameterType="java.util.List">
+    UPDATE cere_product_answer SET selected=1 where answer_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <delete id="deleteAnswer" parameterType="java.util.List">
+    DELETE FROM cere_product_answer where answer_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <select id="getAnswer" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.buyer.MyAnswer">
+    SELECT a.answer_id,a.answer,a.problem_id,b.problem,c.count,e.product_image image,
+    d.`name`,a.selected,a.product_id,f.shop_id,f.sku_id FROM cere_product_answer a
+    LEFT JOIN cere_product_problem b ON a.problem_id=b.problem_id
+    LEFT JOIN (SELECT COUNT(*) count,problem_id FROM cere_product_answer GROUP BY problem_id) c
+    ON b.problem_id=c.problem_id
+    LEFT JOIN (SELECT a.problem_id,IF(a.if_anonymous=1,'匿名用户',IF(b.wechat_name IS NULL,b.`name`,b.wechat_name)) `name`,a.answer
+    from cere_product_answer a,cere_buyer_user b
+    where a.buyer_user_id=b.buyer_user_id GROUP BY a.problem_id) d ON b.problem_id=c.problem_id
+    LEFT JOIN (SELECT a.product_id,a.product_image FROM cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) e ON a.product_id=e.product_id
+    LEFT JOIN (SELECT a.product_id,b.sku_id,a.shop_id FROM cere_shop_product a,cere_product_sku b where a.product_id=b.product_id
+    GROUP BY b.product_id) f ON a.product_id=f.product_id
+    where a.buyer_user_id=#{buyerUserId}
+    GROUP BY a.answer_id
+    ORDER BY a.create_time DESC
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_product_answer SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <delete id="deleteByProblemIds" parameterType="java.util.List">
+    DELETE FROM cere_product_answer where problem_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+</mapper>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.distributor.CereShopDistributionLevelDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.distributor.CereShopDistributionLevel">
+    <id column="distributor_level_id" jdbcType="BIGINT" property="distributorLevelId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="level_name" jdbcType="VARCHAR" property="levelName" />
+    <result column="if_self" jdbcType="BIT" property="ifSelf" />
+    <result column="if_money" jdbcType="BIT" property="ifMoney" />
+    <result column="if_invitation" jdbcType="BIT" property="ifInvitation" />
+    <result column="if_customer" jdbcType="BIT" property="ifCustomer" />
+    <result column="condition_money" jdbcType="DECIMAL" property="conditionMoney" />
+    <result column="condition_invitation" jdbcType="VARCHAR" property="conditionInvitation" />
+    <result column="condition_customer" jdbcType="VARCHAR" property="conditionCustomer" />
+    <result column="direct_proportion" jdbcType="INTEGER" property="directProportion" />
+    <result column="indirect_proportion" jdbcType="INTEGER" property="indirectProportion" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    distributor_level_id, shop_id, level_name, if_self,if_money,if_invitation,if_customer,condition_money,
+    condition_invitation,condition_customer, direct_proportion,
+    indirect_proportion, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_distribution_level
+    where distributor_level_id = #{distributorLevelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_distribution_level
+    where distributor_level_id = #{distributorLevelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="distributor_level_id" keyProperty="distributorLevelId" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributionLevel" useGeneratedKeys="true">
+    insert into cere_shop_distribution_level
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="levelName != null and levelName!=''">
+        level_name,
+      </if>
+      <if test="ifSelf != null">
+        if_self,
+      </if>
+      <if test="ifMoney != null">
+        if_money,
+      </if>
+      <if test="ifInvitation != null">
+        if_invitation,
+      </if>
+      <if test="ifCustomer != null">
+        if_customer,
+      </if>
+      <if test="conditionMoney != null">
+        condition_money,
+      </if>
+      <if test="conditionInvitation != null">
+        condition_invitation,
+      </if>
+      <if test="conditionCustomer != null">
+        condition_customer,
+      </if>
+      <if test="directProportion != null">
+        direct_proportion,
+      </if>
+      <if test="indirectProportion != null">
+        indirect_proportion,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="levelName != null and levelName!=''">
+        #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="ifSelf != null">
+        #{ifSelf,jdbcType=BIT},
+      </if>
+      <if test="ifMoney != null">
+        #{ifMoney,jdbcType=BIT},
+      </if>
+      <if test="ifInvitation != null">
+        #{ifInvitation,jdbcType=BIT},
+      </if>
+      <if test="ifCustomer != null">
+        #{ifCustomer,jdbcType=BIT},
+      </if>
+      <if test="conditionMoney != null">
+        #{conditionMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="conditionInvitation != null">
+        #{conditionInvitation,jdbcType=INTEGER},
+      </if>
+      <if test="conditionCustomer != null">
+        #{conditionCustomer,jdbcType=INTEGER},
+      </if>
+      <if test="directProportion != null">
+        #{directProportion,jdbcType=INTEGER},
+      </if>
+      <if test="indirectProportion != null">
+        #{indirectProportion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributionLevel">
+    update cere_shop_distribution_level
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="levelName != null and levelName!=''">
+        level_name = #{levelName,jdbcType=VARCHAR},
+      </if>
+      <if test="ifSelf != null">
+        if_self = #{ifSelf,jdbcType=BIT},
+      </if>
+      <if test="ifMoney != null">
+        if_money = #{ifMoney,jdbcType=BIT},
+      </if>
+      <if test="ifInvitation != null">
+        if_invitation = #{ifInvitation,jdbcType=BIT},
+      </if>
+      <if test="ifCustomer != null">
+        if_customer = #{ifCustomer,jdbcType=BIT},
+      </if>
+      <if test="conditionMoney != null">
+        condition_money = #{conditionMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="conditionInvitation != null">
+        condition_invitation = #{conditionInvitation,jdbcType=INTEGER},
+      </if>
+      <if test="conditionCustomer != null">
+        condition_customer = #{conditionCustomer,jdbcType=INTEGER},
+      </if>
+      <if test="directProportion != null">
+        direct_proportion = #{directProportion,jdbcType=INTEGER},
+      </if>
+      <if test="indirectProportion != null">
+        indirect_proportion = #{indirectProportion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where distributor_level_id = #{distributorLevelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.distributor.CereShopDistributionLevel">
+    update cere_shop_distribution_level
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      level_name = #{levelName,jdbcType=VARCHAR},
+      if_self = #{ifSelf,jdbcType=BIT},
+      if_money = #{ifMoney,jdbcType=BIT},
+      if_invitation = #{ifInvitation,jdbcType=BIT},
+      if_customer = #{ifCustomer,jdbcType=BIT},
+      condition_money = #{conditionMoney,jdbcType=DECIMAL},
+      condition_invitation = #{conditionInvitation,jdbcType=INTEGER},
+      condition_customer = #{conditionCustomer,jdbcType=INTEGER},
+      direct_proportion = #{directProportion,jdbcType=INTEGER},
+      indirect_proportion = #{indirectProportion,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where distributor_level_id = #{distributorLevelId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

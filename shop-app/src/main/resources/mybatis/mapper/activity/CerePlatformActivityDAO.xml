@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.activity.CerePlatformActivityDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    <id column="activity_id" jdbcType="BIGINT" property="activityId"/>
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName"/>
+    <result column="activity_introduce" jdbcType="VARCHAR" property="activityIntroduce"/>
+    <result column="sign_start_time" jdbcType="VARCHAR" property="signStartTime"/>
+    <result column="sign_end_time" jdbcType="VARCHAR" property="signEndTime"/>
+    <result column="activity_start_time" jdbcType="VARCHAR" property="activityStartTime"/>
+    <result column="activity_end_time" jdbcType="VARCHAR" property="activityEndTime"/>
+    <result column="if_bond" jdbcType="BIT" property="ifBond"/>
+    <result column="bond_money" jdbcType="DECIMAL" property="bondMoney"/>
+    <result column="threshold" jdbcType="DECIMAL" property="threshold"/>
+    <result column="discount_mode" jdbcType="BIT" property="discountMode"/>
+    <result column="coupon_content" jdbcType="DECIMAL" property="couponContent"/>
+    <result column="number" jdbcType="INTEGER" property="number"/>
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber"/>
+    <result column="receive_type" jdbcType="INTEGER" property="receiveType"/>
+    <result column="frequency" jdbcType="INTEGER" property="frequency"/>
+    <result column="image" jdbcType="VARCHAR" property="image"/>
+    <result column="if_credit" jdbcType="BIT" property="ifCredit"/>
+    <result column="credit" jdbcType="INTEGER" property="credit"/>
+    <result column="state" jdbcType="BIT" property="state"/>
+    <result column="apply_type" jdbcType="INTEGER" property="applyType"/>
+    <result column="apply_category" jdbcType="BIGINT" property="applyCategory"/>
+    <result column="sync_card" jdbcType="BIT" property="syncCard"/>
+    <result column="card_title" jdbcType="VARCHAR" property="cardTitle"/>
+    <result column="card_color" jdbcType="VARCHAR" property="cardColor"/>
+    <result column="card_notice" jdbcType="VARCHAR" property="cardNotice"/>
+    <result column="card_id" jdbcType="VARCHAR" property="cardId"/>
+    <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    activity_id
+    , activity_name, activity_introduce, sign_start_time, sign_end_time, activity_start_time,
+    activity_end_time, if_bond, bond_money,threshold, discount_mode, coupon_content,`number`,
+    stock_number, receive_type, frequency, image, if_credit, credit, apply_type, apply_category,
+    sync_card, card_title, card_color, card_notice, card_id, `state`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_platform_activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete
+    from cere_platform_activity
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </delete>
+
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    update cere_platform_activity
+    <set>
+      <if test="activityName != null and activityName!=''">
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityIntroduce != null and activityIntroduce!=''">
+        activity_introduce = #{activityIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="signStartTime != null and signStartTime!=''">
+        sign_start_time = #{signStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="signEndTime != null and signEndTime!=''">
+        sign_end_time = #{signEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStartTime != null and activityStartTime!=''">
+        activity_start_time = #{activityStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityEndTime != null and activityEndTime!=''">
+        activity_end_time = #{activityEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifBond != null">
+        if_bond = #{ifBond,jdbcType=BIT},
+      </if>
+      <if test="bondMoney != null">
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="threshold != null">
+        threshold = #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="discountMode != null">
+        discount_mode = #{discountMode,jdbcType=BIT},
+      </if>
+      <if test="couponContent != null">
+        coupon_content = #{couponContent,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="stockNumber != null">
+        stock_number = #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveType != null">
+        receive_type = #{receiveType,jdbcType=INTEGER},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="ifCredit != null">
+        if_credit = #{ifCredit,jdbcType=BIT},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivity">
+    update cere_platform_activity
+    set activity_name       = #{activityName,jdbcType=VARCHAR},
+        activity_introduce  = #{activityIntroduce,jdbcType=VARCHAR},
+        sign_start_time     = #{signStartTime,jdbcType=VARCHAR},
+        sign_end_time       = #{signEndTime,jdbcType=VARCHAR},
+        activity_start_time = #{activityStartTime,jdbcType=VARCHAR},
+        activity_end_time   = #{activityEndTime,jdbcType=VARCHAR},
+        if_bond             = #{ifBond,jdbcType=BIT},
+        bond_money          = #{bondMoney,jdbcType=DECIMAL},
+        threshold           = #{threshold,jdbcType=DECIMAL},
+        discount_mode       = #{discountMode,jdbcType=BIT},
+        coupon_content      = #{couponContent,jdbcType=DECIMAL},
+        `number`            = #{number,jdbcType=INTEGER},
+        stock_number        = #{stockNumber,jdbcType=INTEGER},
+        receive_type        = #{receiveType,jdbcType=INTEGER},
+        frequency           = #{frequency,jdbcType=INTEGER},
+        image               = #{image,jdbcType=VARCHAR},
+        if_credit           = #{ifCredit,jdbcType=BIT},
+        credit              = #{credit,jdbcType=INTEGER},
+        `state`             = #{state,jdbcType=BIT},
+        create_time         = #{createTime,jdbcType=VARCHAR},
+        update_time         = #{updateTime,jdbcType=VARCHAR}
+    where activity_id = #{activityId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getCoupons" parameterType="com.shop.cereshop.app.param.canvas.CanvasCouponParam" resultType="com.shop.cereshop.app.page.canvas.CanvasCoupon">
+    SELECT activity_id coupon_id, activity_id, activity_name, activity_start_time as startTime, activity_end_time as endTime,
+    discount_mode, threshold full_money, coupon_content reduce_money, 3 as state,
+    if_credit, credit, sync_card, card_id, receive_type, frequency, stock_number,
+    g.takeCount
+    FROM cere_platform_activity
+    left join (select coupon_id, count(coupon_id) as takeCount from cere_buyer_coupon group by coupon_id) g
+    on g.coupon_id = cere_platform_activity.activity_id
+    where state in (3) and activity_start_time&lt;=NOW()
+    and activity_end_time&gt;=NOW()
+    <if test="search!=null and search!=''">
+      and activity_name like concat('%',#{search},'%')
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and activity_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="getUserCoupons" parameterType="com.shop.cereshop.app.param.canvas.CanvasCouponParam" resultType="com.shop.cereshop.app.page.canvas.CanvasCoupon">
+    SELECT a.activity_id coupon_id,a.activity_id,a.activity_name,a.activity_start_time as startTime,a.activity_end_time as endTime,
+    a.discount_mode,a.threshold full_money,a.coupon_content reduce_money,IF(b.coupon_id IS NULL,3,b.state) state,
+    a.if_credit, a.sync_card, a.card_id, a.receive_type, a.frequency, a.stock_number
+    FROM cere_platform_activity a
+    LEFT JOIN cere_buyer_coupon b ON a.activity_id=b.coupon_id and b.buyer_user_id=#{buyerUserId}
+    where a.state in (3) and a.activity_start_time&lt;=NOW()
+    and a.activity_end_time&gt;=NOW()
+    <if test="search!=null and search!=''">
+      and a.activity_name like concat('%',#{search},'%')
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.activity_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="findDetai" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.canvas.CanvasCouponDetail">
+    SELECT activity_id coupon_id,threshold full_money,coupon_content reduce_money FROM cere_platform_activity WHERE activity_id=#{activityId}
+  </select>
+
+  <select id="findCouponByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT a.activity_id coupon_id,a.activity_id,a.activity_name,a.activity_start_time startTime,a.activity_end_time endTime,a.image,a.discount_mode couponType,
+    a.threshold full_money,a.coupon_content reduce_money,b.shop_id,a.discount_mode,IF(d.state IS NULL,3,d.state) state,
+    a.sync_card, a.card_id
+    from cere_platform_activity a
+    LEFT JOIN cere_activity_sign b ON a.activity_id=b.activity_id
+    LEFT JOIN cere_sign_product c ON b.sign_id=c.sign_id
+    LEFT JOIN cere_buyer_coupon d ON a.activity_id=d.coupon_id
+    where b.state=1 and a.state=3 and a.activity_start_time&lt;=NOW()
+    and a.activity_end_time&gt;=NOW() and c.product_id=#{productId}
+    GROUP BY a.activity_id
+    ORDER BY CASE a.threshold when 0 THEN 1 END,a.threshold DESC
+  </select>
+
+  <select id="findProductCanUseCoupon" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT a.activity_id coupon_id, a.activity_id, a.activity_name, a.activity_start_time startTime, a.activity_end_time endTime,
+    a.image, a.stock_number, a.discount_mode couponType, a.frequency,
+    a.threshold full_money, a.coupon_content reduce_money, b.shop_id, a.discount_mode, 3 as state,
+    a.sync_card, a.card_id
+    from cere_platform_activity a
+    LEFT JOIN cere_activity_sign b ON a.activity_id = b.activity_id and b.sign_type = 1
+    LEFT JOIN cere_sign_product c ON b.sign_id=c.sign_id
+    where b.state = 1 and a.state = 3 and a.activity_start_time &lt; NOW()
+    and a.activity_end_time > NOW() and c.product_id = #{productId}
+    GROUP BY a.activity_id
+    ORDER BY CASE a.threshold when 0 THEN 1 END, a.threshold DESC
+  </select>
+
+  <select id="findOnGoingCouponByBatchId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_platform_activity
+    where activity_id in
+      <foreach collection="list" item="couponId" open="(" separator="," close=")">
+        #{couponId}
+      </foreach>
+      and state = 3
+      and stock_number > 0
+  </select>
+
+  <select id="getGroupWorkProducts" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT
+    a.shop_group_work_id shopGroupWorkId,
+    b.product_id,
+    b.product_name,
+    c.original_price,
+    d.product_image image,
+    c.stock_number,
+    a.price,
+    a.sku_id,
+    c.total,
+    b.shop_id,
+    c.original_price,
+    SUM(f.number) +  + b.fictitious_number number
+    from cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id = b.product_id
+    LEFT JOIN cere_product_sku c ON a.sku_id = c.sku_id
+    LEFT JOIN (SELECT a.product_id, a.product_image
+    from cere_product_image a,
+    cere_shop_product b
+    where a.product_id = b.product_id
+    GROUP BY a.product_id) d
+    ON b.product_id = d.product_id
+    LEFT JOIN cere_shop_group_work e ON a.shop_group_work_id=e.shop_group_work_id
+    LEFT JOIN cere_order_product f ON a.product_id=f.product_id
+    LEFT JOIN cere_collage_order_detail h ON f.order_id=h.order_id
+    LEFT JOIN cere_collage_order g ON h.collage_id=g.collage_id and g.state=1
+    where e.state=1
+    <if test="ids!=null and ids.size()>0">
+      and a.shop_group_work_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+    GROUP BY f.product_id
+    ORDER BY SUM(f.number) DESC
+    LIMIT 20
+  </select>
+
+  <select id="getGroupWorkProductCount" resultType="java.lang.Integer">
+    SELECT count(1) from
+      cere_collage_order_detail a
+        LEFT JOIN cere_order_product b ON a.order_id=b.order_id
+        LEFT JOIN cere_collage_order c on a.collage_id=c.collage_id
+    where a.state=1
+      and b.product_id=#{productId} and c.shop_group_work_id=#{shopGroupWorkId}
+  </select>
+
+  <select id="selectCreditCouponList" resultType="com.shop.cereshop.app.page.coupon.CreditCoupon">
+    select distinct a.activity_id as couponId, a.discount_mode as couponType, a.threshold as fullMoney,
+    a.activity_start_time as startTime, a.activity_end_time as endTime, a.coupon_content as reduceMoney,
+    if(b.coupon_id, 1, 0) as state, a.image, a.credit, a.stock_number, g.takeCount,
+    a.sync_card, a.card_id
+    from cere_platform_activity a left join cere_buyer_coupon b
+    on b.coupon_id = a.activity_id and b.buyer_user_id = #{buyerUserId} and b.source = 3
+    left join (select coupon_id, count(coupon_id) takeCount from cere_buyer_coupon
+        group by coupon_id) g on g.coupon_id = a.activity_id
+    where a.state = 3 and a.activity_start_time &lt; now() and a.activity_end_time > now()
+    and a.if_credit = 1 and a.credit > 0
+    order by a.create_time desc
+  </select>
+  <select id="findProductIdList" resultType="java.lang.Long">
+    select c.product_id from cere_activity_sign b join cere_sign_product c
+    on c.sign_id = b.sign_id and b.activity_id = #{couponId} and b.sign_type = 1
+  </select>
+</mapper>

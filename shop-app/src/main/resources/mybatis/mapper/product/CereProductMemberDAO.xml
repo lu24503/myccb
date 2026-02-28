@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereProductMemberDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductMember">
+    <result column="product_id" jdbcType="BIGINT" property="productId"/>
+    <result column="sku_id" jdbcType="BIGINT" property="skuId"/>
+    <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId"/>
+    <result column="mode" jdbcType="BIT" property="mode"/>
+    <result column="price" jdbcType="DECIMAL" property="price"/>
+    <result column="total" jdbcType="DECIMAL" property="total"/>
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductMember">
+    insert into cere_product_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id,
+      </if>
+      <if test="mode != null">
+        `mode`,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="memberLevelId != null">
+        #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <!--<select id="welfareProductList" resultType="com.shop.cereshop.app.page.MemberProduct">
+    select distinct a.product_id as productId, min(pi.product_image) as productImage, min(a.sku_id) as skuId, min(a.member_level_id),
+           <if test="param.type != null and param.type == 2">
+             max(a.total) as price,
+           </if>
+           <if test="param.type == null or param.type == 1">
+             min(a.total) as price,
+           </if>
+           min(b.product_name) as productName, min(b.shop_id) as shopId, min(c.original_price) as originalPrice, min(f.number) as saleNumber
+    from cere_product_member a
+    join cere_shop_product b on a.product_id = b.product_id
+    join cere_product_image pi on pi.product_id = a.product_id
+    join cere_product_sku c on b.product_id = c.product_id and a.sku_id = c.sku_id
+    left join (SELECT SUM(a.number) number,a.product_id,a.order_id from cere_order_product a,
+    cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY product_id) f on f.product_id = a.product_id
+    where a.member_level_id = #{memberLevelId}
+    group by a.product_id
+    <if test="param.type != null">
+      <if test="param.type == 1">
+        order by price
+      </if>
+      <if test="param.type == 2">
+        order by price desc
+      </if>
+    </if>
+    <if test="param.volume != null">
+      <if test="param.volume == 1">
+        order by saleNumber
+      </if>
+      <if test="param.volume == 2">
+        order by saleNumber desc
+      </if>
+    </if>
+    <if test="param.volume == null and param.type == null">
+      order by price
+    </if>
+  </select>-->
+
+  <select id="getMemberProducts" resultType="com.shop.cereshop.app.page.MemberProduct">
+    SELECT d.shop_id,d.shop_name,a.product_id,s.product_name,a.mode,x.users,d.shop_logo,
+    IF(h.image IS NULL OR h.image='',c.product_image,h.image) image,a.member_level_id,y.member_level_name,
+    MIN(a.price) discount,b.price,b.sku_id,b.original_price,IF(f.number IS NULL, s.fictitious_number, f.number + s.fictitious_number) number,b.stock_number from cere_product_member a
+    LEFT JOIN cere_shop_product s ON a.product_id=s.product_id
+    LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON s.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON s.classify_id=e.classify_id
+    LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) h ON a.sku_id=h.sku_id
+    LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM cere_order_product a,cere_shop_order b
+    where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY a.product_id) x ON a.product_id=x.product_id
+    LEFT JOIN cere_platform_member_level y ON a.member_level_id=y.member_level_id
+    where s.shelve_state=1
+    <if test="memberLevelId != null">
+      and a.member_level_id = #{memberLevelId}
+    </if>
+    <if test="shopId!=null">
+      and s.shop_id=#{shopId}
+    </if>
+    <if test="search!=null and search!=''">
+      and (d.shop_name like concat('%',#{search},'%') OR
+      a.product_id like concat('%',#{search},'%') OR
+      s.product_name like concat('%',#{search},'%'))
+    </if>
+    <if test="classifyId!=null">
+      <choose>
+        <when test="classifyLevel != null">
+          <if test="classifyLevel == 1">
+            and s.classify_id1 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 2">
+            and s.classify_id2 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 3">
+            and s.classify_id3 = #{classifyId}
+          </if>
+        </when>
+        <otherwise>
+          and (
+            s.classify_id1 = #{classifyId}
+            OR s.classify_id2 = #{classifyId}
+            OR s.classify_id3 = #{classifyId}
+          )
+        </otherwise>
+      </choose>
+    </if>
+    and s.product_id not in (
+      select b.product_id from cere_activity_sign a
+      join cere_sign_product b
+      on b.sign_id = a.sign_id and a.state = 1
+      <if test="shopId!=null">
+        and a.shop_id=#{shopId}
+      </if>
+      join cere_platform_seckill c on c.seckill_id = a.activity_id and a.sign_type = 2
+      and c.start_time &lt; now() and c.end_time > now() and c.state = 3
+      union all
+      select b.product_id from cere_activity_sign a
+      join cere_sign_product b
+      on b.sign_id = a.sign_id and a.state = 1
+      <if test="shopId!=null">
+        and a.shop_id=#{shopId}
+      </if>
+      join cere_platform_discount c on c.discount_id = a.activity_id and a.sign_type = 3
+      and c.start_time &lt; now() and c.end_time > now() and c.state = 3
+      union all
+      select b.product_id from cere_shop_seckill a
+      join cere_shop_seckill_detail b on b.shop_seckill_id = a.shop_seckill_id
+      and a.effective_start &lt; now() and a.effective_end > now()
+      and a.state = 1
+      <if test="shopId!=null">
+        and a.shop_id=#{shopId}
+      </if>
+      union all
+      select b.product_id from cere_shop_discount a
+      join cere_shop_discount_detail b on b.shop_discount_id = a.shop_discount_id
+      and a.start_time &lt; now() and a.end_time > now()
+      and a.state = 1
+      <if test="shopId!=null">
+        and a.shop_id=#{shopId}
+      </if>
+    )
+    GROUP BY a.product_id
+    <if test="type != null">
+      <if test="type == 1">
+        order by price
+      </if>
+      <if test="type == 2">
+        order by price desc
+      </if>
+    </if>
+    <if test="volume != null">
+      <if test="volume == 1">
+        order by number
+      </if>
+      <if test="volume == 2">
+        order by number desc
+      </if>
+    </if>
+    <if test="volume == null and type == null">
+      order by price
+    </if>
+  </select>
+
+  <select id="selectProductMember" resultMap="BaseResultMap">
+    select product_id, sku_id, member_level_id,
+           `mode`, price, total
+    from cere_product_member
+    where product_id = #{productId}
+      and member_level_id = #{memberLevelId}
+      and sku_id = #{skuId}
+  </select>
+
+  <select id="selectBatchProductMember"
+          resultType="com.shop.cereshop.commons.domain.product.CereProductMember">
+    select product_id, sku_id, member_level_id,
+           `mode`, price, total
+    from cere_product_member
+    where member_level_id = #{memberLevelId}
+    and sku_id in
+    <foreach collection="skuIdList" item="skuId" open="(" separator="," close=")">
+      #{skuId}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.activity.CereActivitySignDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    <id column="sign_id" jdbcType="BIGINT" property="signId" />
+    <result column="sign_code" jdbcType="VARCHAR" property="signCode" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="bond_money" jdbcType="DECIMAL" property="bondMoney" />
+    <result column="payment_mode" jdbcType="BIT" property="paymentMode" />
+    <result column="qr_image" jdbcType="VARCHAR" property="qrImage" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="bond_state" jdbcType="BIT" property="bondState" />
+    <result column="payment_time" jdbcType="VARCHAR" property="paymentTime" />
+    <result column="return_time" jdbcType="VARCHAR" property="returnTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="sign_type" jdbcType="INTEGER" property="signType" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sign_id, sign_code, shop_id, activity_id, bond_money, payment_mode, qr_image, `state`,
+    bond_state, payment_time, return_time,remark,sign_type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_activity_sign
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_activity_sign
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="sign_id" keyProperty="signId" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign" useGeneratedKeys="true">
+    insert into cere_activity_sign
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signCode != null and signCode!=''">
+        sign_code,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="bondMoney != null">
+        bond_money,
+      </if>
+      <if test="paymentMode != null">
+        payment_mode,
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        qr_image,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="bondState != null">
+        bond_state,
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        payment_time,
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        return_time,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="signType != null">
+        sign_type,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signCode != null and signCode!=''">
+        #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="bondMoney != null">
+        #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentMode != null">
+        #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        #{qrImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="bondState != null">
+        #{bondState,jdbcType=BIT},
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null">
+        #{signType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    update cere_activity_sign
+    <set>
+      <if test="signCode != null and signCode!=''">
+        sign_code = #{signCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="bondMoney != null">
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentMode != null">
+        payment_mode = #{paymentMode,jdbcType=BIT},
+      </if>
+      <if test="qrImage != null and qrImage!=''">
+        qr_image = #{qrImage,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="bondState != null">
+        bond_state = #{bondState,jdbcType=BIT},
+      </if>
+      <if test="paymentTime != null and paymentTime!=''">
+        payment_time = #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null and returnTime!=''">
+        return_time = #{returnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="signType != null">
+        sign_type = #{signType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.activity.CereActivitySign">
+    update cere_activity_sign
+    set sign_code = #{signCode,jdbcType=VARCHAR},
+        shop_id = #{shopId,jdbcType=BIGINT},
+        activity_id = #{activityId,jdbcType=BIGINT},
+        bond_money = #{bondMoney,jdbcType=DECIMAL},
+        payment_mode = #{paymentMode,jdbcType=BIT},
+        qr_image = #{qrImage,jdbcType=VARCHAR},
+        `state` = #{state,jdbcType=BIT},
+        bond_state = #{bondState,jdbcType=BIT},
+        payment_time = #{paymentTime,jdbcType=VARCHAR},
+        return_time = #{returnTime,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        sign_type = #{signType,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+    where sign_id = #{signId,jdbcType=BIGINT}
+  </update>
+</mapper>

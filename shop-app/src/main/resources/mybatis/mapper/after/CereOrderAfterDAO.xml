@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.after.CereOrderAfterDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    <id column="after_id" jdbcType="BIGINT" property="afterId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="after_formid" jdbcType="VARCHAR" property="afterFormid" />
+    <result column="after_state" jdbcType="BIT" property="afterState" />
+    <result column="goods_state" jdbcType="BIT" property="goodsState" />
+    <result column="after_type" jdbcType="BIT" property="afterType" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="explain" jdbcType="VARCHAR" property="explain" />
+    <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    after_id, order_id, after_formid, after_state,goods_state, after_type, price,`explain`,return_reason, remark, reason,
+    image, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_order_after
+    where after_id = #{afterId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_order_after
+    where after_id = #{afterId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="after_id" keyProperty="afterId" parameterType="com.shop.cereshop.commons.domain.after.CereOrderAfter" useGeneratedKeys="true">
+    insert into cere_order_after
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="afterFormid != null and afterFormid!=''">
+        after_formid,
+      </if>
+      <if test="afterState != null">
+        after_state,
+      </if>
+      <if test="goodsState != null">
+        goods_state,
+      </if>
+      <if test="afterType != null">
+        after_type,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="explain != null and explain!=''">
+        `explain`,
+      </if>
+      <if test="returnReason != null and returnReason!=''">
+        return_reason,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="reason != null and reason!=''">
+        reason,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="afterFormid != null and afterFormid!=''">
+        #{afterFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="afterState != null">
+        #{afterState,jdbcType=BIT},
+      </if>
+      <if test="goodsState != null">
+        #{goodsState,jdbcType=BIT},
+      </if>
+      <if test="afterType != null">
+        #{afterType,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="explain != null and explain!=''">
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="returnReason != null and returnReason!=''">
+        #{returnReason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null and reason!=''">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    update cere_order_after
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="afterFormid != null and afterFormid!=''">
+        after_formid = #{afterFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="afterState != null">
+        after_state = #{afterState,jdbcType=BIT},
+      </if>
+      <if test="goodsState != null">
+        goods_state = #{goodsState,jdbcType=BIT},
+      </if>
+      <if test="afterType != null">
+        after_type = #{afterType,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="explain != null and explain!=''">
+        `explain` = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="returnReason != null and returnReason!=''">
+        return_reason = #{returnReason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null and reason!=''">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where after_id = #{afterId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    update cere_order_after
+    set order_id = #{orderId,jdbcType=BIGINT},
+      after_formid = #{afterFormid,jdbcType=VARCHAR},
+      after_state = #{afterState,jdbcType=BIT},
+      goods_state = #{goodsState,jdbcType=BIT},
+      after_type = #{afterType,jdbcType=BIT},
+      price = #{price,jdbcType=DECIMAL},
+      `explain` = #{explain,jdbcType=VARCHAR},
+      return_reason = #{returnReason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where after_id = #{afterId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getAll" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.after.Afters">
+    SELECT a.order_id,a.after_id,a.after_type,a.after_state,a.goods_state,
+    a.price,b.shop_id,c.shop_name,a.create_time,a.after_formid,c.shop_logo from cere_order_after a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN cere_platform_shop c ON b.shop_id=c.shop_id
+    where b.buyer_user_id=#{buyerUserId}
+    <if test='state==1'>
+      and a.after_state in (1,2,3,5,6,7,10)
+    </if>
+    <if test='state==2'>
+      and a.after_state in (4,8,9)
+    </if>
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.after.AfterDetail">
+    SELECT a.after_id,a.order_id,a.after_type,a.after_state,a.goods_state,a.reason,return_reason,
+    a.price,after_formid,a.create_time,c.return_person,c.return_phone,c.return_adress
+    ,d.shop_name,d.shop_phone,b.order_formid,b.payment_mode,b.payment_time,b.receive_time,
+    e.transaction_id,b.state orderState,a.`explain`,a.image, ad.express, ad.deliver_formid,
+    ad.reason as deliver_reason from cere_order_after a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN cere_shop_return c ON b.shop_id=c.shop_id
+    LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+    LEFT JOIN cere_after_dilever ad on ad.after_id = a.after_id
+    LEFT JOIN cere_pay_log e ON b.order_formid=e.order_formid and e.state = '退款'
+    where a.after_id=#{afterId}
+  </select>
+
+  <select id="findHistories" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.after.AfterHistory">
+    SELECT operation_describtion title,a.create_time time,
+    IF(a.operation='客户端操作',IF(d.wechat_name IS NULL,d.`name`,d.wechat_name),
+    IF(a.operation='商家端操作',c.`name`,b.`name`)) `name`,e.image
+    from cere_platform_log a
+    LEFT JOIN cere_platform_user b ON a.platform_user_id=b.platform_user_id
+    LEFT JOIN cere_platform_business c ON a.platform_user_id=c.business_user_id
+    LEFT JOIN cere_buyer_user d ON a.platform_user_id=d.buyer_user_id
+    LEFT JOIN (SELECT b.after_id,a.image from cere_platform_after a,cere_order_after b
+    where a.order_id=b.order_id and b.after_id=#{afterId}) e ON a.only=e.after_id and a.operation_describtion='申请平台介入'
+    where a.module='售后管理' and
+    only=#{afterId}
+    ORDER BY a.create_time DESC
+  </select>
+
+  <select id="checkState" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    SELECT after_id FROM cere_order_after where after_id=#{afterId} and after_state=#{state}
+    <if test="afterType!=null">
+      and after_type=#{afterType}
+    </if>
+  </select>
+
+  <select id="checkStateStayAndNo" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    SELECT after_id FROM cere_order_after where after_id=#{afterId} and after_state in (1,6)
+  </select>
+
+  <select id="checkStateStayAndNoAndType" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+    SELECT after_id FROM cere_order_after where after_id=#{afterId} and (after_state in (1,6)
+    OR (after_type=2 and after_state=10) )
+  </select>
+
+  <select id="getPostSaleNumByMonth" resultType="java.lang.Integer">
+    select count(after_id) from cere_order_after a
+    join cere_shop_order b on a.order_id = b.order_id
+    and b.buyer_user_id = #{buyerUserId}
+    and a.create_time > #{time}
+  </select>
+
+  <select id="findAfterCount" resultType="java.lang.Integer">
+    select count(*) from cere_shop_order a join cere_order_after b on a.order_id = b.order_id
+    where a.buyer_user_id = #{buyerUserId}
+  </select>
+</mapper>

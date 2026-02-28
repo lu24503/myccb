@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.order.CereOrderProductAttributeDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.order.CereOrderProductAttribute">
+    <result column="order_product_id" jdbcType="BIGINT" property="orderProductId" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+    <result column="sku_value" jdbcType="VARCHAR" property="skuValue" />
+    <result column="name_code" jdbcType="VARCHAR" property="nameCode" />
+    <result column="value_code" jdbcType="VARCHAR" property="valueCode" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.order.CereOrderProductAttribute">
+    insert into cere_order_product_attribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderProductId != null">
+        order_product_id,
+      </if>
+      <if test="skuName != null">
+        sku_name,
+      </if>
+      <if test="skuValue != null">
+        sku_value,
+      </if>
+      <if test="nameCode != null">
+        name_code,
+      </if>
+      <if test="valueCode != null">
+        value_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderProductId != null">
+        #{orderProductId,jdbcType=BIGINT},
+      </if>
+      <if test="skuName != null">
+        #{skuName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuValue != null">
+        #{skuValue,jdbcType=VARCHAR},
+      </if>
+      <if test="nameCode != null">
+        #{nameCode,jdbcType=VARCHAR},
+      </if>
+      <if test="valueCode != null">
+        #{valueCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.order.CereOrderProductAttribute">
+    SELECT sku_name,sku_value,name_code,value_code FROM cere_sku_name where sku_id=#{skuId}
+  </select>
+
+  <select id="findBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.order.OrderProductAttribute">
+    SELECT sku_name,sku_value,name_code,value_code,sku_id FROM cere_sku_name where sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_order_product_attribute (order_product_id, sku_name, sku_value,name_code,value_code) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.orderProductId},
+      #{item.skuName},
+      #{item.skuValue},
+      #{item.nameCode},
+      #{item.valueCode}
+      )
+    </foreach>
+  </insert>
+</mapper>

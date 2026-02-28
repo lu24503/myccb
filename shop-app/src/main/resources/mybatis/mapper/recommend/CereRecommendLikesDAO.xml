@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.recommend.CereRecommendLikesDAO">
+    <select id="getLikes" resultType="com.shop.cereshop.commons.domain.recommend.CereRecommendLikes">
+        select *
+        from cere_recommend_likes
+        where user_id = #{userId}
+        and recommend_id = #{recommendId}
+    </select>
+
+    <insert id="saveLikes" parameterType="com.shop.cereshop.commons.domain.recommend.CereRecommendLikes">
+        insert into cere_recommend_likes
+        (user_id, recommend_id, create_time)
+        values
+        (#{userId}, #{recommendId}, now())
+    </insert>
+
+    <delete id="deleteLikes" parameterType="com.shop.cereshop.commons.domain.recommend.CereRecommendLikes">
+        delete from cere_recommend_likes
+        where user_id = #{userId}
+        and recommend_id = #{recommendId}
+    </delete>
+</mapper>

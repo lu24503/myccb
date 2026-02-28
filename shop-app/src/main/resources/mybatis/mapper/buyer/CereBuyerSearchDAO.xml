@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerSearchDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch">
+    <id column="search_id" jdbcType="BIGINT" property="searchId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="search" jdbcType="VARCHAR" property="search" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    search_id, buyer_user_id, `search`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_search
+    where search_id = #{searchId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_search
+    where search_id = #{searchId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="search_id" keyProperty="searchId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch" useGeneratedKeys="true">
+    insert into cere_buyer_search
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="search != null">
+        `search`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="search != null">
+        #{search,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch">
+    update cere_buyer_search
+    <set>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="search != null">
+        `search` = #{search,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where search_id = #{searchId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch">
+    update cere_buyer_search
+    set buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      `search` = #{search,jdbcType=VARCHAR}
+    where search_id = #{searchId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_search SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <select id="getHistory" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch">
+    SELECT * FROM cere_buyer_search where buyer_user_id=#{buyerUserId}
+    order by search_id desc
+    limit 10
+  </select>
+
+  <select id="findBySearch" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerSearch">
+    SELECT * FROM cere_buyer_search where buyer_user_id=#{buyerUserId} and `search`=#{search}
+  </select>
+
+  <select id="selectHotSearch" resultType="java.lang.String">
+    select search from cere_buyer_search group by search
+    order by count(search) desc
+    limit 10
+  </select>
+</mapper>

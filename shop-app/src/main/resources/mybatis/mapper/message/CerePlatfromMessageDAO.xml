@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.message.CerePlatfromMessageDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    <id column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="message_project" jdbcType="VARCHAR" property="messageProject" />
+    <result column="message_template" jdbcType="VARCHAR" property="messageTemplate" />
+    <result column="template_code" jdbcType="VARCHAR" property="templateCode" />
+    <result column="template_sign" jdbcType="VARCHAR" property="templateSign" />
+    <result column="template_describe" jdbcType="VARCHAR" property="templateDescribe" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    message_id, message_project, message_template, template_code, template_sign, template_describe,
+    `state`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platfrom_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platfrom_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="message_id" keyProperty="messageId" parameterType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage" useGeneratedKeys="true">
+    insert into cere_platfrom_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageProject != null and messageProject!=''">
+        message_project,
+      </if>
+      <if test="messageTemplate != null and messageTemplate!=''">
+        message_template,
+      </if>
+      <if test="templateCode != null and templateCode!=''">
+        template_code,
+      </if>
+      <if test="templateSign != null and templateSign!=''">
+        template_sign,
+      </if>
+      <if test="templateDescribe != null and templateDescribe!=''">
+        template_describe,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageProject != null and messageProject!=''">
+        #{messageProject,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTemplate != null and messageTemplate!=''">
+        #{messageTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null and templateCode!=''">
+        #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateSign != null and templateSign!=''">
+        #{templateSign,jdbcType=VARCHAR},
+      </if>
+      <if test="templateDescribe != null and templateDescribe!=''">
+        #{templateDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    update cere_platfrom_message
+    <set>
+      <if test="messageProject != null and messageProject!=''">
+        message_project = #{messageProject,jdbcType=VARCHAR},
+      </if>
+      <if test="messageTemplate != null and messageTemplate!=''">
+        message_template = #{messageTemplate,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null and templateCode!=''">
+        template_code = #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateSign != null and templateSign!=''">
+        template_sign = #{templateSign,jdbcType=VARCHAR},
+      </if>
+      <if test="templateDescribe != null and templateDescribe!=''">
+        template_describe = #{templateDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    update cere_platfrom_message
+    set message_project = #{messageProject,jdbcType=VARCHAR},
+      message_template = #{messageTemplate,jdbcType=VARCHAR},
+      template_code = #{templateCode,jdbcType=VARCHAR},
+      template_sign = #{templateSign,jdbcType=VARCHAR},
+      template_describe = #{templateDescribe,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    SELECT message_id, message_project, message_template, template_code, template_sign, template_describe
+    FROM cere_platfrom_message where message_id=#{messageId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.app.param.message.MessageGetAllParam" resultType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    SELECT message_id, message_project, message_template, template_code, template_sign, template_describe,create_time
+    FROM cere_platfrom_message
+    where 1=1
+    <if test="messageProject!=null and messageProject!=''">
+      and message_project like concat('%',#{messageProject},'%')
+    </if>
+    <if test="messageTemplate!=null and messageTemplate!=''">
+      and message_template like concat('%',#{messageTemplate},'%')
+    </if>
+    <if test="templateCode!=null and templateCode!=''">
+      and template_code like concat('%',#{templateCode},'%')
+    </if>
+    <if test="templateSign!=null and templateSign!=''">
+      and template_sign like concat('%',#{templateSign},'%')
+    </if>
+  </select>
+</mapper>

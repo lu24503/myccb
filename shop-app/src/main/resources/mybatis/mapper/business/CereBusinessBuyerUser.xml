@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.business.CereBusinessBuyerUserDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.business.CereBusinessBuyerUser">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertOrUpdate" parameterType="com.shop.cereshop.commons.domain.business.CereBusinessBuyerUser">
+    insert into cere_business_buyer_user (shop_id, buyer_user_id, create_time)
+    values (#{shopId,jdbcType=BIGINT}, #{buyerUserId,jdbcType=BIGINT}, #{createTime,jdbcType=VARCHAR})
+    ON DUPLICATE KEY UPDATE shop_id = #{shopId,jdbcType=BIGINT}
+  </insert>
+  <update id="refreshUpdateTime">
+    update cere_business_buyer_user
+    set update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=BIGINT} and buyer_user_id = #{buyerUserId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectBuyerUserByShopId" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    select a.buyer_user_id, b.member_level_id, b.birthday from cere_business_buyer_user a
+    join cere_buyer_user b on b.buyer_user_id = a.buyer_user_id
+    where a.shop_id = #{shopId} and b.state = 1
+  </select>
+</mapper>

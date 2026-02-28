@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.collect.CereBuyerCollectDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.collect.CereBuyerCollect">
+    <id column="collect_id" jdbcType="BIGINT" property="collectId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="collect_type" jdbcType="BIT" property="collectType" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="selected" jdbcType="BIT" property="selected" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collect_id, buyer_user_id, collect_type, product_id, shop_id, `state`,selected, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_collect
+    where collect_id = #{collectId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_collect
+    where collect_id = #{collectId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="collect_id" keyProperty="collectId" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerCollect" useGeneratedKeys="true">
+    insert into cere_buyer_collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="collectType != null">
+        collect_type,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="selected != null">
+        selected,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="collectType != null">
+        #{collectType,jdbcType=BIT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="selected != null">
+        #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerCollect">
+    update cere_buyer_collect
+    <set>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="collectType != null">
+        collect_type = #{collectType,jdbcType=BIT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="selected != null">
+        selected = #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collect_id = #{collectId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerCollect">
+    update cere_buyer_collect
+    set buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      collect_type = #{collectType,jdbcType=BIT},
+      product_id = #{productId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      `state` = #{state,jdbcType=BIT},
+      selected = #{selected,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where collect_id = #{collectId,jdbcType=BIGINT}
+  </update>
+
+  <update id="cancel" parameterType="java.lang.Object" >
+    UPDATE cere_buyer_collect SET state=0,update_time=#{time} where collect_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <update id="newCancel">
+    UPDATE cere_buyer_collect SET state=0,update_time=#{time} where shop_id = #{shopId} and buyer_user_id=#{buyerUserId}
+  </update>
+
+  <select id="findByUserProduct" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.collect.CereBuyerCollect">
+    SELECT collect_id,state FROM cere_buyer_collect where buyer_user_id=#{buyerUserId} and product_id=#{productId}
+  </select>
+
+  <select id="findByUserShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.collect.CereBuyerCollect">
+    SELECT collect_id,state FROM cere_buyer_collect where buyer_user_id=#{buyerUserId} and shop_id=#{shopId}
+  </select>
+
+  <select id="getAllProduct" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.collect.CollectProduct">
+    SELECT a.collect_id,a.product_id,d.product_image image,b.product_name,b.shelve_state,
+    c.price,c.original_price,c.sku_id,b.shop_id,a.selected,
+    0 as activityType
+    FROM cere_buyer_collect a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.price,b.product_id,a.original_price,a.sku_id from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_image,b.product_id from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON b.product_id=d.product_id
+    where a.buyer_user_id=#{buyerUserId} and a.collect_type=1 and state=1
+    <if test="search!=null and search!=''">
+      and b.product_name like concat('%',#{search},'%')
+    </if>
+    order by a.create_time desc
+  </select>
+
+  <select id="getAllShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.collect.CollectShop">
+    SELECT a.collect_id,a.shop_id,b.shop_name,b.shop_logo,c.person,a.selected from cere_buyer_collect a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    LEFT JOIN (SELECT COUNT(*) person,shop_id FROM cere_buyer_collect where collect_type=2 GROUP BY shop_id) c ON a.shop_id=c.shop_id
+    where a.buyer_user_id=#{buyerUserId} and a.collect_type=2 and a.state=1
+    <if test="search!=null and search!=''">
+      and b.shop_name like concat('%',#{search},'%')
+    </if>
+  </select>
+
+  <select id="findShopCollectCount" resultType="java.lang.Integer">
+    select ifnull(count(*),0) from cere_buyer_collect
+    where shop_id = #{shopId} and collect_type = 2 and state = 1
+  </select>
+
+  <update id="updateSelected" parameterType="java.util.List">
+    UPDATE cere_buyer_collect SET selected=1 where collect_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.util.List">
+    DELETE FROM cere_buyer_collect where collect_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_collect SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

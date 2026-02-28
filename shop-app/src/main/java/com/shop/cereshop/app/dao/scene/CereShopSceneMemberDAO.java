@@ -1,0 +1,19 @@
+/*
+ * Copyright (C) 2017-2021
+ * All rights reserved, Designed By 深圳中科鑫智科技有限公司
+ * Copyright authorization contact 18814114118
+ */
+package com.shop.cereshop.app.dao.scene;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.shop.cereshop.commons.domain.scene.CereShopSceneMember;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
+public interface CereShopSceneMemberDAO extends BaseMapper<CereShopSceneMember> {
+
+    int insertSelective(CereShopSceneMember record);
+
+    CereShopSceneMember selectSceneMemberList(@Param("sceneId") Long sceneId, @Param("memberLevelId") Long memberLevelId);
+}

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.coupon.CereShopCouponDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopCoupon">
+    <id column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="coupon_type" jdbcType="BIT" property="couponType" />
+    <result column="apply_type" jdbcType="BIT" property="applyType" />
+    <result column="threshold" jdbcType="DECIMAL" property="threshold" />
+    <result column="coupon_content" jdbcType="DECIMAL" property="couponContent" />
+    <result column="time_type" jdbcType="BIT" property="timeType" />
+    <result column="effective_start" jdbcType="VARCHAR" property="effectiveStart" />
+    <result column="effective_end" jdbcType="VARCHAR" property="effectiveEnd" />
+    <result column="effective_day" jdbcType="INTEGER" property="effectiveDay" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber" />
+    <result column="receive_type" jdbcType="BIT" property="receiveType" />
+    <result column="frequency" jdbcType="INTEGER" property="frequency" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_add" jdbcType="BIT" property="ifAdd" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_coupon_id, shop_id, coupon_name, remark, coupon_type, apply_type, threshold,
+    coupon_content, time_type, effective_start, effective_end, effective_day, `number`, stock_number,
+    receive_type, frequency, `state`,if_add, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_coupon
+    where shop_coupon_id = #{shopCouponId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_coupon
+    where shop_coupon_id = #{shopCouponId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="shop_coupon_id" keyProperty="shopCouponId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCoupon" useGeneratedKeys="true">
+    insert into cere_shop_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="couponType != null">
+        coupon_type,
+      </if>
+      <if test="applyType != null">
+        apply_type,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="couponContent != null">
+        coupon_content,
+      </if>
+      <if test="timeType != null">
+        time_type,
+      </if>
+      <if test="effectiveStart != null">
+        effective_start,
+      </if>
+      <if test="effectiveEnd != null">
+        effective_end,
+      </if>
+      <if test="effectiveDay != null">
+        effective_day,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="stockNumber != null">
+        stock_number,
+      </if>
+      <if test="receiveType != null">
+        receive_type,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifAdd != null">
+        if_add,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        #{couponType,jdbcType=BIT},
+      </if>
+      <if test="applyType != null">
+        #{applyType,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="couponContent != null">
+        #{couponContent,jdbcType=DECIMAL},
+      </if>
+      <if test="timeType != null">
+        #{timeType,jdbcType=BIT},
+      </if>
+      <if test="effectiveStart != null">
+        #{effectiveStart,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveEnd != null">
+        #{effectiveEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDay != null">
+        #{effectiveDay,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="stockNumber != null">
+        #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveType != null">
+        #{receiveType,jdbcType=BIT},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifAdd != null">
+        #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCoupon">
+    update cere_shop_coupon
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null">
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        coupon_type = #{couponType,jdbcType=BIT},
+      </if>
+      <if test="applyType != null">
+        apply_type = #{applyType,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        threshold = #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="couponContent != null">
+        coupon_content = #{couponContent,jdbcType=DECIMAL},
+      </if>
+      <if test="timeType != null">
+        time_type = #{timeType,jdbcType=BIT},
+      </if>
+      <if test="effectiveStart != null">
+        effective_start = #{effectiveStart,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveEnd != null">
+        effective_end = #{effectiveEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDay != null">
+        effective_day = #{effectiveDay,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="stockNumber != null">
+        stock_number = #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="receiveType != null">
+        receive_type = #{receiveType,jdbcType=BIT},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="ifAdd != null">
+        if_add = #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_coupon_id = #{shopCouponId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCoupon">
+    update cere_shop_coupon
+    set shop_id = #{shopId,jdbcType=BIGINT},
+    coupon_name = #{couponName,jdbcType=VARCHAR},
+    remark = #{remark,jdbcType=VARCHAR},
+    coupon_type = #{couponType,jdbcType=BIT},
+    apply_type = #{applyType,jdbcType=BIT},
+    threshold = #{threshold,jdbcType=DECIMAL},
+    coupon_content = #{couponContent,jdbcType=DECIMAL},
+    time_type = #{timeType,jdbcType=BIT},
+    effective_start = #{effectiveStart,jdbcType=VARCHAR},
+    effective_end = #{effectiveEnd,jdbcType=VARCHAR},
+    effective_day = #{effectiveDay,jdbcType=INTEGER},
+    `number` = #{number,jdbcType=INTEGER},
+    stock_number = #{stockNumber,jdbcType=INTEGER},
+    receive_type = #{receiveType,jdbcType=BIT},
+    frequency = #{frequency,jdbcType=INTEGER},
+    `state` = #{state,jdbcType=BIT},
+    if_add = #{ifAdd,jdbcType=BIT},
+    create_time = #{createTime,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_coupon_id = #{shopCouponId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findProductCanUseCoupon" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    select a.shop_coupon_id, a.threshold fullMoney, a.coupon_content reduceMoney, a.coupon_type, a.frequency,
+    3 as state, a.effective_start startTime, a.effective_end endTime, a.coupon_name activityName, a.stock_number
+    from cere_shop_coupon a where a.shop_id = #{shopId} and state = 1 and apply_type = 1 and stock_number > 0 and a.type = 1
+    union all
+    select a.shop_coupon_id, a.threshold fullMoney, a.coupon_content reduceMoney, a.coupon_type, a.frequency,
+    3 as state, a.effective_start startTime, a.effective_end endTime, a.coupon_name activityName, a.stock_number
+    from cere_shop_coupon a join cere_shop_coupon_detail b on b.shop_coupon_id = a.shop_coupon_id and b.product_id = #{productId}
+    where a.shop_id = #{shopId} and state = 1 and apply_type in (2, 3) and stock_number > 0 and a.type = 1
+  </select>
+
+  <select id="getShopCoupons" parameterType="com.shop.cereshop.app.param.canvas.CanvasCouponParam" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT shop_coupon_id,coupon_name,coupon_type,threshold,coupon_content,effective_start startTime,
+    effective_end endTime, 3 as state FROM cere_shop_coupon where shop_id = #{shopId} and state = 1 and stock_number > 0
+    <if test="search!=null and search!=''">
+      and coupon_name like concat('%',#{search},'%')
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and shop_coupon_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+
+  <select id="getShopCouponsByUserId" parameterType="com.shop.cereshop.app.param.canvas.CanvasCouponParam" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT a.shop_coupon_id,coupon_name,coupon_type,threshold,coupon_content,effective_start as startTime,
+    IF(c.count IS NULL,0,c.count) count,
+    effective_end as endTime,a.frequency,3 as state,a.stock_number FROM cere_shop_coupon a
+    LEFT JOIN (SELECT COUNT(buyer_user_id) count,shop_coupon_id FROM cere_buyer_shop_coupon where buyer_user_id=#{buyerUserId} GROUP BY shop_coupon_id) c
+    ON a.shop_coupon_id=c.shop_coupon_id
+    where a.shop_id=#{shopId} and a.state=1
+    <if test="search!=null and search!=''">
+      and a.coupon_name like concat('%',#{search},'%')
+    </if>
+    <if test="ids!=null and ids.size()>0">
+      and a.shop_coupon_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+  <select id="findOnGoingCouponByBatchId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_coupon
+    where shop_coupon_id in
+    <foreach collection="list" item="couponId" open="(" separator="," close=")">
+      #{couponId}
+    </foreach>
+    and state = 1
+    and stock_number > 0
+  </select>
+  <select id="selectCanTakeCouponUser" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerUser">
+    select t.buyer_user_id, c.member_level_id, c.birthday, t.shop_coupon_id, bsc.buyer_user_id buid, bsc.shop_coupon_id bscid,
+    count(bsc.buyer_user_id) as tc, sum(if(bsc.create_time >= date(now()), 1, 0)) as ec
+    from (select buyer_user_id, shop_coupon_id from cere_business_buyer_user a, cere_shop_coupon b
+    where a.shop_id = #{shopId} and b.shop_id = #{shopId} and b.shop_coupon_id = #{couponId} and b.state = 1 and b.stock_number > 0
+    ) t
+    join cere_buyer_user c on c.buyer_user_id = t.buyer_user_id and c.state = 1
+    left join cere_buyer_shop_coupon bsc on bsc.buyer_user_id = t.buyer_user_id and bsc.shop_coupon_id = t.shop_coupon_id
+    group by t.buyer_user_id, t.shop_coupon_id
+    having
+    <if test="receiveType != null and receiveType == 2">
+      tc <![CDATA[ < ]]> #{frequency} and
+    </if>
+    ec = 0
+  </select>
+</mapper>

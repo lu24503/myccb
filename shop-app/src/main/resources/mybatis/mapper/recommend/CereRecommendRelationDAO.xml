@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.recommend.CereRecommendRelationDAO">
+    <select id="getRecommendProducts" resultType="com.shop.cereshop.app.page.product.RecommendProduct">
+        select csp.*, cpi.product_image as images, concat('￥', MIN(cps.price), '~￥', MAX(cps.price)) `section`,cps.sku_id
+        from cere_recommend_relation as crr
+                 inner join cere_shop_product as csp on crr.product_id = csp.product_id
+                 inner join cere_product_image as cpi on csp.product_id = cpi.product_id
+                 inner join cere_product_sku AS cps on crr.product_id = cps.product_id
+        where crr.recommend_id = #{recommendId}
+        group by crr.product_id
+    </select>
+</mapper>

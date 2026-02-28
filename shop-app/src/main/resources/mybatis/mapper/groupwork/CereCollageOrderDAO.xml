@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.groupwork.CereCollageOrderDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.collage.CereCollageOrder">
+    <id column="collage_id" jdbcType="BIGINT" property="collageId" />
+    <result column="shop_group_work_id" jdbcType="BIGINT" property="shopGroupWorkId" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="collage_name" jdbcType="VARCHAR" property="collageName" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="surplus_number" jdbcType="INTEGER" property="surplusNumber" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    collage_id, shop_group_work_id, `state`, collage_name, buyer_user_id, surplus_number,
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_collage_order
+    where collage_id = #{collageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_collage_order
+    where collage_id = #{collageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="collage_id" keyProperty="collageId" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrder" useGeneratedKeys="true">
+    insert into cere_collage_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopGroupWorkId != null">
+        shop_group_work_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="collageName != null">
+        collage_name,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="surplusNumber != null">
+        surplus_number,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopGroupWorkId != null">
+        #{shopGroupWorkId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="collageName != null">
+        #{collageName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="surplusNumber != null">
+        #{surplusNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrder">
+    update cere_collage_order
+    <set>
+      <if test="shopGroupWorkId != null">
+        shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="collageName != null">
+        collage_name = #{collageName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="surplusNumber != null">
+        surplus_number = #{surplusNumber,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where collage_id = #{collageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrder">
+    update cere_collage_order
+    set shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT},
+      `state` = #{state,jdbcType=BIT},
+      collage_name = #{collageName,jdbcType=VARCHAR},
+      buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      surplus_number = #{surplusNumber,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where collage_id = #{collageId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findCollageOrders" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.collage.CollageOrder">
+    SELECT a.collage_id,IF(d.wechat_name is NULL,d.`name`,d.wechat_name) `name`,
+    d.head_image,a.create_time FROM cere_collage_order a
+    LEFT JOIN (SELECT collage_id,order_id FROM cere_collage_order_detail GROUP BY collage_id) b ON a.collage_id=b.collage_id
+    LEFT JOIN cere_shop_order c ON b.order_id=c.order_id
+    LEFT JOIN cere_buyer_user d ON c.buyer_user_id=d.buyer_user_id
+    LEFT JOIN cere_order_product e ON c.order_id=e.order_id
+    where a.shop_group_work_id=#{shopGroupWorkId} and a.state=0 and c.payment_state=1
+    and e.product_id=#{productId}
+    <if test="buyerUserId!=null">
+      and a.buyer_user_id <![CDATA[!= ]]>#{buyerUserId}
+    </if>
+  </select>
+
+  <select id="findSpelled" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_collage_order_detail a,cere_shop_order b
+    where a.collage_id=#{collageId} and b.payment_state=1 and a.order_id=b.order_id
+  </select>
+
+  <select id="findSurplusNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT surplus_number from cere_collage_order where collage_id=#{collageId}
+  </select>
+
+  <select id="findByOrder" parameterType="com.shop.cereshop.commons.domain.order.CereShopOrder" resultType="com.shop.cereshop.commons.domain.collage.CereCollageOrder">
+    SELECT a.* FROM cere_collage_order a
+    LEFT JOIN cere_collage_order_detail b ON a.collage_id=b.collage_id
+    where a.shop_group_work_id=#{shopGroupWorkId} and b.order_id=#{orderId}
+  </select>
+
+  <select id="findNotPayCollageOrderIds" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT a.order_id FROM cere_shop_order a
+    LEFT JOIN cere_collage_order_detail b ON a.order_id=b.order_id
+    where b.collage_id=#{collageId} and a.order_id<![CDATA[!= ]]>#{orderId} and a.payment_state=0
+  </select>
+
+  <select id="findPayCollageOrderIds" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+    SELECT a.* FROM cere_shop_order a
+    LEFT JOIN cere_collage_order_detail b ON a.order_id=b.order_id
+    where b.collage_id=#{collageId} and a.order_id<![CDATA[!= ]]>#{orderId} and a.payment_state=1
+  </select>
+
+  <select id="findOrderIds" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT order_id from cere_collage_order_detail where collage_id=#{collageId}
+  </select>
+
+  <select id="findDetail" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.order.CollageDetail">
+    SELECT a.collage_id,a.`state`,a.surplus_number people,a.create_time,c.person,c.effective_time FROM cere_collage_order a
+    LEFT JOIN cere_collage_order_detail b ON a.collage_id=b.collage_id
+    LEFT JOIN cere_shop_group_work c ON a.shop_group_work_id=c.shop_group_work_id
+    where a.shop_group_work_id=#{shopGroupWorkId} and b.order_id=#{orderId}
+  </select>
+
+  <select id="findPersons" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.order.CollagePerson">
+    SELECT IF(c.wechat_name IS NULL,c.`name`,c.wechat_name) `name`,c.head_image FROM cere_collage_order_detail a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN cere_buyer_user c ON b.buyer_user_id=c.buyer_user_id
+    where b.payment_state=1 and a.collage_id=#{collageId}
+  </select>
+
+  <select id="findByUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.collage.CereCollageOrder">
+    SELECT a.* FROM cere_collage_order a
+    LEFT JOIN cere_collage_order_detail b ON a.collage_id=b.collage_id
+    LEFT JOIN cere_shop_order c ON b.order_id=c.order_id
+    where a.buyer_user_id=#{buyerUserId} and c.order_id=#{orderId}
+  </select>
+
+  <select id="findRecentCollageOrderGoing" resultType="com.shop.cereshop.app.page.product.BroadCastDTO">
+    select distinct a.buyer_user_id, d.name, d.head_image, 2 as type, a.create_time as time from cere_shop_order a
+    join cere_collage_order b on b.shop_group_work_id = a.shop_group_work_id
+    join cere_order_product c on c.order_id = a.order_id and c.product_id = #{productId}
+    join cere_buyer_user d on d.buyer_user_id = a.buyer_user_id
+    and a.buyer_user_id = b.buyer_user_id
+    where a.create_time > #{oneHourAgo} and a.shop_group_work_id = #{shopGroupWorkId} and b.surplus_number > 0
+    limit 10
+  </select>
+
+  <select id="findRecentCollageOrderDone" resultType="com.shop.cereshop.app.page.product.BroadCastDTO">
+    select distinct a.buyer_user_id, d.name, d.head_image, 3 as type, a.create_time as time from cere_shop_order a
+    join cere_collage_order b on b.shop_group_work_id = a.shop_group_work_id
+    join cere_order_product c on c.order_id = a.order_id and c.product_id = #{productId}
+    join cere_buyer_user d on d.buyer_user_id = a.buyer_user_id
+    and a.buyer_user_id = b.buyer_user_id
+    where a.create_time > #{oneHourAgo} and a.shop_group_work_id = #{shopGroupWorkId} and b.surplus_number = 0
+    limit 10
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_collage_order SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

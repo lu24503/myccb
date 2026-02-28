@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.after.CereAfterDileverDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.after.CereAfterDilever">
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="after_id" jdbcType="BIGINT" property="afterId" />
+    <result column="express" jdbcType="BIGINT" property="express" />
+    <result column="deliver_formid" jdbcType="VARCHAR" property="deliverFormid" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.after.CereAfterDilever">
+    insert into cere_after_dilever
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="afterId != null">
+        after_id,
+      </if>
+      <if test="express != null">
+        express,
+      </if>
+      <if test="deliverFormid != null and deliverFormid!=''">
+        deliver_formid,
+      </if>
+      <if test="reason != null and reason!=''">
+        reason,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="afterId != null">
+        #{afterId,jdbcType=BIGINT},
+      </if>
+      <if test="express != null">
+        #{express,jdbcType=BIGINT},
+      </if>
+      <if test="deliverFormid != null and deliverFormid!=''">
+        #{deliverFormid,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null and reason!=''">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

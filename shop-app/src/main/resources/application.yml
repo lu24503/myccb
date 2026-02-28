@@ -1,0 +1,76 @@
+
+server:
+  port: 9007
+  servlet:
+    context-path: /api
+  # THYMELEAF 网页静态化配置
+  thymeleaf:
+    # 是否启用模板缓存
+    cache: false
+    # 应用于模板的模板模式，参考TemplateMode 枚举
+    mode: HTML5
+    # 模板文件编码
+    encoding: UTF-8
+    # 构建URL时预先查看视图名称的前缀
+    prefix: classpath:/templates/
+    # 在构建URL时附加到视图名称的后缀
+    suffix: .html
+    # 文件解析格式
+    content-type: text/html
+  resources: # 指定静态资源的路径
+    static-locations: classpath:/static/,classpath:/templates/
+  # 默认值为 classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+  static-path-pattern: /**
+  address: 0.0.0.0
+
+spring:
+  # 开发环境|dev正式环境prod
+  profiles:
+    active: app-dev,security
+  # jackson
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+
+# Mybatis-plus
+mybatis-plus:
+  mapper-locations: mybatis/mapper/*/*.xml
+  type-aliases-package: com.shop.cereshop.commons.domain
+  configuration.map-underscore-to-camel-case: true
+
+#快递100配置
+kd100:
+  key: sxx
+  customer: xx
+  queryUrl: https://poll.kuaidi100.com/poll/query.do
+
+#快递鸟配置
+kdNiao:
+  eBusinessID: xx
+  appKey: xxx
+  queryUrl: http://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx
+  getCodeUrl: https://api.kdniao.com/Ebusiness/EbusinessOrderHandle.aspx
+
+#商品缓存时间，单位：毫秒
+productCacheTime: 300000
+
+#密码加密传输，前端公钥加密，后端私钥解密
+rsa:
+  private_key: XXXX
+
+#用户默认头像地址
+defaultHeadImg: https://zk-cereshop.oss-cn-shenzhen.aliyuncs.com/zkthink/2022-01-11/6a05d44b9e0947a2add5a37c94953750_default_head_img.png
+
+#scrm埋点上报链接
+scrmTrackReportUrl: https://127.0.0.1/stage-api/wecom/clue-user/add
+
+#查询sku实时信息表
+querySkuRealInfo: false
+
+#刷新sku实时信息的校验码verifyCode
+verifyCode:

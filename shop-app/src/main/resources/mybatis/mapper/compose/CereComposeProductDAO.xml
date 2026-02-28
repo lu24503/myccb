@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.compose.CereComposeProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereComposeProduct">
+    <result column="compose_id" jdbcType="BIGINT" property="composeId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereComposeProduct">
+    insert into cere_compose_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="composeId != null">
+        compose_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="composeId != null">
+        #{composeId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByComposeId" resultType="java.lang.Long">
+    select product_id
+    from cere_compose_product
+    where compose_id = #{composeId}
+  </select>
+
+  <select id="selectComposeIdListByProductId" resultMap="BaseResultMap">
+    select a.compose_id, b.product_id
+    from cere_shop_compose a
+    join cere_compose_product b on b.compose_id = a.compose_id
+    where a.state = 1
+    and a.start_time &lt; now() and a.end_time > now()
+    and b.product_id in
+    <foreach collection="list" item="productId" open="(" separator="," close=")">
+      #{productId}
+    </foreach>
+  </select>
+</mapper>

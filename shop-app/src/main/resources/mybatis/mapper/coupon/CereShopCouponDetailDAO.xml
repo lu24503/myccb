@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.coupon.CereShopCouponDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopCouponDetail">
+    <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopCouponDetail">
+    insert into cere_shop_coupon_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopCouponId != null">
+        shop_coupon_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopCouponId != null">
+        #{shopCouponId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

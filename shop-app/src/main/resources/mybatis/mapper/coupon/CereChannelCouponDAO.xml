@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.coupon.CereChannelCouponDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereChannelCoupon">
+        <result column="shop_coupon_id" jdbcType="BIGINT" property="shopCouponId"/>
+        <result column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_coupon_id, product_id, shop_id, create_time, update_time
+    </sql>
+
+    <select id="getChannelCouponDetail" resultType="com.shop.cereshop.app.param.coupon.ChannelCouponDetail">
+        select a.shop_id, a.shop_coupon_id, coupon_type, threshold as full_money, coupon_content as reduce_money,
+        effective_start as start_time, effective_end as end_time, a.stock_number,
+        c.product_id, d.sku_id, product_name, d.price as original_price, 3 as state
+        from cere_shop_coupon a join cere_channel_coupon b on b.shop_coupon_id = a.shop_coupon_id
+        join cere_shop_product c on b.product_id = c.product_id
+        join (select product_id, sku_id, price from cere_product_sku
+            where product_id = #{productId} order by price asc limit 1
+        ) d on d.product_id = c.product_id
+        where a.shop_id = #{shopId} and b.product_id = #{productId} and a.shop_coupon_id = #{shopCouponId}
+    </select>
+
+</mapper>

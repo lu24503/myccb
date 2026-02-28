@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.logistics.CereOrderLogisticsDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.logistics.CereOrderLogistics">
+    <id column="logistics_id" jdbcType="BIGINT" property="logisticsId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="logistics_name" jdbcType="VARCHAR" property="logisticsName" />
+    <result column="charge_type" jdbcType="BIT" property="chargeType" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    logistics_id,shop_id, logistics_name, charge_type, region, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_order_logistics
+    where logistics_id = #{logisticsId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="logistics_id" keyProperty="logisticsId" parameterType="com.shop.cereshop.commons.domain.logistics.CereOrderLogistics" useGeneratedKeys="true">
+    insert into cere_order_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="logisticsName != null and logisticsName!=''">
+        logistics_name,
+      </if>
+      <if test="chargeType != null">
+        charge_type,
+      </if>
+      <if test="region != null and region!=''">
+        region,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsName != null and logisticsName!=''">
+        #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null">
+        #{chargeType,jdbcType=BIT},
+      </if>
+      <if test="region != null and region!=''">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.logistics.CereOrderLogistics">
+    update cere_order_logistics
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsName != null and logisticsName!=''">
+        logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeType != null">
+        charge_type = #{chargeType,jdbcType=BIT},
+      </if>
+      <if test="region != null and region!=''">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where logistics_id = #{logisticsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.logistics.CereOrderLogistics">
+    update cere_order_logistics
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      logistics_name = #{logisticsName,jdbcType=VARCHAR},
+      charge_type = #{chargeType,jdbcType=BIT},
+      region = #{region,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where logistics_id = #{logisticsId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findLogistics" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.logistics.CereOrderLogistics">
+    SELECT * FROM cere_order_logistics where shop_id=#{shopId}
+  </select>
+
+  <select id="findCharges" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.logistics.CereLogisticsCharge">
+    SELECT * FROM cere_logistics_charge where logistics_id=#{logisticsId}
+  </select>
+</mapper>

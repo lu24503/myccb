@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.recommend.CereRecommendTrendsDAO">
+
+    <select id="trendPage" parameterType="com.shop.cereshop.app.param.recommend.RecommendTrendPageParam"
+            resultType="com.shop.cereshop.app.page.recommend.CereRecommendTrendPageVO">
+        select crt.*, ci.name, ci.avatar, if(crl.recommend_id is null, 0, 1) as likeStatus from cere_recommend_trends as crt
+        left join cere_business_shop as cbs on cbs.shop_id = crt.shop_id
+        left join
+		(select cpb.`name`,cps.shop_id, cpb.avatar from cere_platform_shop as cps
+		inner join cere_platform_business as cpb on cpb.phone = cps.charge_person_phone
+		) as ci on ci.shop_id = crt.shop_id 
+        left join (select * from cere_recommend_likes where user_id = #{userId}) as crl on crl.recommend_id = crt.recommend_id
+        where cbs.if_binding = 1 and crt.publish_status = 1
+        <if test="collectShopIds != null and collectShopIds.size > 0">
+            and crt.shop_id in
+            <foreach collection="collectShopIds" item="shopId" open="(" separator="," close=")">
+                #{shopId}
+            </foreach>
+        </if>
+        <if test="fileType != null and fileType != 0">
+            and crt.file_type = #{fileType}
+        </if>
+        <if test="recommendType != null and recommendType != 0">
+            and crt.recommend_type = #{recommendType}
+        </if>
+        <if test="shopId != null">
+            and crt.shop_id = #{shopId}
+        </if>
+        group by crt.recommend_id
+        order by crt.like_count desc
+    </select>
+    
+    <select id="getPlatformShop" resultType="com.shop.cereshop.app.page.recommend.BusinessShopInfo">
+        select cps.shop_id,cps.shop_name as name,cpb.avatar,
+        if(cbc.state is null, 0 , cbc.state) as isCollect
+        from cere_platform_business as cpb
+        inner join cere_platform_shop as cps on cpb.phone = cps.charge_person_phone
+        left join (select * from cere_buyer_collect where buyer_user_id = #{userId} and shop_id = #{shopId}) as cbc on cbc.shop_id = cps.shop_id
+        where cps.shop_id = #{shopId}
+    </select>
+
+    <select id="getTrendById" resultType="com.shop.cereshop.app.page.recommend.CereRecommendTrendDetailVO">
+        select * from cere_recommend_trends
+        where recommend_id = #{recommendId}
+    </select>
+
+    <update id="addCommentCount">
+        update cere_recommend_trends
+        set comment_count = comment_count + 1
+        where recommend_id = #{recommendId}
+    </update>
+
+    <update id="subCommentCount">
+        update cere_recommend_trends
+        set comment_count = comment_count - #{count}
+        where recommend_id = #{recommendId}
+    </update>
+
+    <update id="addLikesCount">
+        update cere_recommend_trends
+        set like_count = like_count + 1
+        where recommend_id = #{recommendId}
+    </update>
+
+    <update id="subLikesCount">
+        update cere_recommend_trends
+        set like_count = like_count - 1
+        where recommend_id = #{recommendId} and like_count > 0
+    </update>
+
+    <update id="addShareCount">
+        update cere_recommend_trends
+        set share_count = share_count + 1
+        where recommend_id = #{recommendId}
+    </update>
+</mapper>

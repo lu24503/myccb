@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereProductStatsByDayDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductStatsByDay">
+        <id column="create_date" jdbcType="VARCHAR" property="createDate" />
+        <id column="product_id" jdbcType="BIGINT" property="productId" />
+        <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+        <result column="add_cart_count" jdbcType="INTEGER" property="addCartCount" />
+        <result column="visit_count" jdbcType="DECIMAL" property="visitCount" />
+        <result column="sales_volume" jdbcType="DECIMAL" property="salesVolume" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        create_date, product_id, shop_id, add_cart_count, visit_count, sales_volume
+    </sql>
+    <insert id="insertOrUpdate">
+        insert into cere_product_stats_by_day
+        (
+            <include refid="Base_Column_List"/>
+        )
+        values
+        (
+            #{createDate}, #{productId}, #{shopId}, #{addCartCount}, #{visitCount}, #{salesVolume}
+        )
+        on duplicate key update shop_id = shop_id
+        <if test="addCartCount != null and addCartCount > 0">
+            , add_cart_count = add_cart_count + #{addCartCount}
+        </if>
+        <if test="visitCount != null and visitCount > 0">
+            , visit_count = visit_count + #{visitCount}
+        </if>
+        <if test="salesVolume != null and salesVolume > 0">
+            , sales_volume = sales_volume + #{salesVolume}
+        </if>
+    </insert>
+</mapper>

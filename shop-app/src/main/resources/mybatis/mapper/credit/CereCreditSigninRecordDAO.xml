@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.credit.CereCreditSigninRecordDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.credit.CereCreditSigninRecord">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+        <result column="term_id" jdbcType="INTEGER" property="termId"/>
+        <result column="continue_day" jdbcType="INTEGER" property="continueDay"/>
+        <result column="credit" jdbcType="INTEGER" property="credit"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,create_time,update_time,
+        buyer_user_id, term_id, continue_day, credit
+    </sql>
+
+    <select id="selectSigninRecordList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from cere_credit_signin_record
+        where buyer_user_id = #{buyerUserId}
+        order by create_time desc
+    </select>
+
+</mapper>

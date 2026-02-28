@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.cart.CereShopCartDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    <id column="cart_id" jdbcType="BIGINT" property="cartId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="SKU" jdbcType="VARCHAR" property="SKU" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="selected" jdbcType="INTEGER" property="selected" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cart_id, buyer_user_id, shop_id, product_id, sku_id, product_name, `number`, product_price,
+    image, SKU, weight, selected, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_cart
+    where cart_id = #{cartId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_cart
+    where cart_id = #{cartId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="cart_id" keyProperty="cartId" parameterType="com.shop.cereshop.commons.domain.cart.CereShopCart" useGeneratedKeys="true">
+    insert into cere_shop_cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="SKU != null and SKU!=''">
+        SKU,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="selected != null">
+        selected,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="SKU != null and SKU!=''">
+        #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="selected != null">
+        #{selected,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    update cere_shop_cart
+    <set>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        `number` = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="productPrice != null">
+        product_price = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null and image!=''">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="SKU != null and SKU!=''">
+        SKU = #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="selected != null">
+        selected = #{selected,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cart_id = #{cartId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    update cere_shop_cart
+    set buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      product_name = #{productName,jdbcType=VARCHAR},
+      `number` = #{number,jdbcType=INTEGER},
+      product_price = #{productPrice,jdbcType=DECIMAL},
+      image = #{image,jdbcType=VARCHAR},
+      SKU = #{SKU,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=DECIMAL},
+      selected = #{selected,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where cart_id = #{cartId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findShopCart" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    SELECT * FROM cere_shop_cart where buyer_user_id=#{buyerUserId} and sku_id=#{skuId}
+  </select>
+
+  <select id="findAttributes" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.cart.CereCartAttribute">
+    SELECT sku_name,sku_value,name_code,value_code from cere_sku_name where sku_id=#{skuId}
+  </select>
+
+  <select id="findCartByUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.ShopCart">
+    SELECT a.shop_id,b.shop_name,a.selected from cere_shop_cart a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    where a.buyer_user_id=#{buyerUserId}
+    GROUP BY a.shop_id
+    ORDER BY a.create_time DESC
+  </select>
+
+  <select id="findProductByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.shop_id,a.sku_id,a.product_name,d.original_price,d.price,a.image,b.`value`,a.number,
+     d.price*a.number total,a.weight,a.SKU,c.if_logistics,a.selected,d.stock_number,
+     c.shelve_state,
+     m.shop_group_work_id,
+     n.shop_seckill_id,
+     h.shop_discount_id,
+     psec.platform_seckill_id,
+     pdis.platform_discount_id,
+     price.price_id,
+     if(m.shop_group_work_id, m.if_add,
+        if(psec.platform_seckill_id, psec.if_add,
+           if(pdis.platform_discount_id, pdis.if_add,
+              if(n.shop_seckill_id, n.if_add,
+                 if(h.shop_discount_id, h.if_add, 1))))) ifCouponAdd,
+     if(m.shop_group_work_id, 1,
+        if(psec.platform_seckill_id, 4,
+           if(pdis.platform_discount_id, 5,
+              if(n.shop_seckill_id, 2,
+                 if(h.shop_discount_id, 3, 0))))) activityType
+    from cere_shop_cart a
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,cart_id from cere_cart_attribute GROUP BY cart_id) b ON a.cart_id=b.cart_id
+    LEFT JOIN cere_shop_product c ON a.product_id=c.product_id
+    LEFT JOIN cere_product_sku d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price,start_time,b.if_add FROM cere_shop_group_work_detail a
+        LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+        where b.shop_id=#{shopId} and b.state in (1)) m ON a.sku_id=m.sku_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price,effective_start,b.if_add FROM cere_shop_seckill_detail a
+        LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+        where b.shop_id=#{shopId} and b.state in (1)) n ON a.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price,start_time,b.if_add FROM cere_shop_discount_detail a
+        LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+        where b.shop_id=#{shopId} and b.state in (1)) h ON a.sku_id=h.sku_id
+    LEFT JOIN (select seckill_id as platform_seckill_id, d.product_id, b.if_add  from cere_platform_seckill b
+        join cere_activity_sign c on c.activity_id = b.seckill_id and c.sign_type = 2 and c.state = 1 and b.state = 3
+        and b.sign_end_time <![CDATA[ <= ]]> now() and now() <![CDATA[ <= ]]> b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) psec on psec.product_id = a.product_id
+    LEFT JOIN (select discount_id as platform_discount_id, d.product_id, b.if_add from cere_platform_discount b
+        join cere_activity_sign c on c.activity_id = b.discount_id and c.sign_type = 3 and c.state = 1 and b.state = 3
+        and b.sign_end_time <![CDATA[ <= ]]> now() and now() <![CDATA[ <= ]]> b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) pdis on pdis.product_id = a.product_id
+    LEFT JOIN (select a.price_id, b.product_id from cere_shop_price a join cere_price_product b on b.price_id = a.price_id
+        where a.shop_id = #{shopId} and a.state = 1) price on price.product_id = c.product_id
+    where a.shop_id=#{shopId} and a.buyer_user_id=#{buyerUserId}
+    ORDER BY a.create_time DESC
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_cart where buyer_user_id=#{buyerUserId} and sku_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </delete>
+
+  <delete id="deleteAll" parameterType="java.lang.Object">
+    DELETE FROM cere_shop_cart where buyer_user_id=#{buyerUserId}
+  </delete>
+
+  <update id="updateSelected" parameterType="com.shop.cereshop.app.param.cart.SelectedParam">
+    UPDATE cere_shop_cart SET selected=#{selected}
+    where buyer_user_id=#{buyerUserId} and sku_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <select id="findByParam" parameterType="com.shop.cereshop.app.param.cart.ShopCartParam" resultType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    SELECT * FROM cere_shop_cart where shop_id=#{shopId} and sku_id=#{skuId} and buyer_user_id=#{buyerUserId}
+  </select>
+
+  <delete id="deleteSkus" parameterType="java.lang.Object" >
+    DELETE FROM cere_shop_cart where buyer_user_id=#{buyerUserId}
+    and product_id in (
+    <foreach collection="carts" item="item" index="index" separator=",">
+      #{item.productId}
+    </foreach>
+    )
+    and sku_id in (
+    <foreach collection="carts" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </delete>
+  <delete id="clearInvalidSku">
+    DELETE t1 FROM cere_shop_cart t1 join  (
+      select a.product_id from cere_shop_cart a join cere_shop_product b on b.product_id = a.product_id and b.shelve_state = 0
+    ) t2 on t2.product_id = t1.product_id
+    where t1.buyer_user_id = #{buyerUserId}
+  </delete>
+
+  <update id="updateSelectedAll" parameterType="java.lang.Object">
+    UPDATE cere_shop_cart SET selected=1 where buyer_user_id=#{buyerUserId}
+  </update>
+
+  <select id="findBySkuIdAndUser" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    SELECT * FROM cere_shop_cart where buyer_user_id=#{buyerUserId} and sku_id=#{skuId}
+  </select>
+
+  <select id="findSku" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.cart.CereShopCart">
+    SELECT b.shop_id,a.product_id,a.sku_id,b.product_name,a.price product_price,a.weight,
+    IF(d.image IS NULL OR d.image='',c.product_image,d.image) image,a.SKU from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    where a.sku_id=#{skuId}
+  </select>
+
+  <select id="findOrderProduct" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT product_id,sku_id,number,a.product_price price,weight,SKU,image,b.shop_id,product_name from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id where a.order_id=#{orderId}
+  </select>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+  insert into cere_shop_cart (buyer_user_id,shop_id, product_id, sku_id, product_name, `number`, product_price,
+    image,SKU,weight,selected,create_time) values
+  <foreach collection="list" item="item" index="index" separator=",">
+    (
+    #{item.buyerUserId},
+    #{item.shopId},
+    #{item.productId},
+    #{item.skuId},
+    #{item.productName},
+    #{item.number},
+    #{item.productPrice},
+    #{item.image},
+    #{item.SKU},
+    #{item.weight},
+    #{item.selected},
+    #{item.createTime}
+    )
+  </foreach>
+  </insert>
+  <insert id="insertOrUpdate" useGeneratedKeys="true">
+    insert into cere_shop_cart (
+        buyer_user_id, shop_id, product_id, sku_id, product_name, `number`, product_price,
+        image, SKU, weight, selected, create_time, update_time
+    ) values
+    (
+        #{buyerUserId}, #{shopId}, #{productId}, #{skuId}, #{productName}, #{number}, #{productPrice},
+        #{image}, #{SKU}, #{weight}, #{selected}, #{createTime}, #{updateTime}
+    )
+    on duplicate key
+    update `number` = `number` + #{number}, product_price = #{productPrice}, update_time = #{updateTime}
+  </insert>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    update cere_shop_cart
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="number =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.number!=null">
+            when cart_id=#{i.cartId} then #{i.number}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="selected =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.selected!=null">
+            when cart_id=#{i.cartId} then #{i.selected}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.updateTime!=null">
+            when cart_id=#{i.cartId} then #{i.updateTime}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      cart_id=#{i.cartId}
+    </foreach>
+  </update>
+
+  <select id="findNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) from cere_shop_cart
+    where buyer_user_id=#{buyerUserId} GROUP BY buyer_user_id
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_shop_cart SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+
+  <select id="findActivityData" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.domain.activity.ActivityData">
+    SELECT m.shop_group_work_id,n.shop_seckill_id,h.shop_discount_id,
+	IF(m.price IS NULL,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,a.price,h.price),n.seckill_price),m.price) price FROM cere_product_sku a
+    LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price,MIN(start_time) FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where b.state=1) m ON a.sku_id=m.sku_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price,MIN(effective_start) FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where b.state=1) n ON a.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price,MIN(start_time) FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where b.state=1) h ON a.sku_id=h.sku_id
+	where a.sku_id=#{skuId}
+  </select>
+</mapper>

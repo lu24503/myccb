@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerBankDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerBank">
+    <id column="bank_id" jdbcType="BIGINT" property="bankId"/>
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+  </resultMap>
+  <insert id="insertSelective" keyColumn="bank_id" keyProperty="bankId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerBank" useGeneratedKeys="true">
+    insert into cere_buyer_bank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankCard != null">
+        bank_card,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCard != null">
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerBank">
+    SELECT * FROM cere_buyer_bank where bank_id = #{bankId}
+  </select>
+
+  <select id="getAll" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerBank">
+    SELECT * FROM cere_buyer_bank where buyer_user_id=#{buyerUserId}
+  </select>
+
+  <select id="checkBank" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerBank">
+    SELECT bank_id FROM cere_buyer_bank where buyer_user_id=#{buyerUserId} and bank_card=#{bankCard}
+    <if test="bankId!=null">
+      and bank_id<![CDATA[!= ]]>#{bankId}
+    </if>
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_bank SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

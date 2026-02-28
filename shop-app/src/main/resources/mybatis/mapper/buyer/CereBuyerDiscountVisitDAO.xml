@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerDiscountVisitDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerDiscountVisit">
+    <result column="shop_discount_id" jdbcType="BIGINT" property="shopDiscountId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="visit_time" jdbcType="VARCHAR" property="visitTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_discount_id, buyer_user_id, visit_time
+  </sql>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerDiscountVisit">
+    insert into cere_buyer_discount_visit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopDiscountId != null">
+        shop_discount_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="visitTime != null">
+        visit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopDiscountId != null">
+        #{shopDiscountId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="visitTime != null">
+        #{visitTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

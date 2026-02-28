@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.sensitive.CerePlatformSensitiveDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.sensitive.CerePlatformSensitive">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sensitive_word" jdbcType="VARCHAR" property="sensitiveWord" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="handle_measures" jdbcType="BIT" property="handleMeasures" />
+  </resultMap>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shop.cereshop.commons.domain.sensitive.CerePlatformSensitive" useGeneratedKeys="true">
+    insert into cere_platform_sensitive
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sensitiveWord != null and sensitiveWord!=''">
+        sensitive_word,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="handleMeasures != null">
+        handle_measures,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sensitiveWord != null and sensitiveWord!=''">
+        #{sensitiveWord,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="handleMeasures != null">
+        #{handleMeasures,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findSensitive" resultType="com.shop.cereshop.commons.domain.sensitive.CerePlatformSensitive">
+    SELECT * FROM cere_platform_sensitive
+  </select>
+</mapper>

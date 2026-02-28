@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.activity.CereSignProductDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CereSignProduct">
+    <result column="sign_id" jdbcType="BIGINT" property="signId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.activity.CereSignProduct">
+    insert into cere_sign_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signId != null">
+        sign_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="number != null">
+        `number`,
+      </if>
+      <if test="total != null">
+        `total`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signId != null">
+        #{signId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateNumber">
+    update cere_sign_product t1
+    inner join cere_activity_sign t2 on t2.sign_id = t1.sign_id and t2.sign_type = #{signType}
+    set t1.number = #{stockNumber}
+    where t2.activity_id = #{activityId} and t1.product_id = #{productId}
+  </update>
+</mapper>

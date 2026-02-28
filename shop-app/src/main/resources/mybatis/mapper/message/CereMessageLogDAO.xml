@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.message.CereMessageLogDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.message.CereMessageLog">
+    <result column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="template" jdbcType="VARCHAR" property="template" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="subject" jdbcType="VARCHAR" property="subject" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.message.CereMessageLog">
+    insert into cere_message_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        message_id,
+      </if>
+      <if test="template != null and template!=''">
+        `template`,
+      </if>
+      <if test="phone != null and phone!=''">
+        phone,
+      </if>
+      <if test="subject != null and subject!=''">
+        subject,
+      </if>
+      <if test="message != null and message!=''">
+        message,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="template != null and template!=''">
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null and phone!=''">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="subject != null and subject!=''">
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null and message!=''">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findMessage" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.message.CerePlatfromMessage">
+    SELECT message_id,message_template,template_describe FROM cere_platfrom_message where template_code=#{template}
+  </select>
+</mapper>

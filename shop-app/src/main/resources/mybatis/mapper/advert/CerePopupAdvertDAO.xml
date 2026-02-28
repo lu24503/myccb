@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.advert.CerePopupAdvertDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.advert.CerePopupAdvert">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="start_time" jdbcType="VARCHAR" property="startTime"/>
+        <result column="end_time" jdbcType="VARCHAR" property="endTime"/>
+        <result column="popup_img" jdbcType="VARCHAR" property="popupImg"/>
+        <result column="close_img" jdbcType="VARCHAR" property="closeImg"/>
+        <result column="jump_type" jdbcType="INTEGER" property="jumpType"/>
+        <result column="jump_content" jdbcType="VARCHAR" property="jumpContent"/>
+        <result column="trigger_condition" jdbcType="INTEGER" property="triggerCondition"/>
+        <result column="apply_group" jdbcType="INTEGER" property="applyGroup"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, start_time, end_time, popup_img, close_img, jump_type,
+        jump_content, trigger_condition, apply_group, state, create_time, update_time
+    </sql>
+
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select a.id, a.name, a.start_time, a.end_time, a.popup_img, a.close_img, a.jump_type,
+            a.jump_content, a.trigger_condition, a.apply_group, a.state, a.create_time, a.update_time
+        from cere_popup_advert a
+        left join cere_close_advert b on a.trigger_condition = b.trigger_condition and b.close_date = curdate()
+        <if test="buyerUserId != null">
+            and b.buyer_user_id = #{buyerUserId}
+        </if>
+        <if test="triggerCondition">
+            and b.trigger_condition = #{triggerCondition}
+        </if>
+        where a.state = 1 and a.start_time &lt; #{startTime}
+        and a.end_time > #{endTime}
+        and a.trigger_condition = #{triggerCondition}
+        and b.id is null
+    </select>
+
+</mapper>

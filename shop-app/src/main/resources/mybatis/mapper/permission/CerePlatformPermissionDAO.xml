@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.permission.CerePlatformPermissionDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.permission.CerePlatformPermission">
+    <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+    <result column="permission_pid" jdbcType="BIGINT" property="permissionPid" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="permission_uri" jdbcType="VARCHAR" property="permissionUri" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="resource_type" jdbcType="CHAR" property="resourceType" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="project" jdbcType="BIT" property="project" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    permission_id, permission_pid, permission_name, permission_uri, permission, icon,
+    `describe`, resource_type, sort, project, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="permission_id" keyProperty="permissionId" parameterType="com.shop.cereshop.commons.domain.permission.CerePlatformPermission" useGeneratedKeys="true">
+    insert into cere_platform_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionPid != null">
+        permission_pid,
+      </if>
+      <if test="permissionName != null and permissionName!=''">
+        permission_name,
+      </if>
+      <if test="permissionUri != null and permissionUri!=''">
+        permission_uri,
+      </if>
+      <if test="permission != null and permission!=''">
+        permission,
+      </if>
+      <if test="icon != null and icon!=''">
+        icon,
+      </if>
+      <if test="describe != null and describe!=''">
+        `describe`,
+      </if>
+      <if test="resourceType != null">
+        resource_type,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="project != null">
+        project,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionPid != null">
+        #{permissionPid,jdbcType=BIGINT},
+      </if>
+      <if test="permissionName != null and permissionName!=''">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUri != null and permissionUri!=''">
+        #{permissionUri,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null and permission!=''">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null and icon!=''">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null and describe!=''">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        #{resourceType,jdbcType=CHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="project != null">
+        #{project,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.permission.CerePlatformPermission">
+    update cere_platform_permission
+    <set>
+      <if test="permissionPid != null">
+        permission_pid = #{permissionPid,jdbcType=BIGINT},
+      </if>
+      <if test="permissionName != null and permissionName!=''">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionUri != null and permissionUri!=''">
+        permission_uri = #{permissionUri,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null and permission!=''">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null and icon!=''">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null and describe!=''">
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        resource_type = #{resourceType,jdbcType=CHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="project != null">
+        project = #{project,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.permission.CerePlatformPermission">
+    update cere_platform_permission
+    set permission_pid = #{permissionPid,jdbcType=BIGINT},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_uri = #{permissionUri,jdbcType=VARCHAR},
+      permission = #{permission,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      resource_type = #{resourceType,jdbcType=CHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      project = #{project,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

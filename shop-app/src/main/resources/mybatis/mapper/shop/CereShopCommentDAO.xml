@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.shop.CereShopCommentDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopComment">
+    <id column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_code" jdbcType="VARCHAR" property="shopCode" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="add_image" jdbcType="VARCHAR" property="addImage" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="add_comment" jdbcType="VARCHAR" property="addComment" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="if_sensitive" jdbcType="BIT" property="ifSensitive" />
+    <result column="add_time" jdbcType="VARCHAR" property="addTime" />
+    <result column="star" jdbcType="INTEGER" property="star" />
+    <result column="des" jdbcType="INTEGER" property="des" />
+    <result column="delivery" jdbcType="INTEGER" property="delivery" />
+    <result column="attitude" jdbcType="INTEGER" property="attitude" />
+    <result column="impression" jdbcType="VARCHAR" property="impression" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" keyColumn="comment_id" keyProperty="commentId" parameterType="com.shop.cereshop.commons.domain.shop.CereShopComment" useGeneratedKeys="true">
+    insert into cere_shop_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name,
+      </if>
+      <if test="shopCode != null and shopCode!=''">
+        shop_code,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="image != null and image!=''">
+        image,
+      </if>
+      <if test="addImage != null and addImage!=''">
+        add_image,
+      </if>
+      <if test="comment != null and comment!=''">
+        `comment`,
+      </if>
+      <if test="addComment != null and addComment!=''">
+        add_comment,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="ifSensitive != null">
+        if_sensitive,
+      </if>
+      <if test="addTime != null and addTime!=''">
+        add_time,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      <if test="delivery != null">
+        delivery,
+      </if>
+      <if test="attitude != null">
+        attitude,
+      </if>
+      <if test="impression != null and impression!=''">
+        impression,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCode != null and shopCode!=''">
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="image != null and image!=''">
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="addImage != null and addImage!=''">
+        #{addImage,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null and comment!=''">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="addComment != null and addComment!=''">
+        #{addComment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="ifSensitive != null">
+        #{ifSensitive,jdbcType=BIT},
+      </if>
+      <if test="addTime != null and addTime!=''">
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=INTEGER},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=INTEGER},
+      </if>
+      <if test="delivery != null">
+        #{delivery,jdbcType=INTEGER},
+      </if>
+      <if test="attitude != null">
+        #{attitude,jdbcType=INTEGER},
+      </if>
+      <if test="impression != null and impression!=''">
+        #{impression,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByOrderId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopComment">
+    SELECT comment_id,add_time from cere_shop_comment where order_id=#{orderId} LIMIT 1
+  </select>
+
+  <select id="findByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.BuyerComment">
+    SELECT a.comment_id,a.shop_name,IF(b.wechat_name IS NULL,b.`name`,b.wechat_name) `name`,
+    a.`comment`,a.add_comment,a.image,a.add_image,a.create_time,b.head_image,d.sku_value value,
+    f.likes from cere_shop_comment a
+    LEFT JOIN cere_buyer_user b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN cere_order_product c ON a.order_id=c.order_id and a.sku_id=c.sku_id
+    LEFT JOIN cere_order_product_attribute d ON c.order_product_id=d.order_product_id
+    LEFT JOIN cere_buyer_comment_like e ON a.buyer_user_id=e.buyer_user_id
+    LEFT JOIN (SELECT COUNT(buyer_user_id) likes,comment_id FROM cere_buyer_comment_like where if_like=1
+    GROUP BY comment_id) f ON a.comment_id=f.comment_id
+    where a.product_id=#{productId} and a.state=0
+    GROUP BY a.comment_id
+    ORDER BY a.create_time desc
+  </select>
+
+  <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopComment">
+    SELECT a.product_id,b.shop_id,b.shop_name,b.shop_code from cere_shop_product a
+    LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="getAll" parameterType="com.shop.cereshop.app.param.comment.CommentParam" resultType="com.shop.cereshop.app.page.comment.SelfComment">
+    SELECT a.comment_id,IF(b.wechat_name IS NULL,b.`name`,b.wechat_name) `name`,c.product_price,c.product_name,c.image productImage,
+    a.`comment`,a.add_comment,a.image,a.add_image,a.create_time,b.head_image,g.`value`,a.add_time,
+    IF(e.if_like IS NULL,0,e.if_like) if_like,IF(f.likes IS NULL,0,f.likes) likes,a.star,a.impression,
+    a.des,a.delivery,a.attitude,a.shop_id,a.product_id,a.sku_id from cere_shop_comment a
+    LEFT JOIN cere_buyer_user b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN cere_order_product c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,sku_id FROM cere_sku_name GROUP BY sku_id) g ON a.sku_id=g.sku_id
+    LEFT JOIN cere_buyer_comment_like e ON a.buyer_user_id=e.buyer_user_id and a.comment_id=e.comment_id
+    LEFT JOIN (SELECT comment_id,COUNT(*) likes from cere_buyer_comment_like where if_like=1 GROUP BY comment_id) f ON a.comment_id=f.comment_id
+    where a.buyer_user_id=#{buyerUserId}
+    <if test='state=="1"'>
+      and ((a.image IS NOT NULL and a.image <![CDATA[!= ]]>'') OR (a.add_image IS NOT NULL and a.add_image <![CDATA[!= ]]>''))
+    </if>
+    GROUP BY a.comment_id
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findTotal" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_shop_comment where buyer_user_id=#{buyerUserId}
+    <if test="state!=null">
+      and image IS NOT NULL and image <![CDATA[!= ]]>''
+    </if>
+  </select>
+
+  <select id="findWords" resultType="com.shop.cereshop.commons.domain.word.CerePlatformWord">
+    SELECT word_id,key_word FROM cere_platform_word where state=1
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.comment.Comment">
+    SELECT comment_id,image,`comment`,star,des,delivery,attitude,impression FROM cere_shop_comment where comment_id=#{commentId}
+  </select>
+
+  <select id="getProductAll" parameterType="com.shop.cereshop.app.param.comment.CommentWorParam" resultType="com.shop.cereshop.app.page.comment.WordComment">
+    SELECT a.comment_id,a.image,a.`comment`,a.add_image,a.add_comment,
+    IF(c.wechat_name IS NULL,c.`name`,c.wechat_name) `name`,c.head_image,
+    a.create_time,a.add_time FROM cere_shop_comment a
+    LEFT JOIN cere_comment_word b ON a.comment_id=b.comment_id
+    LEFT JOIN cere_buyer_user c ON a.buyer_user_id=c.buyer_user_id
+    where a.product_id=#{productId} and a.state =0
+    <if test="word!=null and word!=''">
+      and b.key_word=#{word}
+    </if>
+  </select>
+
+  <select id="findProductNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM cere_shop_comment where order_id=#{orderId}
+  </select>
+
+  <select id="findComment" resultType="com.shop.cereshop.commons.domain.shop.CereShopComment">
+    select shop_id, shop_name, shop_code,
+           product_id,sku_id,order_id, buyer_user_id, image, add_image,
+           `comment`,add_comment, `state`,if_sensitive,add_time,star,des,delivery,attitude,impression, create_time,
+           update_time
+    from cere_shop_comment
+    where buyer_user_id = #{buyerUserId} and order_id = #{orderId} and sku_id = #{skuId}
+  </select>
+
+  <select id="getCommentList" resultType="com.shop.cereshop.app.page.comment.SelfComment">
+    SELECT a.comment_id,IF(b.wechat_name IS NULL,b.`name`,b.wechat_name) `name`,c.product_price,c.product_name,c.image productImage,
+    a.`comment`,a.add_comment,a.image,a.add_image,a.create_time,b.head_image,g.`value`,a.add_time,
+    IF(e.if_like IS NULL,0,e.if_like) if_like,IF(f.likes IS NULL,0,f.likes) likes,a.star,a.impression,
+    a.des,a.delivery,a.attitude,a.shop_id,ps.shop_name,ps.shop_logo,a.product_id,a.sku_id,c.order_id from cere_shop_comment a
+    JOIN cere_platform_shop ps ON ps.shop_id=a.shop_id
+    LEFT JOIN cere_buyer_user b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN cere_order_product c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,sku_id FROM cere_sku_name GROUP BY sku_id) g ON a.sku_id=g.sku_id
+    LEFT JOIN cere_buyer_comment_like e ON a.buyer_user_id=e.buyer_user_id and a.comment_id=e.comment_id
+    LEFT JOIN (SELECT comment_id,COUNT(*) likes from cere_buyer_comment_like where if_like=1 GROUP BY comment_id) f ON a.comment_id=f.comment_id
+    where a.buyer_user_id=#{buyerUserId}
+    <if test="type != null and type == 2">
+      and a.add_time is null
+    </if>
+    <if test='state=="1"'>
+      and ((a.image IS NOT NULL and a.image <![CDATA[!= ]]>'') OR (a.add_image IS NOT NULL and a.add_image <![CDATA[!= ]]>''))
+    </if>
+    <if test="search != null and search != ''">
+      and (c.order_id like concat('%', #{search}, '%') or c.product_name like concat('%', #{search}, '%'))
+    </if>
+    GROUP BY a.comment_id
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getUnCommentList" resultType="com.shop.cereshop.app.page.comment.SelfComment">
+    SELECT IF(b.wechat_name IS NULL,b.`name`,b.wechat_name) `name`, c.product_price, c.product_name, c.image productImage,
+    b.head_image, g.`value`, ps.shop_id, ps.shop_name, ps.shop_logo, c.product_id, c.sku_id, a.order_id
+    from cere_shop_order a
+    JOIN cere_platform_shop ps ON ps.shop_id=a.shop_id
+    JOIN cere_order_product c ON c.order_id=a.order_id
+    LEFT JOIN cere_shop_comment sc on sc.order_id = a.order_id and sc.sku_id = c.sku_id
+    LEFT JOIN cere_buyer_user b ON a.buyer_user_id=b.buyer_user_id
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,sku_id FROM cere_sku_name GROUP BY sku_id) g ON g.sku_id=c.sku_id
+    where a.buyer_user_id=#{buyerUserId}
+    <if test="search != null and search != ''">
+        and (a.order_id like concat('%', #{search}, '%') or c.product_name like concat('%', #{search}, '%'))
+    </if>
+    ORDER BY c.order_product_id DESC
+  </select>
+
+  <select id="findRecentComment" resultType="com.shop.cereshop.app.page.product.BroadCastDTO">
+    select b.buyer_user_id, b.name, b.head_image, 1 as type, a.create_time as time from cere_shop_comment a
+    join cere_buyer_user b on b.buyer_user_id = a.buyer_user_id
+    where a.product_id = #{productId} and a.create_time > #{oneHourAgo}
+    and star = 5 and des = 5 and delivery = 5 and attitude = 5
+    order by a.create_time desc limit 10
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_shop_comment SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

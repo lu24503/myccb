@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereShopProductDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereShopProduct">
+        <id column="product_id" jdbcType="BIGINT" property="productId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="product_name" jdbcType="VARCHAR" property="productName"/>
+        <result column="product_brief" jdbcType="VARCHAR" property="productBrief"/>
+        <result column="shop_group_id" jdbcType="BIGINT" property="shopGroupId"/>
+        <result column="classify_id" jdbcType="BIGINT" property="classifyId"/>
+        <result column="supplier_id" jdbcType="BIGINT" property="supplierId"/>
+        <result column="supplier_name" jdbcType="VARCHAR" property="supplierName"/>
+        <result column="if_logistics" jdbcType="BIT" property="ifLogistics"/>
+        <result column="shelve_state" jdbcType="BIT" property="shelveState"/>
+        <result column="if_oversold" jdbcType="BIT" property="ifOversold"/>
+        <result column="fictitious_number" jdbcType="INTEGER" property="fictitiousNumber"/>
+        <result column="reject" jdbcType="VARCHAR" property="reject"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.shop.cereshop.commons.domain.product.CereShopProduct">
+        <result column="product_text" jdbcType="LONGVARCHAR" property="productText"/>
+    </resultMap>
+
+    <resultMap type="com.shop.cereshop.app.page.canvas.CanvasProductSku" id="canvasProductSkuMap">
+        <result property="productId" column="product_id"/>
+        <result property="image" column="image"/>
+        <result property="price" column="price"/>
+        <result property="skuId" column="sku_id"/>
+        <result property="originalPrice" column="original_price"/>
+        <result property="stockNumber" column="stock_number"/>
+    </resultMap>
+
+    <resultMap id="productUsersMap" type="com.shop.cereshop.app.page.canvas.CanvasProductUsers">
+        <result property="productId" column="product_id" javaType="java.lang.Long"/>
+        <result property="users" column="users" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <resultMap id="productNumberMap" type="com.shop.cereshop.app.page.canvas.CanvasProductNumber">
+        <result property="productId" column="product_id" javaType="java.lang.Long"/>
+        <result property="number" column="number" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        product_id, shop_id, product_name, product_brief, shop_group_id, classify_id, supplier_id,
+        supplier_name, if_logistics, shelve_state, if_oversold,fictitious_number, create_time,
+        update_time,product_text,reject
+    </sql>
+    <sql id="Blob_Column_List">
+        product_text
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cere_shop_product
+        where product_id = #{productId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from cere_shop_product
+        where product_id = #{productId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSelective" keyColumn="product_id" keyProperty="productId"
+            parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct" useGeneratedKeys="true">
+        insert into cere_shop_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="productName != null and productName!=''">
+                product_name,
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                product_brief,
+            </if>
+            <if test="shopGroupId != null">
+                shop_group_id,
+            </if>
+            <if test="classifyId != null">
+                classify_id,
+            </if>
+            <if test="supplierId != null">
+                supplier_id,
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                supplier_name,
+            </if>
+            <if test="ifLogistics != null">
+                if_logistics,
+            </if>
+            <if test="shelveState != null">
+                shelve_state,
+            </if>
+            <if test="ifOversold != null">
+                if_oversold,
+            </if>
+            <if test="fictitiousNumber != null">
+                fictitious_number,
+            </if>
+            <if test="reject != null">
+                reject,
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time,
+            </if>
+            <if test="productText != null">
+                product_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="productName != null and productName!=''">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                #{productBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGroupId != null">
+                #{shopGroupId,jdbcType=BIGINT},
+            </if>
+            <if test="classifyId != null">
+                #{classifyId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierId != null">
+                #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="ifLogistics != null">
+                #{ifLogistics,jdbcType=BIT},
+            </if>
+            <if test="shelveState != null">
+                #{shelveState,jdbcType=BIT},
+            </if>
+            <if test="ifOversold != null">
+                #{ifOversold,jdbcType=BIT},
+            </if>
+            <if test="fictitiousNumber != null">
+                #{fictitiousNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reject != null">
+                #{reject,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="productText != null">
+                #{productText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="productName != null and productName!=''">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrief != null and productBrief!=''">
+                product_brief = #{productBrief,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGroupId != null">
+                shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+            </if>
+            <if test="classifyId != null">
+                classify_id = #{classifyId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId,jdbcType=BIGINT},
+            </if>
+            <if test="supplierName != null and supplierName!=''">
+                supplier_name = #{supplierName,jdbcType=VARCHAR},
+            </if>
+            <if test="ifLogistics != null">
+                if_logistics = #{ifLogistics,jdbcType=BIT},
+            </if>
+            <if test="shelveState != null">
+                shelve_state = #{shelveState,jdbcType=BIT},
+            </if>
+            <if test="ifOversold != null">
+                if_oversold = #{ifOversold,jdbcType=BIT},
+            </if>
+            <if test="fictitiousNumber != null">
+                fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reject != null">
+                reject = #{reject,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="productText != null">
+                product_text = #{productText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        set shop_id = #{shopId,jdbcType=BIGINT},
+        product_name = #{productName,jdbcType=VARCHAR},
+        product_brief = #{productBrief,jdbcType=VARCHAR},
+        shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+        classify_id = #{classifyId,jdbcType=BIGINT},
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+        if_logistics = #{ifLogistics,jdbcType=BIT},
+        shelve_state = #{shelveState,jdbcType=BIT},
+        if_oversold = #{ifOversold,jdbcType=BIT},
+        fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+        reject = #{reject,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR},
+        product_text = #{productText,jdbcType=LONGVARCHAR}
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereShopProduct">
+        update cere_shop_product
+        set shop_id = #{shopId,jdbcType=BIGINT},
+        product_name = #{productName,jdbcType=VARCHAR},
+        product_brief = #{productBrief,jdbcType=VARCHAR},
+        shop_group_id = #{shopGroupId,jdbcType=BIGINT},
+        classify_id = #{classifyId,jdbcType=BIGINT},
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+        if_logistics = #{ifLogistics,jdbcType=BIT},
+        shelve_state = #{shelveState,jdbcType=BIT},
+        if_oversold = #{ifOversold,jdbcType=BIT},
+        fictitious_number = #{fictitiousNumber,jdbcType=INTEGER},
+        reject = #{reject,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+        where product_id = #{productId,jdbcType=BIGINT}
+    </update>
+
+    <select id="findBySkuId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.app.page.product.ProductDetail">
+        SELECT
+        a.shop_id,
+        a.product_id,
+        b.sku_id,
+        a.product_name,
+        a.product_text text,
+        a.shelve_state,
+        a.if_huabei,
+        b.original_price,
+        c.shop_name,
+        c.shop_logo,
+        a.product_brief,
+        a.classify_id,
+        a.if_logistics,
+        m.shop_group_work_id,
+        n.shop_seckill_id,
+        h.shop_discount_id,
+        ifnull(g.users, 0) + a.fictitious_number as users,
+        ifnull(x.number, 0) + y.fictitious_number as number,
+        if(m.shop_group_work_id, 1,
+        if(psec.platform_seckill_id, 4,
+        if(pdis.platform_discount_id, 5,
+        if(n.shop_seckill_id, 2,
+        if(h.shop_discount_id, 3, 0))))) activityType,
+        b.price,
+        b.weight,
+        psec.platform_seckill_id,
+        pdis.platform_discount_id
+        from cere_shop_product a
+        LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+        LEFT JOIN cere_platform_shop c ON a.shop_id=c.shop_id
+        LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price FROM cere_shop_group_work_detail a
+        INNER JOIN (SELECT shop_group_work_id FROM cere_shop_group_work where state in (0,1) and shop_id=#{shopId} ORDER
+        BY start_time LIMIT 1) b
+        ON a.shop_group_work_id=b.shop_group_work_id) m ON b.sku_id=m.sku_id
+        LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price FROM cere_shop_seckill_detail a
+        INNER JOIN (SELECT shop_seckill_id FROM cere_shop_seckill where state in (0,1) and shop_id=#{shopId} ORDER BY
+        effective_start LIMIT 1) b
+        ON a.shop_seckill_id=b.shop_seckill_id) n ON b.sku_id=n.sku_id
+        LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price FROM cere_shop_discount_detail a
+        INNER JOIN (SELECT shop_discount_id FROM cere_shop_discount where state in (0,1) and shop_id=#{shopId} ORDER BY
+        start_time LIMIT 1) b
+        ON a.shop_discount_id=b.shop_discount_id) h ON b.sku_id=h.sku_id
+        LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM
+        cere_order_product a,cere_shop_order b
+        where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY
+        a.product_id) g ON a.product_id=g.product_id
+        LEFT JOIN (SELECT SUM(a.number) number, b.shop_id from cere_order_product a
+        LEFT JOIN cere_shop_order b ON a.order_id = b.order_id
+        where b.shop_id = #{shopId} and b.state in (2,3,4)) x ON a.shop_id = x.shop_id
+        LEFT JOIN (SELECT SUM(a.fictitious_number) fictitious_number from cere_shop_product a
+        where a.shop_id = #{shopId}) y on 1 = 1
+        LEFT JOIN (select seckill_id as platform_seckill_id, d.product_id from cere_platform_seckill b
+        join cere_activity_sign c on c.activity_id = b.seckill_id and c.sign_type = 2 and c.state = 1 and b.state = 3
+        and b.sign_end_time <![CDATA[ <= ]]> now() and now() <![CDATA[ <= ]]> b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) psec on psec.product_id = a.product_id
+        LEFT JOIN (select discount_id as platform_discount_id, d.product_id from cere_platform_discount b
+        join cere_activity_sign c on c.activity_id = b.discount_id and c.sign_type = 3 and c.state = 1 and b.state = 3
+        and b.sign_end_time <![CDATA[ <= ]]> now() and now() <![CDATA[ <= ]]> b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) pdis on pdis.product_id = a.product_id
+        where b.sku_id=#{skuId}
+        GROUP BY b.sku_id
+    </select>
+
+    <select id="findImages" parameterType="java.lang.Object" resultType="java.lang.String">
+        SELECT product_image from cere_product_image
+        where product_id=#{productId}
+    </select>
+
+    <select id="findSkuImages" parameterType="java.lang.Object" resultType="java.lang.String">
+        SELECT a.image from cere_sku_name a
+        LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+        where b.product_id=#{productId} and a.image IS NOT NULL and a.image <![CDATA[!= ]]>''
+    </select>
+
+    <select id="findClassifyNumber" parameterType="java.lang.Object" resultType="java.lang.Long">
+        SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(b.classify_level_hierarchy,'/',-1),'/',1) from cere_shop_product a
+        LEFT JOIN cere_product_classify b ON a.classify_id=b.classify_id
+        where a.shop_id=#{shopId}
+        GROUP BY replace(SUBSTRING_INDEX(b.classify_level_hierarchy,'/',2),'/','')
+    </select>
+
+    <select id="findPayNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT SUM(a.number) from cere_order_product a
+        LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+        where a.sku_id=#{skuId} and b.state in (2,3,4)
+    </select>
+
+    <select id="getSearchProducts" parameterType="com.shop.cereshop.app.param.index.SearchParam"
+            resultType="com.shop.cereshop.app.page.index.Product">
+        SELECT a.shop_id,
+        d.shop_name,
+        a.product_id,
+        a.product_name,
+        c.product_image image,
+        b.sku_id,
+        b.original_price,
+        b.price,
+        0 as activityType,
+        ifnull(f.number, 0) + a.fictitious_number as number
+        from cere_shop_product a
+        LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        b.sku_id=f.sku_id
+        where a.shelve_state=1 and d.state=1
+        <if test="search!=null and search!=''">
+            and a.product_name like concat('%', #{search}, '%')
+        </if>
+        <if test="minMoney!=null">
+            and b.price &gt;= #{minMoney}
+        </if>
+        <if test="maxMoney!=null">
+            and b.price &lt;= #{maxMoney}
+        </if>
+        ORDER BY
+        <if test='type==1'>
+            price,
+        </if>
+        <if test='type==2'>
+            price DESC,
+        </if>
+        <if test='volume==1'>
+            ifnull(f.number, 0) + a.fictitious_number,
+        </if>
+        <if test='volume==2'>
+            ifnull(f.number, 0) + a.fictitious_number DESC,
+        </if>
+        a.update_time DESC,a.create_time DESC
+    </select>
+
+    <select id="findShareProduct" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.app.page.product.ShareProduct">
+        SELECT a.product_id,a.sku_id,a.price,a.weight,a.SKU,d.product_name,
+        GROUP_CONCAT(b.sku_value) value,c.product_image image from cere_product_sku a
+        LEFT JOIN cere_sku_name b ON a.sku_id=b.sku_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_shop_product d ON a.product_id=d.product_id
+        where a.sku_id=#{skuId}
+    </select>
+
+    <select id="getCanvasProducts" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT a.shop_id,d.shop_name,d.shop_logo,a.product_id,a.product_name, ifnull(x.users, 0) + a.fictitious_number
+        as users,
+        IF(h.image IS NULL OR h.image='',c.product_image,h.image) image,
+        b.price,b.sku_id,b.original_price,IF(f.number IS NULL, a.fictitious_number, f.number + a.fictitious_number)
+        number,b.stock_number from cere_shop_product a
+        LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price,a.stock_number from cere_product_sku
+        a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        b.sku_id=f.sku_id
+        LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+        LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) h ON
+        b.sku_id=h.sku_id
+
+        LEFT JOIN (
+            SELECT COUNT(a.buyer_user_id) users, a.product_id FROM (
+                SELECT b.buyer_user_id, a.product_id FROM
+                cere_order_product a, cere_shop_order b
+                where a.order_id = b.order_id
+				<if test="ids != null and ids.size() > 0">
+					and a.product_id in (
+                        <foreach collection="ids" item="productId" separator=",">
+                            #{productId}
+                        </foreach>
+                    )
+				</if>
+				GROUP BY a.product_id, b.buyer_user_id
+            ) a GROUP BY a.product_id
+        ) x ON a.product_id = x.product_id
+
+        where a.shelve_state=1 and d.state=1
+        <if test="shelveState!=null">
+            and a.shelve_state=#{shelveState}
+        </if>
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%', #{search}, '%') OR
+            a.product_id like concat('%', #{search}, '%') OR
+            a.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and a.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and a.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and a.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        a.classify_id1 = #{classifyId}
+                        OR a.classify_id2 = #{classifyId}
+                        OR a.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="getCanvasProducts2" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT a.shop_id,d.shop_name,d.shop_logo,a.product_id,a.product_name,a.fictitious_number
+        from cere_shop_product a
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+        where a.shelve_state=1 and d.state=1
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%', #{search}, '%') OR
+            a.product_id like concat('%', #{search}, '%') OR
+            a.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and a.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and a.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and a.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        a.classify_id1 = #{classifyId}
+                        OR a.classify_id2 = #{classifyId}
+                        OR a.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size > 0">
+            and a.product_id in (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="getProductUsers" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultMap="productUsersMap">
+        select
+			a.product_id,
+			ifnull(x.users, 0) + a.fictitious_number as users
+        from cere_shop_product a
+        left join (
+			select COUNT(a.buyer_user_id) users, a.product_id
+			from (
+				select
+					b.buyer_user_id,
+					a.product_id
+				from cere_order_product a, cere_shop_order b
+				where a.order_id = b.order_id
+				<if test="ids != null and ids.size() > 0">
+					and a.product_id in (
+						<foreach collection="ids" item="id" separator=",">
+							#{id}
+						</foreach>
+					)
+				</if>
+				group by a.product_id, b.buyer_user_id
+			) a group by a.product_id
+		) x on a.product_id = x.product_id
+        where a.shelve_state = 1
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+				<foreach collection="ids" item="id" separator=",">
+					#{id}
+				</foreach>
+            )
+        </if>
+        group by a.product_id
+    </select>
+
+    <select id="getProductSku" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultMap="canvasProductSkuMap">
+        SELECT b.product_id,
+               if(h.image is null OR h.image = '', c.product_image, h.image) image,
+               b.price,
+               b.sku_id,
+               b.original_price,
+               b.stock_number
+        FROM (
+            SELECT a.product_id,
+                a.price,
+                a.sku_id,
+                a.original_price,
+                a.stock_number
+            FROM cere_product_sku a, cere_shop_product b
+            WHERE a.product_id = b.product_id
+            GROUP BY a.product_id
+        ) b
+        LEFT JOIN (
+            SELECT a.product_id, a.product_image
+            FROM cere_product_image a, cere_shop_product b
+            WHERE a.product_id = b.product_id
+            GROUP BY a.product_id
+        ) c ON b.product_id = c.product_id
+        LEFT JOIN (
+            SELECT a.sku_id, a.image
+            FROM cere_sku_name a, cere_product_sku b
+            WHERE a.sku_id = b.sku_id limit 1
+        ) h ON b.sku_id = h.sku_id
+
+        <if test="ids != null AND ids.size() > 0">
+            WHERE b.product_id IN (
+                <foreach collection="ids" item="id" separator=",">
+                    #{id}
+                </foreach>
+            )
+        </if>
+
+        GROUP BY b.product_id
+    </select>
+
+    <select id="getProductNumber" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultMap="productNumberMap">
+        select
+            b.product_id,
+            if(f.number is null, b.fictitious_number, f.number + b.fictitious_number) number
+        from (
+            select
+                a.product_id,
+                a.price,
+                a.sku_id,
+                a.original_price,
+                a.stock_number,
+                b.fictitious_number
+            from cere_product_sku a, cere_shop_product b
+            where a.product_id = b.product_id
+            group by a.product_id
+        ) b
+        left join (
+            select
+                SUM(number) number,
+                sku_id,
+                order_id
+            from cere_order_product
+            group by sku_id
+        ) f on b.sku_id = f.sku_id
+
+        <if test="ids != null and ids.size() > 0">
+            where b.product_id in (
+                <foreach collection="ids" item="id" separator=",">
+                    #{id}
+                </foreach>
+            )
+        </if>
+
+        group by b.product_id
+    </select>
+
+    <select id="getGroupWorkProducts" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT b.shop_id,d.shop_name,d.shop_logo,a.product_id,b.product_name, ifnull(x.users, 0) + b.fictitious_number
+        as users, h.start_time,h.end_time,h.state,
+        IF(m.image IS NULL OR m.image='',c.product_image,m.image) image,h.if_enable,h.enable_time,
+        a.price,a.sku_id,n.price original_price,IF(f.number IS NULL, b.fictitious_number, f.number +
+        b.fictitious_number) number,n.stock_number FROM cere_shop_group_work_detail a
+        LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON b.classify_id=e.classify_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        a.sku_id=f.sku_id
+        LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+
+        LEFT JOIN (
+            SELECT COUNT(a.buyer_user_id) users, a.product_id FROM (
+                SELECT b.buyer_user_id, a.product_id FROM
+                cere_order_product a, cere_shop_order b
+                where a.order_id = b.order_id
+				<if test="ids != null and ids.size() > 0">
+					and a.product_id in (
+                        <foreach collection="ids" item="productId" separator=",">
+                            #{productId}
+                        </foreach>
+                    )
+				</if>
+				GROUP BY a.product_id, b.buyer_user_id
+            ) a GROUP BY a.product_id
+        ) x ON a.product_id = x.product_id
+
+        LEFT JOIN cere_shop_group_work h ON a.shop_group_work_id=h.shop_group_work_id
+        LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) m ON
+        a.sku_id=m.sku_id
+        LEFT JOIN cere_product_sku n ON a.sku_id=n.sku_id
+        where b.shelve_state=1 and h.state=1 and d.state=1
+        <if test="shopId!=null">
+            and b.shop_id=#{shopId}
+        </if>
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%', #{search}, '%') OR
+            a.product_id like concat('%', #{search}, '%') OR
+            b.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="shelveState!=null">
+            and b.shelve_state=#{shelveState}
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and b.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and b.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and b.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        b.classify_id1 = #{classifyId}
+                        OR b.classify_id2 = #{classifyId}
+                        OR b.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        GROUP BY a.product_id
+        ORDER BY b.create_time DESC
+    </select>
+
+    <select id="getSeckillProducts" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT b.shop_id,d.shop_name,d.shop_logo,a.product_id,b.product_name, ifnull(x.users, 0) + b.fictitious_number
+        as users, h.effective_start start_time,h.effective_end end_time,h.state,
+        IF(m.image IS NULL OR m.image='',c.product_image,m.image) image,h.if_enable,h.enable_time,
+        a.seckill_price price,a.sku_id,n.price original_price,IF(f.number IS NULL, b.fictitious_number, f.number +
+        b.fictitious_number) number,n.stock_number FROM cere_shop_seckill_detail a
+        LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON b.classify_id=e.classify_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        a.sku_id=f.sku_id
+        LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+
+        LEFT JOIN (
+            SELECT COUNT(a.buyer_user_id) users, a.product_id FROM (
+                SELECT b.buyer_user_id, a.product_id FROM
+                cere_order_product a, cere_shop_order b
+                where a.order_id = b.order_id
+				<if test="ids != null and ids.size() > 0">
+					and a.product_id in (
+                        <foreach collection="ids" item="productId" separator=",">
+                            #{productId}
+                        </foreach>
+                    )
+				</if>
+				GROUP BY a.product_id, b.buyer_user_id
+            ) a GROUP BY a.product_id
+        ) x ON a.product_id = x.product_id
+
+        LEFT JOIN cere_shop_seckill h ON a.shop_seckill_id=h.shop_seckill_id
+        LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) m ON
+        a.sku_id=m.sku_id
+        LEFT JOIN cere_product_sku n ON a.sku_id=n.sku_id
+        where b.shelve_state=1 and h.state=1 and d.state=1
+        <if test="shopId!=null">
+            and b.shop_id=#{shopId}
+        </if>
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%', #{search}, '%') OR
+            a.product_id like concat('%', #{search}, '%') OR
+            b.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="shelveState!=null">
+            and b.shelve_state=#{shelveState}
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and b.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and b.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and b.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        b.classify_id1 = #{classifyId}
+                        OR b.classify_id2 = #{classifyId}
+                        OR b.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        GROUP BY a.product_id
+        ORDER BY b.create_time DESC
+    </select>
+
+    <select id="getDiscountProducts" parameterType="com.shop.cereshop.app.param.canvas.CanvasAppProductParam"
+            resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT b.shop_id,d.shop_name,d.shop_logo,a.product_id,b.product_name, ifnull(x.users, 0) + b.fictitious_number
+        as users, h.start_time,h.end_time,h.state,
+        IF(m.image IS NULL OR m.image='',c.product_image,m.image) image,h.if_enable,h.enable_time,
+        a.price,a.sku_id,n.price original_price,IF(f.number IS NULL, b.fictitious_number, f.number +
+        b.fictitious_number) number,n.stock_number FROM cere_shop_discount_detail a
+        LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON b.classify_id=e.classify_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        a.sku_id=f.sku_id
+        LEFT JOIN cere_shop_order g ON f.order_id=g.order_id and g.state in (2,3,4)
+
+        LEFT JOIN (
+            SELECT COUNT(a.buyer_user_id) users, a.product_id FROM (
+                SELECT b.buyer_user_id, a.product_id FROM
+                cere_order_product a, cere_shop_order b
+                where a.order_id = b.order_id
+				<if test="ids != null and ids.size() > 0">
+					and a.product_id in (
+                        <foreach collection="ids" item="productId" separator=",">
+                            #{productId}
+                        </foreach>
+                    )
+				</if>
+				GROUP BY a.product_id, b.buyer_user_id
+            ) a GROUP BY a.product_id
+        ) x ON a.product_id = x.product_id
+
+        LEFT JOIN cere_shop_discount h ON a.shop_discount_id=h.shop_discount_id
+        LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) m ON
+        a.sku_id=m.sku_id
+        LEFT JOIN cere_product_sku n ON a.sku_id=n.sku_id
+        where b.shelve_state=1 and h.state=1 and d.state=1
+        <if test="shopId!=null">
+            and b.shop_id=#{shopId}
+        </if>
+        <if test="search!=null and search!=''">
+            and (d.shop_name like concat('%', #{search}, '%') OR
+            a.product_id like concat('%', #{search}, '%') OR
+            b.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="shelveState!=null">
+            and b.shelve_state=#{shelveState}
+        </if>
+        <if test="classifyId!=null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and b.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and b.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and b.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        b.classify_id1 = #{classifyId}
+                        OR b.classify_id2 = #{classifyId}
+                        OR b.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+            <foreach collection="ids" item="id" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+        GROUP BY a.product_id
+        ORDER BY b.create_time DESC
+    </select>
+
+    <select id="findAllClassify" resultType="com.shop.cereshop.commons.domain.product.Classify">
+        SELECT classify_id id,classify_pid parentId,classify_name categoryName,classify_level depth,classify_image
+        FROM cere_product_classify where classify_level=1
+    </select>
+
+    <select id="findChildsClassify" resultType="com.shop.cereshop.commons.domain.product.Classify">
+        SELECT classify_id id,classify_pid parentId,classify_name categoryName,classify_level depth,classify_image
+        FROM cere_product_classify where classify_level<![CDATA[!= ]]>1
+    </select>
+
+    <select id="findSimilarProducts" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.app.page.index.Product">
+        SELECT a.shop_id,d.shop_name,a.product_id,a.product_name,c.product_image image,
+        b.price,b.sku_id,b.original_price,a.product_brief,g.users from cere_shop_product a
+        LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        LEFT JOIN (SELECT IF(SUM(number) IS NULL,0,SUM(number)) number,sku_id,order_id from cere_order_product GROUP BY
+        sku_id) f ON b.sku_id=f.sku_id
+        LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM
+        cere_order_product a,cere_shop_order b
+        where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY
+        a.product_id) g ON a.product_id=g.product_id
+        where d.state=1 and a.shelve_state=1
+        <if test="classifyId!=null">
+            and a.classify_id=#{classifyId}
+        </if>
+        ORDER BY (f.number + a.fictitious_number) DESC LIMIT 4
+    </select>
+
+    <select id="getRandomSortProduct" resultType="com.shop.cereshop.app.page.index.Product">
+        SELECT a.shop_id,
+        d.shop_name,
+        d.shop_logo,
+        a.product_id,
+        a.product_name,
+        c.product_image image,
+        b.sku_id,
+        b.original_price,
+        b.price,
+        0 as activityType
+        from cere_shop_product a
+        LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+        LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON
+        b.sku_id=f.sku_id
+        where a.shelve_state=1 and d.state=1
+        ORDER BY aes_encrypt(a.product_id, #{timestamp}), a.update_time DESC, a.create_time DESC
+    </select>
+
+    <delete id="deleteAllSearch" parameterType="java.lang.Object">
+        DELETE FROM cere_buyer_search where buyer_user_id=#{buyerUserId}
+    </delete>
+
+    <select id="findRandom4ShopProducts" resultType="com.shop.cereshop.app.page.index.Product">
+        SELECT a.shop_id,d.shop_name,a.product_id,a.product_name,c.product_image image,
+        b.price,b.sku_id,b.original_price,a.product_brief from cere_shop_product a
+        LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+        LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+        where d.state=1 and a.shelve_state=1 and a.shop_id = #{shopId}
+        ORDER BY a.update_time DESC LIMIT 4
+    </select>
+    <select id="selectFictitiousNumber" resultType="java.lang.Integer">
+        select ifnull(sum(fictitious_number), 0)
+        from cere_shop_product
+        where product_id = #{productId}
+    </select>
+    <select id="findByShopIdAndSkuIdList" resultType="com.shop.cereshop.app.page.index.Product">
+        SELECT
+        a.shop_id,
+        a.product_id,
+        a.shelve_state,
+        a.if_huabei,
+        b.sku_id,
+        ifnull(g.users, 0) + a.fictitious_number as users,
+        if(m.shop_group_work_id, b.price,
+        if(psec.platform_seckill_id, b.original_price,
+        if(pdis.platform_discount_id, b.price,
+        if(n.shop_seckill_id, b.price,
+        if(h.shop_discount_id, b.price, b.original_price))))) original_price,
+        m.shop_group_work_id,
+        n.shop_seckill_id,
+        h.shop_discount_id,
+        if(m.shop_group_work_id, 1,
+        if(psec.platform_seckill_id, 4,
+        if(pdis.platform_discount_id, 5,
+        if(n.shop_seckill_id, 2,
+        if(h.shop_discount_id, 3, 0))))) activityType,
+        if(m.shop_group_work_id, m.price,
+        if(psec.platform_seckill_id, b.original_price - psec.seckill_money,
+        if(pdis.platform_discount_id, b.price * pdis.discount / 10 ,
+        if(n.shop_seckill_id, n.seckill_price,
+        if(h.shop_discount_id, h.price, b.price))))) price,
+        psec.platform_seckill_id,
+        pdis.platform_discount_id
+        from cere_shop_product a
+        LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+        LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price FROM cere_shop_group_work_detail a
+        INNER JOIN (SELECT shop_group_work_id FROM cere_shop_group_work where state in (0,1) and shop_id = #{shopId}
+        ORDER
+        BY start_time LIMIT 1) b
+        ON a.shop_group_work_id=b.shop_group_work_id) m ON b.sku_id=m.sku_id
+        LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price FROM cere_shop_seckill_detail a
+        INNER JOIN (SELECT shop_seckill_id FROM cere_shop_seckill where state in (0,1) and shop_id = #{shopId} ORDER BY
+        effective_start LIMIT 1) b
+        ON a.shop_seckill_id=b.shop_seckill_id) n ON b.sku_id=n.sku_id
+        LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price FROM cere_shop_discount_detail a
+        INNER JOIN (SELECT shop_discount_id FROM cere_shop_discount where state in (0,1) and shop_id = #{shopId} ORDER
+        BY
+        start_time LIMIT 1) b
+        ON a.shop_discount_id=b.shop_discount_id) h ON b.sku_id=h.sku_id
+        LEFT JOIN (select seckill_id as platform_seckill_id, d.product_id, b.seckill_money from cere_platform_seckill b
+        join cere_activity_sign c on c.activity_id = b.seckill_id and c.sign_type = 2 and c.state = 1 and b.state in
+        (2,3)
+        and b.sign_end_time  <![CDATA[ <= ]]>  now() and now()  <![CDATA[ <= ]]>  b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) psec on psec.product_id = a.product_id
+        LEFT JOIN (select discount_id as platform_discount_id, d.product_id, b.discount from cere_platform_discount b
+        join cere_activity_sign c on c.activity_id = b.discount_id and c.sign_type = 3 and c.state = 1 and b.state in
+        (2,3)
+        and b.sign_end_time  <![CDATA[ <= ]]>  now() and now()  <![CDATA[ <= ]]>  b.end_time
+        join cere_sign_product d on d.sign_id = c.sign_id) pdis on pdis.product_id = a.product_id
+        LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM
+        cere_order_product a,cere_shop_order b
+        where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY
+        a.product_id) g ON a.product_id=g.product_id
+        where b.sku_id in (
+            <foreach collection="skuIdList" item="skuId" separator=",">
+                #{skuId}
+            </foreach>
+        )
+        GROUP BY b.sku_id
+    </select>
+    <select id="queryProductDetail" resultType="com.shop.cereshop.app.page.product.ProductDetail">
+        select a.product_id, a.shop_id, a.product_text as text, a.shelve_state,
+        a.if_huabei, a.product_brief, a.classify_id, a.if_logistics,
+        b.sku_id, b.weight, b.price, b.original_price
+        c.shop_name, c.shop_logo
+        from cere_shop_product a join cere_product_sku b on b.product_id = a.product_id
+        join cere_platform_shop c on a.shop_id = c.shop_id
+        where b.sku_id = #{skuId}
+    </select>
+    <select id="getCanvasActivityRealInfo" resultType="com.shop.cereshop.app.page.canvas.CanvasProduct">
+        SELECT
+            d.shop_id,
+            d.shop_name,
+            d.shop_logo,
+            a.product_id,
+            b.product_name,
+            a.activity_type,
+            if (a.activity_type = 1, a.activity_id, 0) as shopGroupWorkId,
+            if (a.activity_type = 2, a.activity_id, 0) as shopSeckillId,
+            if (a.activity_type = 3, a.activity_id, 0) as shopDiscountId,
+            a.sales_user_count + fictitious_number as users,
+            c.product_image as image,
+            a.start_time,
+            a.end_time,
+            a.state,
+            a.if_enable - 1 as ifEnable,
+            a.enable_time,
+            a.cur_price as price,
+            a.cur_original_price original_price,
+            a.sku_id,
+            n.stock_number,
+            <if test="type != null and type in (1,2,3)">
+                a.sales_volume as number
+            </if>
+            <if test="type == null">
+                a.product_sales_volume as number
+            </if>
+        FROM cere_sku_member_real_info a
+        JOIN cere_shop_product b on b.product_id = a.product_id
+        JOIN cere_product_image c on c.product_id = a.product_id
+        JOIN cere_platform_shop d ON b.shop_id = d.shop_id
+        JOIN cere_product_sku n ON a.sku_id = n.sku_id
+
+        <if test="classifyId != null">
+            JOIN cere_product_classify e ON b.classify_id = e.classify_id
+        </if>
+
+        where a.member_level_id = #{memberLevelId} and b.shelve_state = 1 and d.state = 1
+        <if test="type != null">
+            <if test="type == 1">
+                and a.activity_type = 1
+            </if>
+            <if test="type == 2">
+                and a.activity_type = 2
+            </if>
+            <if test="type == 3">
+                and a.activity_type = 3
+            </if>
+        </if>
+        <if test="shopId != null">
+            and b.shop_id = #{shopId}
+        </if>
+        <if test="search != null and search != ''">
+            and (d.shop_name like concat('%', #{search}, '%')
+                OR a.product_id like concat('%', #{search}, '%')
+                OR b.product_name like concat('%', #{search}, '%'))
+        </if>
+        <if test="classifyId != null">
+            <choose>
+                <when test="classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and b.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and b.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and b.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    and (
+                        b.classify_id1 = #{classifyId}
+                        OR b.classify_id2 = #{classifyId}
+                        OR b.classify_id3 = #{classifyId}
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        <if test="ids != null and ids.size() > 0">
+            and a.product_id in (
+                <foreach collection="ids" item="id" separator=",">
+                    #{id}
+                </foreach>
+            )
+        </if>
+        GROUP BY a.product_id
+        ORDER BY a.update_time DESC, b.update_time DESC
+    </select>
+</mapper>

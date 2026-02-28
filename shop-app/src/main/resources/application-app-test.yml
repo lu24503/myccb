@@ -1,0 +1,222 @@
+#mysql和阿里druid配置
+spring:
+#  application:
+#    name:     #指定应用的名称建议使用小写
+  jmx:
+    default-domain: admin-server
+  main:
+    allow-bean-definition-overriding: true
+  activiti:
+    #当遇到同样名字的时候，是否允许覆盖注册
+    check-process-definitions: false
+  #pagehelper分页插件
+  pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+    returnPageInfo: check
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    url: jdbc:oracle:thin:@192.168.1.98:1521:orcl
+    # 本地环境
+#    url: jdbc:mysql://localhost:3306/cereshop1.6?useUnicode=true&allowMultiQueries=true&serverTimezone=UTC
+#    username: root
+#    password: 123456
+    # 测试环境
+    url: jdbc:mysql://localhost:3306/cereshop1.6?useUnicode=true&allowMultiQueries=true&characterEncoding=UTF-8
+    username: root
+    password: xxx
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      #    driver-class-name: oracle.jdbc.driver.OracleDriver
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initialSize: 1
+      minIdle: 3
+      maxActive: 200
+      # 配置获取连接等待超时的时间
+      maxWait: 10000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 300000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 3600000
+      #validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    timeout: 10000
+    jedis:
+      pool:
+        max-active: 6000
+        max-wait: 1000
+        max-idle: 400
+        min-idle: 0
+  #网站域名
+  domain: https://ceres.zkthink.com
+
+#阿里云短信
+aliyun:
+  #区域id，参考 https://help.aliyun.com/document_detail/40654.html?spm=a2c6h.13066369.0.0.c85c7eecnh6fH6
+  regionid: cn-shenzhen
+  #产品名称:云通信短信API产品,开发者无需替换
+  name: Dysmsapi
+  #产品域名,开发者无需替换
+  domain: dysmsapi.aliyuncs.com
+  #产品keyid
+  keyid: xxx
+  #产品keysecret
+  keysecret: xx
+  #短信签名
+  sign_name:
+  #短信模板编号
+  template:
+
+#秒信云短信
+miaoxinyun:
+  #短信子账号App_ID
+  account: xxx
+  #短信子账号的App_SECRET 密匙
+  secret: xxx
+  #域名
+  domain: http://www.51miaoxin.com
+  #签名
+  sign_name: cereshop商城
+  #模板内容
+  template: 您好,您的验证码为：{0},请妥善保管,5分钟后失效
+
+upload:
+  type: LOCAL # 当前支持 ALI LOCAL 两种
+  storage-path: /Users/root/Documents/uploadfile/file/    # 这个路径在 type = LOCAL的时候才需要配置 文件存储路径  （ 某些版本的 window 需要改成  D:\\data\\projects\\uploadfile\\file\\  ）
+  uriPrefix: ${spring.domain}/local/   # 这个路径在 type = LOCAL的时候才需要配置 域名后面的/local/ 需要配置nginx 映射到服务器上 的 storerage-path 对应的目录
+
+alioss:
+  file:
+    #不同的服务器，地址不同
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    #去OSS控制台获取
+    keyid: xx
+    #去OSS控制台获取
+    keysecret: xxx
+    #这个自己创建bucket时的命名，控制台创建也行，代码创建也行
+    bucketname: zk-cereshop
+    #文件上传路径
+    upload: test
+
+#微信支付配置
+weixin:
+  #小程序appid
+  appid: xxx
+  #APP端的appid
+  app_appid: xxx
+  #小程序秘钥
+  secret: xxx
+  #商户号
+  mchid: xxx
+  #证书路径
+  certurl: /Users/yongz/zkthink/cert/1218/cert_all/apiclient_cert.p12
+  #商家端端保证金支付回调地址
+  pc_notifyurl: ${spring.domain}/businessapi/activity/pay/rolBack
+  #C端订单取消退款回调地址
+  order_refund_notifyurl: ${spring.domain}/api/order/refund/rolBack
+  #C端支付回调地址
+  app_notifyurl: ${spring.domain}/api/order/pay/rolBack
+  #平台端售后同意退款回调地址
+  pc_refund_notifyurl: ${spring.domain}/businessapi/after/pay/rolBack
+  #商家端保证金退款回调地址
+  pc_bond_refund_notifyurl: ${spring.domain}/businessapi/activity/refund/rolBack
+  #商户秘钥
+  key: xxx
+  #私钥pem
+  privateKeyPath: /home/apiclient_key.pem
+  #证书pem
+  privateCertPath: /home/apiclient_cert.pem
+  #h5支付之后跳转地址
+  redirect_url: ${spring.domain}/h5/#/pages_category_page1/orderModule/index?isJumpBack=1
+  #小程序直播开播的消息模板
+  liveTemplateId: xxx
+  #小程序直播间应用id
+  liveAppId: xxx
+  #app支付的使用的接口版本 不是v3可不填默认用v1
+  app_pay_version: v3
+  #app端V3支付回调 以下5个配置都是v3支付相关的，如果使用v1随意填写即可
+  app_v3_notifyurl: ${spring.domain}/api/order/pay/v3RolBack
+  #apiV3秘钥
+  apiV3Key: xxx
+  #apiclient_cert.pem对应的序列号
+  mchSerialNo: xxx
+  #平台证书pem
+  platformCertPath: /home/wechatpay_xxxxxxxx.pem
+  #平台证书序列号
+  platformCertSerialNo: xx
+
+#企业微信相关配置
+wxwork:
+  #suiteId
+  suiteId: xxxxxx
+  #suiteTicket
+  suiteSecret: xx
+  #token
+  token: xxx
+  #aesKey
+  aesKey: xxx
+  #corpId
+  corpId: xxx
+  #corpSecret
+  corpSecret: xxx
+
+#支付宝设置
+alipay:
+  #支付宝appid
+  appid: xxx
+  #支付宝应用私钥
+  rsa_private_key: xxx
+  #支付宝内容解密key
+  decrypt_key: xxx
+  #支付宝公钥
+  alipay_public_key: xxx
+  #C端支付后端回调地址
+  app_notifyurl: ${spring.domain}/api/order/alipay/rolBack
+  #C端支付之后前端跳转地址
+  redirect_url: ${spring.domain}/h5/#/pages_category_page1/orderModule/index
+  #订单退款回调地址
+  refund_notifyurl: ${spring.domain}/api/order/alipayRefund/rolBack
+  #保证金支付成功回调地址
+  bond_notifyurl:
+  #花呗手续费类型 1-商户支付 2-用户支付
+  huabei_charge_type: 1
+  #花呗手续费比例 参考支付宝文档 https://opendocs.alipay.com/open/277/105952
+  huabei_feerate_list: 1.8,4.5,7.5
+
+#是否允许生成代码，生产环境设置为false
+generator:
+  enabled: false
+
+logging:
+  level:
+    com.shop.cereshop.app: info
+    org.springframework: warn
+
+#商品详情页面链接地址
+goods_url: ${spring.domain}/h5/#/pages_category_page1/goodsModule/goodsDetails?
+
+#店铺页面地址
+shop_url: ${spring.domain}/h5/#/pages_category_page1/store/index?
+
+#店铺招募页面地址
+recruit_url: ${spring.domain}/h5/#/pages_category_page1/distributionModule/recruit?
+

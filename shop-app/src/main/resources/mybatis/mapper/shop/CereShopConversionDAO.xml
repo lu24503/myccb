@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.shop.CereShopConversionDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopConversion">
+    <id column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_id, `type`, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_conversion
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_conversion
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopConversion">
+    insert into cere_shop_conversion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopConversion">
+    update cere_shop_conversion
+    <set>
+      <if test="type != null">
+        `type` = #{type,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CereShopConversion">
+    update cere_shop_conversion
+    set `type` = #{type,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_shop_conversion (shop_id,`type`,create_time) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.shopId},
+      #{item.type},
+      #{item.createTime}
+      )
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.platformtool.CerePlatformPoliteActivityDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    <result column="polite_id" jdbcType="BIGINT" property="politeId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
+    <result column="activity_type" jdbcType="BIT" property="activityType" />
+    <result column="threshold" jdbcType="DECIMAL" property="threshold" />
+    <result column="coupon_content" jdbcType="DECIMAL" property="couponContent" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.platformtool.CerePlatformPoliteActivity">
+    insert into cere_platform_polite_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="politeId != null">
+        polite_id,
+      </if>
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="activityName != null">
+        activity_name,
+      </if>
+      <if test="activityType != null">
+        activity_type,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="couponContent != null">
+        coupon_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="politeId != null">
+        #{politeId,jdbcType=BIGINT},
+      </if>
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null">
+        #{activityType,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=DECIMAL},
+      </if>
+      <if test="couponContent != null">
+        #{couponContent,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByPoliteId" resultMap="BaseResultMap">
+    select polite_id, activity_id, activity_name,
+           activity_type, threshold, coupon_content
+    from cere_platform_polite_activity
+    where polite_id = #{politeId}
+  </select>
+</mapper>

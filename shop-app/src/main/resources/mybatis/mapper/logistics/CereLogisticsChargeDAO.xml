@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.logistics.CereLogisticsChargeDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.logistics.CereLogisticsCharge">
+    <result column="logistics_id" jdbcType="BIGINT" property="logisticsId" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="second_weight" jdbcType="DECIMAL" property="second_weight" />
+    <result column="second_price" jdbcType="DECIMAL" property="second_price" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.logistics.CereLogisticsCharge">
+    insert into cere_logistics_charge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logisticsId != null">
+        logistics_id,
+      </if>
+      <if test="region != null and region!=''">
+        region,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="secondWeight != null">
+        second_weight,
+      </if>
+      <if test="secondPrice != null">
+        second_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logisticsId != null">
+        #{logisticsId,jdbcType=BIGINT},
+      </if>
+      <if test="region != null and region!=''">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="secondWeight != null">
+        #{secondWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="secondPrice != null">
+        #{secondPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

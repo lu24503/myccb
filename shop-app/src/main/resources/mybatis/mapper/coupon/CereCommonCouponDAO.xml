@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.coupon.CereCommonCouponDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.app.page.coupon.CommonCoupon">
+        <result column="source" jdbcType="INTEGER" property="source" />
+        <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+        <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+        <result column="take_start" jdbcType="VARCHAR" property="takeStart" />
+        <result column="take_end" jdbcType="VARCHAR" property="takeEnd" />
+        <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+        <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+        <result column="coupon_type" jdbcType="BIT" property="couponType" />
+        <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
+        <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney" />
+        <result column="receive_type" jdbcType="BIT" property="receiveType" />
+        <result column="frequency" jdbcType="INTEGER" property="frequency" />
+        <result column="stock_number" jdbcType="INTEGER" property="stockNumber" />
+        <result column="state" jdbcType="BIT" property="state" />
+        <result column="user_take_count" jdbcType="INTEGER" property="userTakeCount" />
+    </resultMap>
+
+    <select id="selectCouponList" resultMap="BaseResultMap">
+        select * from
+        (
+            select
+                1 as source,
+                activity_id as coupon_id,
+                activity_name as coupon_name,
+                activity_start_time as start_time,
+                activity_end_time as end_time,
+                discount_mode as coupon_type,
+                threshold as full_money,
+                coupon_content as reduce_money,
+                receive_type,
+                frequency,
+                stock_number,
+                3 as state,
+                0 as user_take_count
+            from cere_platform_activity
+            where activity_start_time &lt; now() and activity_end_time > now()
+            and state = 3
+            union all
+            select
+                2 as source,
+                shop_coupon_id as coupon_id,
+                coupon_name,
+                effective_start as start_time,
+                effective_end as end_time,
+                coupon_type,
+                threshold as full_money,
+                coupon_content as reduce_money,
+                receive_type,
+                frequency,
+                stock_number,
+                3 as state,
+                0 as user_take_count
+                from cere_shop_coupon
+            where effective_start &lt; now() and effective_end > now()
+            and state = 1 and type = 1
+        ) t
+        order by t.start_time asc
+    </select>
+
+    <select id="getChannelActivityCoupon" resultMap="BaseResultMap">
+        select
+                3 as source,
+                shop_coupon_id as coupon_id,
+                coupon_name,
+                take_start,
+                take_end,
+                effective_start as start_time,
+                effective_end as end_time,
+                coupon_type,
+                threshold as full_money,
+                coupon_content as reduce_money,
+                receive_type,
+                frequency,
+                stock_number,
+                3 as state,
+                0 as user_take_count
+                from cere_shop_coupon a join cere_shop_channel_activity_coupon b on b.coupon_id = a.shop_coupon_id
+                join cere_shop_channel_activity c on c.id = b.id
+            where a.take_start &lt; now() and a.take_end > now() and a.state = 1
+              and c.id = #{activityId} and c.start_time &lt; now() and c.end_time > now() and c.state = 1
+              and a.stock_number > 0
+    </select>
+
+</mapper>

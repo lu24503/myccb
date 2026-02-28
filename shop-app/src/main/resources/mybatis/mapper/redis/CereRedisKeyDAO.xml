@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.redis.CereRedisKeyDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.redis.CereRedisKey">
+    <result column="redis_key" jdbcType="VARCHAR" property="redisKey" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.redis.CereRedisKey">
+    insert into cere_redis_key
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="redisKey != null and redisKey!=''">
+        redis_key,
+      </if>
+      <if test="endTime != null and endTime!=''">
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="redisKey != null and redisKey!=''">
+        #{redisKey,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null and endTime!=''">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByKey" parameterType="com.shop.cereshop.commons.domain.redis.CereRedisKey">
+    UPDATE cere_redis_key SET end_time=#{endTime} where redis_key=#{redisKey}
+  </update>
+
+  <delete id="deleteByKey" parameterType="java.lang.Object">
+    DELETE FROM cere_redis_key where redis_key=#{key}
+  </delete>
+
+  <select id="findAll" resultType="com.shop.cereshop.commons.domain.redis.CereRedisKey">
+    SELECT * FROM cere_redis_key
+  </select>
+
+  <select id="findByKey" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT end_time FROM cere_redis_key where redis_key=#{key}
+  </select>
+</mapper>

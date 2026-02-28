@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.scene.CereShopSceneMemberCouponDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.scene.CereShopSceneMemberCoupon">
+    <result column="scene_id" jdbcType="BIGINT" property="sceneId" />
+    <result column="member_level_id" jdbcType="BIGINT" property="memberLevelId" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.scene.CereShopSceneMemberCoupon">
+    insert into cere_shop_scene_member_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        scene_id,
+      </if>
+      <if test="memberLevelId != null">
+        member_level_id,
+      </if>
+      <if test="couponId != null">
+        coupon_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sceneId != null">
+        #{sceneId,jdbcType=BIGINT},
+      </if>
+      <if test="memberLevelId != null">
+        #{memberLevelId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        #{couponId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectBySceneId" resultMap="BaseResultMap">
+    select scene_id, member_level_id, coupon_id
+    from cere_shop_scene_member_coupon
+    where scene_id = #{sceneId}
+  </select>
+</mapper>

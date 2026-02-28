@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.log.CerePlatformWebLogDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.log.CerePlatformWebLog">
+    <id column="web_log_id" jdbcType="BIGINT" property="webLogId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="params" jdbcType="VARCHAR" property="params" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="ip_source" jdbcType="VARCHAR" property="ipSource" />
+    <result column="describe" jdbcType="VARCHAR" property="describe" />
+    <result column="browser_name" jdbcType="VARCHAR" property="browserName" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    web_log_id, `name`, url, params, `type`, ip, ip_source, `describe`, browser_name,
+    `time`, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_web_log
+    where web_log_id = #{webLogId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_web_log
+    where web_log_id = #{webLogId,jdbcType=BIGINT}
+  </delete>
+  <!--<insert id="insert" keyColumn="web_log_id" keyProperty="webLogId" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformWebLog" useGeneratedKeys="true">
+    insert into cere_platform_web_log (`name`, url, params,
+      `type`, ip, ip_source, `describe`,
+      browser_name, `time`, create_time
+      )
+    values (#{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR},
+      #{type,jdbcType=BIT}, #{ip,jdbcType=VARCHAR}, #{ipSource,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR},
+      #{browserName,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}
+      )
+  </insert>-->
+  <insert id="insertSelective" keyColumn="web_log_id" keyProperty="webLogId" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformWebLog" useGeneratedKeys="true">
+    insert into cere_platform_web_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="params != null">
+        params,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="ipSource != null">
+        ip_source,
+      </if>
+      <if test="describe != null">
+        `describe`,
+      </if>
+      <if test="browserName != null">
+        browser_name,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="ipSource != null">
+        #{ipSource,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="browserName != null">
+        #{browserName,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformWebLog">
+    update cere_platform_web_log
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        params = #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=BIT},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="ipSource != null">
+        ip_source = #{ipSource,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="browserName != null">
+        browser_name = #{browserName,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where web_log_id = #{webLogId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.log.CerePlatformWebLog">
+    update cere_platform_web_log
+    set `name` = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      params = #{params,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=BIT},
+      ip = #{ip,jdbcType=VARCHAR},
+      ip_source = #{ipSource,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      browser_name = #{browserName,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where web_log_id = #{webLogId,jdbcType=BIGINT}
+  </update>
+</mapper>

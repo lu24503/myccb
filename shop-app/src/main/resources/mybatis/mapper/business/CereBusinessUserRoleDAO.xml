@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.business.CereBusinessUserRoleDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.business.CereBusinessUserRole">
+    <result column="business_user_id" jdbcType="BIGINT" property="businessUserId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.business.CereBusinessUserRole">
+    insert into cere_business_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="businessUserId != null">
+        business_user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="businessUserId != null">
+        #{businessUserId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

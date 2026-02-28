@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereProductSkuDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductSku">
+    <id column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="SKU" jdbcType="VARCHAR" property="SKU" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="stock_number" jdbcType="INTEGER" property="stockNumber" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="weight" jdbcType="DECIMAL" property="weight" />
+    <result column="sku_image" jdbcType="VARCHAR" property="skuImage" />
+    <result column="style" jdbcType="BIT" property="style" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sku_id, product_id,SKU, price, original_price, stock_number,total, weight,
+    sku_image, `style`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_product_sku
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_product_sku
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="sku_id" keyProperty="skuId" parameterType="com.shop.cereshop.commons.domain.product.CereProductSku" useGeneratedKeys="true">
+    insert into cere_product_sku
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="SKU != null and SKU!=''">
+        SKU,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="originalPrice != null">
+        original_price,
+      </if>
+      <if test="stockNumber != null">
+        stock_number,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="skuImage != null and skuImage!=''">
+        sku_image,
+      </if>
+      <if test="style != null">
+        `style`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="SKU != null and SKU!=''">
+        #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null">
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockNumber != null">
+        #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="skuImage != null and skuImage!=''">
+        #{skuImage,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null">
+        #{style,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    update cere_product_sku
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="SKU != null and SKU!=''">
+        SKU = #{SKU,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null">
+        original_price = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="stockNumber != null">
+        stock_number = #{stockNumber,jdbcType=INTEGER},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="skuImage != null and skuImage!=''">
+        sku_image = #{skuImage,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null">
+        `style` = #{style,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    update cere_product_sku
+    set product_id = #{productId,jdbcType=BIGINT},
+    SKU = #{SKU,jdbcType=VARCHAR},
+    price = #{price,jdbcType=DECIMAL},
+    original_price = #{originalPrice,jdbcType=DECIMAL},
+    stock_number = #{stockNumber,jdbcType=INTEGER},
+    total = #{total,jdbcType=INTEGER},
+    weight = #{weight,jdbcType=DECIMAL},
+    sku_image = #{skuImage,jdbcType=VARCHAR},
+    `style` = #{style,jdbcType=BIT},
+    create_time = #{createTime,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=VARCHAR}
+    where sku_id = #{skuId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSkuNames" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.SkuName">
+    SELECT sku_name,name_code,sku_id from cere_sku_name
+    where sku_id in (SELECT sku_id from cere_product_sku where product_id=#{productId})
+    GROUP BY name_code
+  </select>
+
+  <select id="findSkuValues" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.SkuValue">
+    SELECT sku_value,value_code from cere_sku_name
+    where sku_id in (SELECT sku_id from cere_product_sku where product_id=#{productId})
+    and sku_name=#{skuName}
+    GROUP BY value_code
+  </select>
+
+  <select id="findValuesByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.SkuValue">
+    SELECT sku_name,sku_value,value_code FROM cere_sku_name a
+    LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+    where b.product_id=#{productId}
+    GROUP BY value_code
+  </select>
+
+  <select id="findOneValues" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.SkuValue">
+    SELECT sku_value,value_code from cere_sku_name
+    where sku_id=#{skuId}
+  </select>
+
+  <select id="findSku" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductSkus">
+    SELECT b.shop_id,a.product_id,a.sku_id,b.product_name,b.if_huabei,a.original_price,a.weight,
+    IF(d.image IS NULL OR d.image='',c.product_image,d.image) image,a.stock_number,a.SKU,b.if_logistics,
+    IF(m.price IS NULL,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,a.price,h.price),n.seckill_price),m.price) price from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price,MIN(start_time) FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where a.sku_id=#{skuId} and b.state in (0,1)) m ON a.sku_id=m.sku_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price,MIN(effective_start) FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where a.sku_id=#{skuId} and b.state in (0,1)) n ON a.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price,MIN(start_time) FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where a.sku_id=#{skuId} and b.state in (0,1)) h ON a.sku_id=h.sku_id
+    where a.sku_id=#{skuId}
+  </select>
+
+  <select id="findFirstSku" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductSkus">
+    SELECT a.shop_id,a.product_id,a.product_name,a.if_huabei,c.sku_id,c.original_price,a.if_logistics,
+    c.weight,c.SKU,c.stock_number,IF(d.image IS NULL,b.product_image,d.image) image,
+    IF(m.price IS NULL,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,c.price,h.price),n.seckill_price),m.price) price from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) b ON b.product_id=a.product_id
+    LEFT JOIN (SELECT a.product_id,a.sku_id,a.original_price,a.price,a.weight,a.stock_number,a.SKU from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id LIMIT 1) d ON c.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price,MIN(start_time) FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) m ON c.sku_id=m.sku_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price,MIN(effective_start) FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) n ON c.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price,MIN(start_time) FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) h ON c.sku_id=h.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findSimpleSkuByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    SELECT
+      a.sku_id,
+      a.stock_number,
+      a.total,
+      IF(d.image IS NULL,c.product_image,d.image) image,
+      a.original_price,
+      a.price,
+      f.valueCodes
+    from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+      GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT GROUP_CONCAT(value_code) valueCodes, sku_id from cere_sku_name GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findSkuByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    SELECT a.sku_id,a.stock_number,
+    a.original_price,
+    IF(d.image IS NULL,c.product_image,d.image) image,
+    IF(m.price IS NULL,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,a.price,h.price),n.seckill_price),m.price) price,
+    IF(m.price IS NULL,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,0,3),2),1) activityType from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.shop_group_work_id,a.sku_id,a.price,MIN(start_time) FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) m ON a.sku_id=m.sku_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price,MIN(effective_start) FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) n ON a.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price,MIN(start_time) FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where a.product_id=#{productId} and b.state in (0,1) GROUP BY a.sku_id) h ON a.sku_id=h.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findTool" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.SkuTool">
+    SELECT IF(m.shop_group_work_id IS NULL,IF(n.shop_seckill_id IS NULL,h.if_enable,n.if_enable),m.if_enable) if_enable,
+    IF(m.shop_group_work_id IS NULL,IF(n.shop_seckill_id IS NULL,h.enable_time,n.enable_time),m.enable_time) enable_time,
+    IF(m.shop_group_work_id IS NULL,IF(n.shop_seckill_id IS NULL,h.state,n.state),m.state) state,
+    IF(m.shop_group_work_id IS NULL,IF(n.shop_seckill_id IS NULL,h.start_time,n.effective_start),m.start_time) start_time,
+    m.shop_group_work_id,n.shop_seckill_id,h.shop_discount_id,
+    IF(m.shop_group_work_id IS NULL,IF(n.shop_seckill_id IS NULL,h.end_time,n.effective_end),m.end_time) end_time FROM cere_shop_product a
+    LEFT JOIN (SELECT a.shop_group_work_id,a.product_id,a.price,MIN(start_time),b.if_enable,b.enable_time,b.state,b.start_time,b.end_time FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where a.product_id=#{productId} and b.state in (0,1)) m ON a.product_id=m.product_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.product_id,a.number,a.total,a.seckill_price,MIN(effective_start),b.if_enable,b.enable_time,b.state,b.effective_start,b.effective_end FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_seckill b ON a.shop_seckill_id=b.shop_seckill_id
+    where a.product_id=#{productId} and b.state in (0,1)) n ON a.product_id=n.product_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.product_id,a.number,a.total,a.price,MIN(start_time),b.if_enable,b.enable_time,b.state,b.start_time,b.end_time FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_discount b ON a.shop_discount_id=b.shop_discount_id
+    where a.product_id=#{productId} and b.state in (0,1)) h ON a.product_id=h.product_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findGroupWorkSkuByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    SELECT a.sku_id,a.original_price,IF(e.price IS NULL,a.price,e.price) price,a.price sale_price,a.stock_number,
+    a.total,IF(d.image IS NULL OR d.image='',c.product_image,d.image) image,f.valueCodes,
+    IF(e.price IS NULL,0,1) activityType from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN cere_shop_group_work_detail e ON a.sku_id=e.sku_id and e.shop_group_work_id=#{shopGroupWorkId}
+    LEFT JOIN (SELECT GROUP_CONCAT(value_code) valueCodes,sku_id from cere_sku_name GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findSeckillSkuByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    SELECT a.sku_id,a.original_price,IF(e.seckill_price IS NULL,a.price,e.seckill_price) price,a.stock_number,
+    a.total,IF(d.image IS NULL OR d.image='',c.product_image,d.image) image,f.valueCodes,
+    IF(e.seckill_price IS NULL,0,2) activityType from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN cere_shop_seckill_detail e ON a.sku_id=e.sku_id and e.shop_seckill_id=#{shopSeckillId}
+    LEFT JOIN (SELECT GROUP_CONCAT(value_code) valueCodes,sku_id from cere_sku_name GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findDiscountSkuByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    SELECT a.sku_id,a.original_price,IF(e.price IS NULL,a.price,e.price) price,a.stock_number,
+    a.total,IF(d.image IS NULL OR d.image='',c.product_image,d.image) image,f.valueCodes,
+    IF(e.price IS NULL,0,3) activityType from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) d ON a.sku_id=d.sku_id
+    LEFT JOIN cere_shop_discount_detail e ON a.sku_id=e.sku_id and e.shop_discount_id=#{shopDiscountId}
+    LEFT JOIN (SELECT GROUP_CONCAT(value_code) valueCodes,sku_id from cere_sku_name GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where a.product_id=#{productId}
+  </select>
+
+  <select id="findValueBySkuId" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT GROUP_CONCAT(value_code) from cere_sku_name where sku_id=#{skuId}
+  </select>
+
+  <select id="findStockNumberBySkuId" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT IF(b.if_oversold=1,999999,a.stock_number) from cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    where a.sku_id=#{skuId}
+  </select>
+
+  <select id="findStockNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT stock_number from cere_product_sku
+    where sku_id=#{skuId}
+  </select>
+
+  <select id="findStockNumberBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT
+      a.product_id,
+      a.sku_id,
+      b.product_name,
+      a.weight,
+      a.stock_number,
+      b.if_oversold,
+      a.SKU,
+      c.`value`,
+      b.if_logistics,
+      a.original_price,
+      a.price,
+      b.if_credit,
+      b.credit_limit,
+      IF(c.image IS NULL OR c.image = '', d.product_image, c.image) image
+    FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id = b.product_id
+    LEFT JOIN (
+      SELECT sku_id, image, GROUP_CONCAT(sku_value) `value`
+      from cere_sku_name GROUP BY sku_id
+    ) c ON a.sku_id = c.sku_id
+    LEFT JOIN (
+      SELECT a.product_id, a.product_image from cere_product_image a, cere_shop_product b
+      where a.product_id = b.product_id GROUP BY a.product_id
+    ) d ON a.product_id = d.product_id
+    where a.sku_id in (
+      <foreach collection="skus" item="item" index="index" separator=",">
+        #{item.skuId}
+      </foreach>
+    )
+  </select>
+
+  <select id="findGroupWorkStockNumberBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,a.original_price,a.weight,a.stock_number,b.if_oversold,
+    a.SKU,c.`value`,b.if_logistics,e.price,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_shop_group_work_detail e ON a.sku_id=e.sku_id
+    where e.shop_group_work_id=#{shopGroupWorkId} and a.sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <select id="findSeckillStockNumberBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,a.weight,a.stock_number,b.if_oversold,
+    a.SKU,c.`value`,b.if_logistics,e.seckill_price price,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_shop_seckill_detail e ON a.sku_id=e.sku_id
+    where e.shop_seckill_id=#{shopSeckillId} and a.sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <select id="findDiscountStockNumberBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,a.weight,a.stock_number,b.if_oversold,
+    a.SKU,c.`value`,b.if_logistics,e.price,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_shop_discount_detail e ON a.sku_id=e.sku_id
+    where e.shop_discount_id=#{shopDiscountId} and a.sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <select id="findStockNumberByOrderId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    SELECT a.number stockNumber,a.sku_id from cere_order_product a
+    LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+    LEFT JOIN cere_shop_product c ON b.product_id=c.product_id
+    where a.order_id=#{orderId}
+  </select>
+
+  <update id="updateBatch" parameterType="java.util.List" >
+    update cere_product_sku
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="stock_number =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.stockNumber!=null">
+            when sku_id=#{i.skuId} then #{i.stockNumber}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      sku_id=#{i.skuId}
+    </foreach>
+  </update>
+
+  <update id="updateBatchSkus" parameterType="java.util.List" >
+    update cere_product_sku
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="stock_number =case" suffix="end,">
+        <foreach collection="list" item="i" index="index">
+          <if test="i.stockNumber!=null">
+            when sku_id=#{i.skuId} then #{i.stockNumber}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where
+    <foreach collection="list" separator="or" item="i" index="index" >
+      sku_id=#{i.skuId}
+    </foreach>
+  </update>
+
+  <update id="rollbackStock">
+    update cere_product_sku
+    set stock_number = stock_number + #{buyNumber}
+    where sku_id = #{skuId}
+  </update>
+
+  <select id="findSkuBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,a.weight,
+    a.SKU,c.`value`,b.if_logistics,IF(n.seckill_price IS NULL,
+    IF(h.price IS NULL,a.price,h.price),n.seckill_price) price,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN (SELECT a.shop_seckill_id,a.sku_id,a.number,a.total,a.seckill_price FROM cere_shop_seckill_detail a
+    INNER JOIN (SELECT a.* from (SELECT shop_seckill_id,shop_id FROM cere_shop_seckill where state=1 ORDER BY effective_start) a
+    GROUP BY a.shop_id) b
+    ON a.shop_seckill_id=b.shop_seckill_id) n ON a.sku_id=n.sku_id
+    LEFT JOIN (SELECT a.shop_discount_id,a.sku_id,a.number,a.total,a.price FROM cere_shop_discount_detail a
+    INNER JOIN (SELECT a.* from (SELECT shop_discount_id,shop_id FROM cere_shop_discount where state=1 ORDER BY start_time) a
+    GROUP BY a.shop_id) b
+    ON a.shop_discount_id=b.shop_discount_id) h ON a.sku_id=h.sku_id
+    where a.sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <select id="findOriginalSkuBySkus" parameterType="java.util.List" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,a.weight,
+    a.SKU,c.`value`,b.if_logistics,a.price,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    where a.sku_id in (
+    <foreach collection="skus" item="item" index="index" separator=",">
+      #{item.skuId}
+    </foreach>
+    )
+  </select>
+
+  <select id="findSkuBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,e.price,a.weight,
+    a.SKU,c.`value`,b.if_logistics,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_shop_group_work_detail e ON a.sku_id=e.sku_id
+    where a.sku_id=#{skuId}
+  </select>
+
+  <select id="findSkuBySkuIdAndWorkId" parameterType="com.shop.cereshop.app.param.groupwork.GroupWorkSettlementParam" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,a.sku_id,b.product_name,e.price,a.weight,
+    a.SKU,c.`value`,b.if_logistics, b.if_credit, b.credit_limit,
+    IF(c.image IS NULL OR c.image='',d.product_image,c.image) image FROM cere_product_sku a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT sku_id,image,GROUP_CONCAT(sku_value) `value`
+    from cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_shop_group_work_detail e ON a.sku_id=e.sku_id
+    where a.sku_id=#{skuId} and e.shop_group_work_id=#{shopGroupWorkId}
+  </select>
+
+  <select id="findSkuByOrderId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT d.shop_id,a.product_id,a.sku_id,a.product_price*a.number total,
+    a.product_price price,a.image,a.number,a.weight,a.SKU,c.`value`,
+    a.product_name, a.logistics_price, b.pricing_price, a.activity_type,
+    0 as discount_price, a.actual_price
+    from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,sku_id
+    FROM cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+    where a.order_id=#{orderId}
+  </select>
+
+  <select id="findSkuByIds" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT d.shop_id,a.product_id,a.sku_id,a.product_price*a.number total,
+    a.product_price price,a.image,a.number,a.weight,a.SKU,c.`value`,
+    a.product_name, a.logistics_price, b.pricing_price, a.activity_type,
+    b.discount_price, a.actual_price
+    from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN (SELECT GROUP_CONCAT(sku_value) `value`,sku_id
+    FROM cere_sku_name GROUP BY sku_id) c ON a.sku_id=c.sku_id
+    LEFT JOIN cere_platform_shop d ON b.shop_id=d.shop_id
+    where a.order_id=#{orderId} and a.sku_id NOT in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </select>
+
+  <select id="findAll" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    SELECT sku_id,stock_number FROM cere_product_sku
+  </select>
+
+  <select id="selectSkuInfo" resultType="com.shop.cereshop.commons.domain.tool.CereComposeSkuInfo">
+    select a.sku_id, a.price, group_concat(b.sku_value) as skuName from cere_product_sku a
+    join cere_sku_name b on b.sku_id = a.sku_id
+    where a.product_id = #{productId}
+    group by a.sku_id
+  </select>
+  <select id="findProductStockInfo" resultType="com.shop.cereshop.app.page.product.ProductStockInfo">
+    select product_id, sum(stock_number) as stockNumber, sum(total) as total
+    from cere_product_sku where product_id = #{productId}
+  </select>
+  <select id="selectSkuIdListByProductId" resultType="java.lang.Long">
+    select sku_id
+    from cere_product_sku where product_id = #{productId}
+  </select>
+  <select id="selectProductIAndSkuId" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    select a.product_id, a.sku_id from cere_product_sku a
+    join cere_shop_product b on a.product_id = b.product_id and b.shop_id = #{shopId}
+    and b.shelve_state = 1
+  </select>
+  <select id="findSkuValueBySkuId" resultType="com.shop.cereshop.commons.domain.product.SkuValue">
+    SELECT sku_value, value_code from cere_sku_name
+    where sku_id = #{skuId}
+    and sku_name = #{skuName}
+    GROUP BY value_code
+  </select>
+  <select id="selectMatchSceneList" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    select a.* from cere_product_sku a
+    join cere_sku_member_real_info b on b.sku_id = a.sku_id and b.activity_type not in
+    <foreach collection="filterActivityTypeList" item="activityType" open="(" separator="," close=")">
+      #{activityType}
+    </foreach>
+    and b.member_level_id = 0
+    join cere_shop_product c on b.product_id = c.product_id and c.shop_id = #{shopId} and c.shelve_state = 1
+  </select>
+  <select id="selectSceneTypeList" resultType="com.shop.cereshop.commons.domain.product.CereProductSku">
+    select a.* from cere_product_sku a
+    join cere_sku_member_real_info b on b.sku_id = a.sku_id and b.activity_type = #{sceneType} and b.member_level_id = 0
+    join cere_shop_product c on b.product_id = c.product_id and c.shop_id = #{shopId} and c.shelve_state = 1
+  </select>
+  <select id="findStockNumberByProductId" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    select
+      sku_id,
+      product_id,
+      stock_number,
+      total
+    from cere_product_sku
+    where product_id = #{productId}
+  </select>
+
+  <select id="findCartSkuList" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT
+      a.product_id,
+      a.sku_id,
+      a.weight,
+      a.stock_number,
+      a.SKU,
+      a.original_price,
+      a.price,
+
+      b.if_logistics,
+      b.if_oversold,
+      b.product_name,
+      b.if_credit,
+      b.credit_limit,
+
+      c.`value`,
+      IF(c.image IS NULL OR c.image = '', d.product_image, c.image) image
+    FROM cere_product_sku a
+    JOIN cere_shop_product b ON a.product_id = b.product_id
+    LEFT JOIN (
+      select
+        sku_id,
+        image,
+        GROUP_CONCAT(sku_value) as `value`
+      from cere_sku_name
+      where sku_id in
+      (
+        <foreach collection="skuIdList" item="skuId" separator=",">
+          #{skuId}
+        </foreach>
+      )
+      group by sku_id
+    ) c on c.sku_id = a.sku_id
+    LEFT JOIN cere_product_image d ON a.product_id = d.product_id
+    where a.sku_id in
+    (
+      <foreach collection="skuIdList" item="skuId" separator=",">
+        #{skuId}
+      </foreach>
+    )
+    group by a.sku_id
+  </select>
+</mapper>

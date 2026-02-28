@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereCommentWordDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereCommentWord">
+    <result column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="word_id" jdbcType="BIGINT" property="wordId" />
+    <result column="key_word" jdbcType="VARCHAR" property="keyWord" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereCommentWord">
+    insert into cere_comment_word
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="wordId != null">
+        word_id,
+      </if>
+      <if test="keyWord != null">
+        key_word,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="wordId != null">
+        #{wordId,jdbcType=BIGINT},
+      </if>
+      <if test="keyWord != null">
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into cere_comment_word (comment_id, product_id, word_id,
+    key_word) values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.commentId},
+      #{item.productId},
+      #{item.wordId},
+      #{item.keyWord}
+      )
+    </foreach>
+  </insert>
+
+  <select id="findByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.CommentWord">
+    SELECT key_word,COUNT(word_id) count from cere_comment_word
+    where product_id=#{productId}
+    GROUP BY word_id
+  </select>
+</mapper>

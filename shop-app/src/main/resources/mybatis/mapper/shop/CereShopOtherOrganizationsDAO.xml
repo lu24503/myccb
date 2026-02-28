@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.shop.CereShopOtherOrganizationsDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopOtherOrganizations">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="other_name" jdbcType="VARCHAR" property="otherName" />
+    <result column="other_code" jdbcType="VARCHAR" property="otherCode" />
+    <result column="other_region" jdbcType="VARCHAR" property="otherRegion" />
+    <result column="other_adress" jdbcType="VARCHAR" property="otherAdress" />
+    <result column="other_start_time" jdbcType="VARCHAR" property="otherStartTime" />
+    <result column="other_end_time" jdbcType="VARCHAR" property="otherEndTime" />
+    <result column="other_license" jdbcType="VARCHAR" property="otherLicense" />
+    <result column="other_operator" jdbcType="VARCHAR" property="otherOperator" />
+    <result column="other_card_type" jdbcType="BIGINT" property="otherCardType" />
+    <result column="other_id_card" jdbcType="VARCHAR" property="otherIdCard" />
+    <result column="other_card_start_time" jdbcType="VARCHAR" property="otherCardStartTime" />
+    <result column="other_card_end_time" jdbcType="VARCHAR" property="otherCardEndTime" />
+    <result column="other_card_positive" jdbcType="VARCHAR" property="otherCardPositive" />
+    <result column="other_card_side" jdbcType="VARCHAR" property="otherCardSide" />
+    <result column="administrators_phone" jdbcType="VARCHAR" property="administratorsPhone" />
+    <result column="administrators_email" jdbcType="VARCHAR" property="administratorsEmail" />
+    <result column="account_open_bank" jdbcType="BIGINT" property="accountOpenBank" />
+    <result column="account_bank_region" jdbcType="VARCHAR" property="accountBankRegion" />
+    <result column="account_bank_card" jdbcType="VARCHAR" property="accountBankCard" />
+    <result column="shop_abbreviation" jdbcType="VARCHAR" property="shopAbbreviation" />
+    <result column="service_phone" jdbcType="VARCHAR" property="servicePhone" />
+    <result column="service_providing" jdbcType="BIGINT" property="serviceProviding" />
+    <result column="shop_index_image" jdbcType="VARCHAR" property="shopIndexImage" />
+    <result column="shop_backstage_image" jdbcType="VARCHAR" property="shopBackstageImage" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+
+  <insert id="insertParam" parameterType="com.shop.cereshop.app.param.shop.CereShopOtherOrganizationsParam">
+    insert into cere_shop_other_organizations (shop_id, other_name,
+    other_code, other_region, other_adress,
+    other_start_time, other_end_time, other_license,
+    other_operator, other_card_type, other_id_card,
+    other_card_start_time, other_card_end_time, other_card_positive,
+    other_card_side, administrators_phone, administrators_email,
+    account_open_bank, account_bank_region, account_bank_card,
+    shop_abbreviation, service_phone, service_providing,
+    shop_index_image, shop_backstage_image, remark,
+    create_time, update_time
+    )
+    values (#{shopId,jdbcType=BIGINT}, #{otherName,jdbcType=VARCHAR},
+    #{otherCode,jdbcType=VARCHAR}, #{otherRegion,jdbcType=VARCHAR}, #{otherAdress,jdbcType=VARCHAR},
+    #{otherStartTime,jdbcType=VARCHAR}, #{otherEndTime,jdbcType=VARCHAR}, #{otherLicense,jdbcType=VARCHAR},
+    #{otherOperator,jdbcType=VARCHAR}, #{otherCardType,jdbcType=BIGINT}, #{otherIdCard,jdbcType=VARCHAR},
+    #{otherCardStartTime,jdbcType=VARCHAR}, #{otherCardEndTime,jdbcType=VARCHAR}, #{otherCardPositive,jdbcType=VARCHAR},
+    #{otherCardSide,jdbcType=VARCHAR}, #{administratorsPhone,jdbcType=VARCHAR}, #{administratorsEmail,jdbcType=VARCHAR},
+    #{accountOpenBank,jdbcType=BIGINT}, #{accountBankRegion,jdbcType=VARCHAR}, #{accountBankCard,jdbcType=VARCHAR},
+    #{shopAbbreviation,jdbcType=VARCHAR}, #{servicePhone,jdbcType=VARCHAR}, #{serviceProviding,jdbcType=BIGINT},
+    #{shopIndexImage,jdbcType=VARCHAR}, #{shopBackstageImage,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+    #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopOtherOrganizations">
+    insert into cere_shop_other_organizations
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="otherName != null and otherName!=''">
+        other_name,
+      </if>
+      <if test="otherCode != null and otherCode!=''">
+        other_code,
+      </if>
+      <if test="otherRegion != null and otherRegion!=''">
+        other_region,
+      </if>
+      <if test="otherAdress != null and otherAdress!=''">
+        other_adress,
+      </if>
+      <if test="otherStartTime != null and otherStartTime!=''">
+        other_start_time,
+      </if>
+      <if test="otherEndTime != null and otherEndTime!=''">
+        other_end_time,
+      </if>
+      <if test="otherLicense != null and otherLicense!=''">
+        other_license,
+      </if>
+      <if test="otherOperator != null and otherOperator!=''">
+        other_operator,
+      </if>
+      <if test="otherCardType != null">
+        other_card_type,
+      </if>
+      <if test="otherIdCard != null and otherIdCard!=''">
+        other_id_card,
+      </if>
+      <if test="otherCardStartTime != null and otherCardStartTime!=''">
+        other_card_start_time,
+      </if>
+      <if test="otherCardEndTime != null and otherCardEndTime!=''">
+        other_card_end_time,
+      </if>
+      <if test="otherCardPositive != null and otherCardPositive!=''">
+        other_card_positive,
+      </if>
+      <if test="otherCardSide != null and otherCardSide!=''">
+        other_card_side,
+      </if>
+      <if test="administratorsPhone != null and administratorsPhone!=''">
+        administrators_phone,
+      </if>
+      <if test="administratorsEmail != null and administratorsEmail!=''">
+        administrators_email,
+      </if>
+      <if test="accountOpenBank != null">
+        account_open_bank,
+      </if>
+      <if test="accountBankRegion != null and accountBankRegion!=''">
+        account_bank_region,
+      </if>
+      <if test="accountBankCard != null and accountBankCard!=''">
+        account_bank_card,
+      </if>
+      <if test="shopAbbreviation != null and shopAbbreviation!=''">
+        shop_abbreviation,
+      </if>
+      <if test="servicePhone != null and servicePhone!=''">
+        service_phone,
+      </if>
+      <if test="serviceProviding != null">
+        service_providing,
+      </if>
+      <if test="shopIndexImage != null and shopIndexImage!=''">
+        shop_index_image,
+      </if>
+      <if test="shopBackstageImage != null and shopBackstageImage!=''">
+        shop_backstage_image,
+      </if>
+      <if test="remark != null and remark!=''">
+        remark,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="otherName != null and otherName!=''">
+        #{otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null and otherCode!=''">
+        #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherRegion != null and otherRegion!=''">
+        #{otherRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAdress != null and otherAdress!=''">
+        #{otherAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStartTime != null and otherStartTime!=''">
+        #{otherStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherEndTime != null and otherEndTime!=''">
+        #{otherEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherLicense != null and otherLicense!=''">
+        #{otherLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="otherOperator != null and otherOperator!=''">
+        #{otherOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardType != null">
+        #{otherCardType,jdbcType=BIGINT},
+      </if>
+      <if test="otherIdCard != null and otherIdCard!=''">
+        #{otherIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardStartTime != null and otherCardStartTime!=''">
+        #{otherCardStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardEndTime != null and otherCardEndTime!=''">
+        #{otherCardEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardPositive != null and otherCardPositive!=''">
+        #{otherCardPositive,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardSide != null and otherCardSide!=''">
+        #{otherCardSide,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsPhone != null and administratorsPhone!=''">
+        #{administratorsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsEmail != null and administratorsEmail!=''">
+        #{administratorsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountOpenBank != null">
+        #{accountOpenBank,jdbcType=BIGINT},
+      </if>
+      <if test="accountBankRegion != null and accountBankRegion!=''">
+        #{accountBankRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBankCard != null and accountBankCard!=''">
+        #{accountBankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAbbreviation != null and shopAbbreviation!=''">
+        #{shopAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhone != null and servicePhone!=''">
+        #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceProviding != null">
+        #{serviceProviding,jdbcType=BIGINT},
+      </if>
+      <if test="shopIndexImage != null and shopIndexImage!=''">
+        #{shopIndexImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBackstageImage != null and shopBackstageImage!=''">
+        #{shopBackstageImage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateOrganizations" parameterType="com.shop.cereshop.commons.domain.shop.CereShopOtherOrganizations">
+    UPDATE cere_shop_other_organizations
+    <set>
+      <if test="otherName != null and otherName!=''">
+        other_name = #{otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null and otherCode!=''">
+        other_code = #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherRegion != null and otherRegion!=''">
+        other_region = #{otherRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAdress != null and otherAdress!=''">
+        other_adress = #{otherAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStartTime != null and otherStartTime!=''">
+        other_start_time = #{otherStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherEndTime != null and otherEndTime!=''">
+        other_end_time = #{otherEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherLicense != null and otherLicense!=''">
+        other_license = #{otherLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="otherOperator != null and otherOperator!=''">
+        other_operator = #{otherOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardType != null">
+        other_card_type = #{otherCardType,jdbcType=BIGINT},
+      </if>
+      <if test="otherIdCard != null and otherIdCard!=''">
+        other_id_card = #{otherIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardStartTime != null and otherCardStartTime!=''">
+        other_card_start_time = #{otherCardStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardEndTime != null and otherCardEndTime!=''">
+        other_card_end_time = #{otherCardEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardPositive != null and otherCardPositive!=''">
+        other_card_positive = #{otherCardPositive,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardSide != null and otherCardSide!=''">
+        other_card_side = #{otherCardSide,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsPhone != null and administratorsPhone!=''">
+        administrators_phone = #{administratorsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsEmail != null and administratorsEmail!=''">
+        administrators_email = #{administratorsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountOpenBank != null">
+        account_open_bank = #{accountOpenBank,jdbcType=BIGINT},
+      </if>
+      <if test="accountBankRegion != null and accountBankRegion!=''">
+        account_bank_region = #{accountBankRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBankCard != null and accountBankCard!=''">
+        account_bank_card = #{accountBankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAbbreviation != null and shopAbbreviation!=''">
+        shop_abbreviation = #{shopAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhone != null and servicePhone!=''">
+        service_phone = #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceProviding != null">
+        service_providing = #{serviceProviding,jdbcType=BIGINT},
+      </if>
+      <if test="shopIndexImage != null and shopIndexImage!=''">
+        shop_index_image = #{shopIndexImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBackstageImage != null and shopBackstageImage!=''">
+        shop_backstage_image = #{shopBackstageImage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id=#{shopId}
+  </update>
+
+  <update id="updateParam" parameterType="com.shop.cereshop.app.param.shop.CereShopOtherOrganizationsParam">
+    UPDATE cere_shop_other_organizations
+    <set>
+      <if test="otherName != null and otherName!=''">
+        other_name = #{otherName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCode != null and otherCode!=''">
+        other_code = #{otherCode,jdbcType=VARCHAR},
+      </if>
+      <if test="otherRegion != null and otherRegion!=''">
+        other_region = #{otherRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="otherAdress != null and otherAdress!=''">
+        other_adress = #{otherAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="otherStartTime != null and otherStartTime!=''">
+        other_start_time = #{otherStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherEndTime != null and otherEndTime!=''">
+        other_end_time = #{otherEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherLicense != null and otherLicense!=''">
+        other_license = #{otherLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="otherOperator != null and otherOperator!=''">
+        other_operator = #{otherOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardType != null">
+        other_card_type = #{otherCardType,jdbcType=BIGINT},
+      </if>
+      <if test="otherIdCard != null and otherIdCard!=''">
+        other_id_card = #{otherIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardStartTime != null and otherCardStartTime!=''">
+        other_card_start_time = #{otherCardStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardEndTime != null and otherCardEndTime!=''">
+        other_card_end_time = #{otherCardEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardPositive != null and otherCardPositive!=''">
+        other_card_positive = #{otherCardPositive,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCardSide != null and otherCardSide!=''">
+        other_card_side = #{otherCardSide,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsPhone != null and administratorsPhone!=''">
+        administrators_phone = #{administratorsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorsEmail != null and administratorsEmail!=''">
+        administrators_email = #{administratorsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="accountOpenBank != null">
+        account_open_bank = #{accountOpenBank,jdbcType=BIGINT},
+      </if>
+      <if test="accountBankRegion != null and accountBankRegion!=''">
+        account_bank_region = #{accountBankRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBankCard != null and accountBankCard!=''">
+        account_bank_card = #{accountBankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAbbreviation != null and shopAbbreviation!=''">
+        shop_abbreviation = #{shopAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhone != null and servicePhone!=''">
+        service_phone = #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceProviding != null">
+        service_providing = #{serviceProviding,jdbcType=BIGINT},
+      </if>
+      <if test="shopIndexImage != null and shopIndexImage!=''">
+        shop_index_image = #{shopIndexImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBackstageImage != null and shopBackstageImage!=''">
+        shop_backstage_image = #{shopBackstageImage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark!=''">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id=#{shopId}
+  </update>
+
+  <select id="findByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopOtherOrganizations">
+    SELECT * FROM cere_shop_other_organizations where shop_id=#{shopId}
+  </select>
+</mapper>

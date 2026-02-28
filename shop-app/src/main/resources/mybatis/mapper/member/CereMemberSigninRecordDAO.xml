@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.member.CereMemberSigninRecordDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.member.CereMemberSigninRecord">
+    <id column="signin_id" jdbcType="BIGINT" property="signinId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="term_id" jdbcType="INTEGER" property="termId" />
+    <result column="growth" jdbcType="INTEGER" property="growth" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    signin_id, buyer_user_id, term_id, growth, create_time, update_time
+  </sql>
+  <select id="selectSigninRecordList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_member_signin_record
+    where buyer_user_id = #{buyerUserId}
+    order by create_time desc
+  </select>
+</mapper>

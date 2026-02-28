@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.recommend.CereRecommendCommentDAO">
+    <select id="commentPage" parameterType="com.shop.cereshop.app.param.recommend.RecommendCommentPageParam"
+            resultType="com.shop.cereshop.app.page.recommend.CereRecommendCommentPageVO">
+        SELECT
+        crc.*,
+        IF( crc.user_type = 1, a.NAME, b.NAME ) AS userName,
+        IF( crc.user_type = 1, a.head_image, b.avatar ) AS avatar,
+        IF( crc.root_comment_id != crc.parent_comment_id , IF( crc.target_user_type = 1, c.NAME, d.NAME ), null ) AS targetUserName,
+        If( crc.user_type = 1 and crc.user_id = #{userId}, 1, 0) AS isSelf
+        FROM
+        cere_recommend_comment crc
+        LEFT JOIN cere_buyer_user AS a ON crc.user_id = a.buyer_user_id
+        LEFT JOIN cere_platform_business AS b ON crc.user_id = b.business_user_id
+        LEFT JOIN cere_buyer_user AS c ON crc.target_user_id = c.buyer_user_id
+        LEFT JOIN cere_platform_business AS d ON crc.target_user_id = d.business_user_id
+        where  recommend_id = #{recommendId}
+        <if test="recommendCommentId != null">
+            and crc.root_comment_id = #{recommendCommentId}
+        </if>
+        <if test="recommendCommentId == null">
+            and crc.root_comment_id is null
+        </if>
+        <if test="replyCommentId != null">
+            and crc.recommend_comment_id != #{replyCommentId}
+        </if>
+        ORDER BY
+        crc.reply_count DESC
+    </select>
+
+    <select id="getCommentPageInfo" resultType="com.shop.cereshop.app.page.recommend.CereRecommendCommentPageVO">
+        SELECT crc.*,
+               IF(crc.user_type = 1, a.NAME, b.NAME)                                                                AS userName,
+               IF(crc.user_type = 1, a.head_image, b.avatar)                                                        AS avatar,
+               IF(crc.root_comment_id != crc.parent_comment_id, IF(crc.target_user_type = 1, c.NAME, d.NAME),null)  AS targetUserName,
+               1 AS isSelf
+        FROM cere_recommend_comment crc
+                 LEFT JOIN cere_buyer_user AS a ON crc.user_id = a.buyer_user_id
+                 LEFT JOIN cere_platform_business AS b ON crc.user_id = b.business_user_id
+                 LEFT JOIN cere_buyer_user AS c ON crc.target_user_id = c.buyer_user_id
+                 LEFT JOIN cere_platform_business AS d ON crc.target_user_id = d.business_user_id
+        where recommend_comment_id = #{recommendCommentId}
+    </select>
+
+    <select id="getCommentById" resultType="com.shop.cereshop.commons.domain.recommend.CereRecommendComment">
+        select * from cere_recommend_comment where recommend_comment_id = #{recommendCommentId}
+    </select>
+
+    <update id="addReplyCount">
+        update cere_recommend_comment
+        set reply_count = reply_count + 1
+        where recommend_comment_id = #{recommendCommentId}
+    </update>
+
+    <update id="subReplyCount">
+        update cere_recommend_comment
+        set reply_count = reply_count - #{count}
+        where recommend_comment_id = #{recommendCommentId}
+    </update>
+
+    <insert id="saveComment" parameterType="com.shop.cereshop.commons.domain.recommend.CereRecommendComment"
+            keyColumn="recommend_comment_id" keyProperty="recommendCommentId"  useGeneratedKeys="true">
+        insert into cere_recommend_comment
+        (root_comment_id, parent_comment_id, user_id, content,
+         recommend_id, user_type, target_user_id, target_user_type, create_time)
+        values (#{rootCommentId}, #{parentCommentId}, #{userId},
+                #{content}, #{recommendId}, #{userType}, #{targetUserId}, #{targetUserType},now())
+    </insert>
+
+    <delete id="deleteComment">
+        delete from cere_recommend_comment where recommend_comment_id = #{recommendCommentId}
+    </delete>
+
+    <delete id="deleteCommentByRootCommentId">
+        delete from cere_recommend_comment where root_comment_id = #{rootCommentId} or recommend_comment_id = #{rootCommentId}
+    </delete>
+
+    <delete id="deleteCommentByParentCommentId">
+        delete from cere_recommend_comment where parent_comment_id = #{parentCommentId} or recommend_comment_id = #{parentCommentId}
+    </delete>
+
+    <select id="getUnreadCount" resultType="java.lang.Integer">
+        select count(0) from cere_recommend_comment
+        where target_user_id = #{userId} and target_user_type = 1 and read_status = 0
+        and user_id != #{userId}
+    </select>
+
+    <update id="read">
+        update cere_recommend_comment
+        set read_status = 1
+        where target_user_id = #{userId}
+    </update>
+
+    <select id="myMessage" resultType="com.shop.cereshop.app.page.recommend.MyCommentPageVO">
+        select crc.*,
+               crt.file_url, crt.cover,
+               IF(crc.target_user_type = 1, a.NAME, b.NAME)         AS userName,
+               IF(crc.target_user_type = 1, a.head_image, b.avatar) AS avatar,
+               IF(crc.user_type = 1, c.head_image, d.avatar)  AS myAvatar,
+               crt.file_type
+        from cere_recommend_comment as crc
+                 inner join cere_recommend_trends as crt on crt.recommend_id = crc.recommend_id
+                 LEFT JOIN cere_buyer_user AS a ON crc.target_user_id = a.buyer_user_id
+                 LEFT JOIN cere_platform_business AS b ON crc.target_user_id = b.business_user_id
+                 LEFT JOIN cere_buyer_user AS c ON crc.user_id = c.buyer_user_id
+                 LEFT JOIN cere_platform_business AS d ON crc.user_id = d.business_user_id
+        where crc.target_user_id = #{userId} and crc.target_user_type = 1 and crc.user_id != #{userId}
+        order by crc.recommend_comment_id desc
+    </select>
+</mapper>

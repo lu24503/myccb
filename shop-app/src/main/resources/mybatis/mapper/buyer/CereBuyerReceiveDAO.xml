@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.buyer.CereBuyerReceiveDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    <id column="receive_id" jdbcType="BIGINT" property="receiveId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="receive_name" jdbcType="VARCHAR" property="receiveName" />
+    <result column="receive_phone" jdbcType="VARCHAR" property="receivePhone" />
+    <result column="receive_adress" jdbcType="VARCHAR" property="receiveAdress" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="if_default" jdbcType="INTEGER" property="ifDefault" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    receive_id, buyer_user_id, receive_name, receive_phone, receive_adress,address,label,if_default, create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_receive
+    where receive_id = #{receiveId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_receive
+    where receive_id = #{receiveId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="receive_id" keyProperty="receiveId" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive" useGeneratedKeys="true">
+    insert into cere_buyer_receive
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="receiveName != null and receiveName!=''">
+        receive_name,
+      </if>
+      <if test="receivePhone != null and receivePhone!=''">
+        receive_phone,
+      </if>
+      <if test="receiveAdress != null and receiveAdress!=''">
+        receive_adress,
+      </if>
+      <if test="address != null and address!=''">
+        address,
+      </if>
+      <if test="label != null and label!=''">
+        label,
+      </if>
+      <if test="ifDefault != null">
+        if_default,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveName != null and receiveName!=''">
+        #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null and receivePhone!=''">
+        #{receivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAdress != null and receiveAdress!=''">
+        #{receiveAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null and address!=''">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null and label!=''">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="ifDefault != null">
+        #{ifDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    update cere_buyer_receive
+    <set>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="receiveName != null and receiveName!=''">
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="receivePhone != null and receivePhone!=''">
+        receive_phone = #{receivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveAdress != null and receiveAdress!=''">
+        receive_adress = #{receiveAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null and address!=''">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null and label!=''">
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="ifDefault != null">
+        if_default = #{ifDefault,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where receive_id = #{receiveId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    update cere_buyer_receive
+    set buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      receive_phone = #{receivePhone,jdbcType=VARCHAR},
+      receive_adress = #{receiveAdress,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      if_default = #{ifDefault,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where receive_id = #{receiveId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findlatelyReceiveByUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT receive_id, receive_name, receive_phone, receive_adress, address FROM cere_buyer_receive where buyer_user_id=#{buyerUserId}
+    ORDER BY CASE if_default when 1 then 1 when 0 then 2 end,update_time DESC,create_time DESC LIMIT 1
+  </select>
+
+  <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT receive_id,receive_name,receive_phone,receive_adress,address,label,if_default
+    FROM cere_buyer_receive where receive_id=#{receiveId}
+  </select>
+
+  <select id="getAll" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT receive_id,receive_name,receive_phone,receive_adress,address,label,if_default FROM cere_buyer_receive where buyer_user_id=#{buyerUserId}
+    ORDER BY CASE if_default when 1 then 1 when 0 then 2 end,update_time DESC,create_time DESC
+  </select>
+
+  <select id="findDefaultByUserIdAndSelf" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT receive_id FROM cere_buyer_receive where buyer_user_id=#{buyerUserId} and if_default=1
+    <if test="receiveId!=null">
+      and receive_id <![CDATA[!= ]]>#{receiveId}
+    </if>
+  </select>
+
+  <select id="findById" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.buyer.CereBuyerReceive">
+    SELECT receive_id,receive_name,receive_phone,receive_adress,address FROM cere_buyer_receive where receive_id=#{receiveId}
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_receive SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

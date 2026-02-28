@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereSkuMemberRealInfoDAO">
+
+  <insert id="insertOrUpdate" keyColumn="sku_id" keyProperty="skuId" parameterType="com.shop.cereshop.commons.domain.product.CereSkuMemberRealInfo" useGeneratedKeys="true">
+    insert into cere_sku_member_real_info
+    (
+      sku_id, product_id, member_level_id, activity_type, activity_id,
+      cur_price, cur_original_price, min_price, max_price, limit_number,
+      if_enable, enable_time, if_add, person, sales_user_count,
+      sales_volume, sku_sales_volume, product_sales_volume, start_time, end_time,
+      state, create_time, update_time
+    )
+    values (
+      #{skuId}, #{productId}, #{memberLevelId}, #{activityType}, #{activityId},
+      #{curPrice}, #{curOriginalPrice}, #{minPrice}, #{maxPrice}, #{limitNumber},
+      #{ifEnable}, #{enableTime}, #{ifAdd}, #{person}, #{salesUserCount},
+      #{salesVolume}, #{skuSalesVolume}, #{productSalesVolume}, #{startTime}, #{endTime},
+      #{state}, #{createTime}, #{updateTime}
+    )
+    on duplicate key update
+      activity_type = #{activityType},
+      activity_id = #{activityId},
+      cur_price = #{curPrice},
+      cur_original_price = #{curOriginalPrice},
+      min_price = #{minPrice},
+      max_price = #{maxPrice},
+      limit_number = #{limitNumber},
+      if_enable = #{ifEnable},
+      enable_time = #{enableTime},
+      if_add = #{ifAdd},
+      person = #{person},
+      sales_user_count = #{salesUserCount},
+      sales_volume = #{salesVolume},
+      sku_sales_volume = #{skuSalesVolume},
+      product_sales_volume = #{productSalesVolume},
+      start_time = #{startTime},
+      end_time = #{endTime},
+      state = #{state},
+      update_time = #{updateTime}
+  </insert>
+
+  <update id="updateSkuPrice">
+    update cere_sku_member_real_info
+    <set>
+      <if test="curPrice != null">
+        cur_price = #{curPrice},
+      </if>
+      <if test="curOriginalPrice != null">
+        cur_original_price = #{curOriginalPrice},
+      </if>
+    </set>
+    where sku_id = #{skuId}
+  </update>
+
+  <delete id="deleteByProductId">
+    delete from cere_sku_member_real_info
+    where product_id = #{productId}
+  </delete>
+
+  <delete id="deleteBySkuId">
+    delete from cere_sku_member_real_info
+    where sku_id = #{skuId}
+  </delete>
+
+  <delete id="deleteByProductIdList">
+    delete from cere_sku_member_real_info
+    where product_id in
+    <foreach collection="list" item="productId" open="(" separator="," close=")">
+      #{productId}
+    </foreach>
+  </delete>
+
+  <update id="increSalesVolumeBy">
+    update cere_sku_member_real_info
+    set sales_volume = sales_volume + #{addedNumber},
+    sku_sales_volume = sku_sales_volume + #{addedNumber},
+    product_sales_volume = product_sales_volume + #{addedNumber}
+    where product_id = #{productId}
+  </update>
+
+  <update id="updateSelective">
+    update cere_sku_member_real_info
+    <set>
+      <if test="realInfo.activityType != null">
+        activity_type = #{realInfo.activityType},
+      </if>
+      <if test="realInfo.activityId != null">
+        activity_id = #{realInfo.activityId},
+      </if>
+      <if test="realInfo.curPrice != null">
+        cur_price = #{realInfo.curPrice},
+      </if>
+      <if test="realInfo.curOriginalPrice != null">
+        cur_original_price = #{realInfo.curOriginalPrice},
+      </if>
+      <if test="realInfo.minPrice != null">
+        min_price = #{realInfo.minPrice},
+      </if>
+      <if test="realInfo.maxPrice != null">
+        max_price = #{realInfo.maxPrice},
+      </if>
+      <if test="realInfo.limitNumber != null">
+        limit_number = #{realInfo.limitNumber},
+      </if>
+      <if test="realInfo.updateTime != null">
+        update_time = #{realInfo.updateTime},
+      </if>
+      <if test="resetSalesVolume">
+        sales_volume = product_sales_volume,
+      </if>
+      <if test="realInfo.ifAdd != null">
+        if_add = #{realInfo.ifAdd}
+      </if>
+    </set>
+    where sku_id = #{realInfo.skuId} and member_level_id = #{realInfo.memberLevelId}
+  </update>
+  <update id="clearMemberProductInfo">
+    update cere_sku_member_real_info a
+    join cere_sku_member_real_info b on b.sku_id = a.sku_id
+    set a.cur_price = b.cur_price, a.cur_original_price = b.cur_original_price
+    where a.sku_id = #{skuId}
+    and a.member_level_id != 0
+    and b.member_level_id = 0
+  </update>
+  <update id="increSalesUserCount">
+        update cere_sku_member_real_info
+        set sales_user_count = sales_user_count + 1
+        where product_id in
+        (
+            <foreach collection="list" separator="," item="productId">
+                #{productId}
+            </foreach>
+        )
+  </update>
+  <select id="findProductDetailBySkuId" resultType="com.shop.cereshop.app.page.product.ProductDetail">
+    select
+      a.shop_id,
+      a.product_id,
+      a.product_name,
+      a.product_text text,
+      a.shelve_state,
+      a.if_huabei,
+      a.product_brief,
+      a.classify_id,
+      a.if_logistics,
+
+      b.sku_id,
+      b.cur_price as price,
+      b.cur_original_price as original_price,
+      b.cur_original_price as sale_price,
+      b.sales_user_count as users,
+      b.product_sales_volume as number,
+      b.activity_type,
+      b.activity_id,
+      b.start_time,
+      b.end_time,
+      b.if_enable - 1 as ifEnable,
+      b.if_add,
+      b.person,
+
+      if(b.activity_type = 4, b.activity_id, 0) as platform_seckill_id,
+      if(b.activity_type = 5, b.activity_id, 0) as platform_discount_id,
+      if(b.activity_type = 2, b.activity_id, 0) as shop_seckill_id,
+      if(b.activity_type = 3, b.activity_id, 0) as shop_discount_id,
+      if(b.activity_type = 1, b.activity_id, 0) as shop_group_work_id,
+      if(b.activity_type = 8, b.activity_id, 0) as scene_id,
+
+      c.shop_name,
+      c.shop_logo,
+
+      cps.weight,
+      cps.stock_number as surplus_number,
+      cps.total
+    from cere_shop_product a
+    join cere_sku_member_real_info b on b.product_id = a.product_id
+    join cere_platform_shop c on c.shop_id = #{shopId}
+    join cere_product_sku cps on cps.sku_id = #{skuId}
+    where a.shop_id = #{shopId}
+    and b.sku_id = #{skuId}
+    and b.member_level_id = #{memberLevelId}
+  </select>
+
+  <select id="findSkuListByProductId" resultType="com.shop.cereshop.commons.domain.product.Sku">
+    select
+      b.sku_id,
+      b.cur_price as price,
+      b.cur_original_price as original_price,
+
+      b.cur_original_price as sale_price,
+      b.activity_type,
+      b.activity_id,
+      b.start_time,
+      b.end_time,
+      b.if_enable - 1 as ifEnable,
+      b.person,
+
+      cps.stock_number,
+      cps.total,
+
+      if(b.activity_type = 4, b.activity_id, 0) as platform_seckill_id,
+      if(b.activity_type = 5, b.activity_id, 0) as platform_discount_id,
+      if(b.activity_type = 2, b.activity_id, 0) as shop_seckill_id,
+      if(b.activity_type = 3, b.activity_id, 0) as shop_discount_id,
+      if(b.activity_type = 1, b.activity_id, 0) as shop_group_work_id,
+      if(b.activity_type = 8, b.activity_id, 0) as scene_id,
+
+      min(csn.image) as image,
+      group_concat(csn2.value_code) valueCodes
+
+    from cere_sku_member_real_info b
+    join cere_product_sku cps on cps.sku_id = b.sku_id
+    left join cere_sku_name csn on csn.sku_id = b.sku_id and csn.image is not null and csn.image != ''
+    left join cere_sku_name csn2 on csn2.sku_id = b.sku_id
+    where b.product_id = #{productId} and b.member_level_id = #{memberLevelId}
+    group by b.sku_id
+  </select>
+  <select id="getSearchProducts" resultType="com.shop.cereshop.app.page.index.Product">
+        select
+            b.sku_id,
+            b.product_id,
+            b.cur_price as price,
+            b.cur_original_price as original_price,
+
+            b.activity_type,
+            b.product_sales_volume as number,
+            b.limit_number as total,
+            b.sales_user_count as users,
+
+            csp.product_name,
+
+            shop.shop_id,
+            shop.shop_name,
+            shop.shop_logo,
+
+            cpi.product_image as image
+
+        from cere_sku_member_real_info b
+        join cere_shop_product csp on csp.product_id = b.product_id
+        join cere_product_sku cps on cps.sku_id = b.sku_id
+        join cere_platform_shop shop on shop.shop_id = csp.shop_id
+        left join cere_product_image cpi on cpi.product_id = b.product_id
+        left join cere_product_classify cpc on cpc.classify_id = csp.classify_id
+        <where>
+            b.member_level_id = #{memberLevelId}
+            <if test="search != null and search != ''">
+                and csp.product_name like concat('%', #{search}, '%')
+            </if>
+            <choose>
+                <when test="classifyId != null and classifyLevel != null">
+                    <if test="classifyLevel == 1">
+                        and csp.classify_id1 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 2">
+                        and csp.classify_id2 = #{classifyId}
+                    </if>
+                    <if test="classifyLevel == 3">
+                        and csp.classify_id3 = #{classifyId}
+                    </if>
+                </when>
+                <otherwise>
+                    <if test="classifyId != null">
+                        and (
+                            csp.classify_id1 = #{classifyId}
+                            OR csp.classify_id2 = #{classifyId}
+                            OR csp.classify_id3 = #{classifyId}
+                        )
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+        group by b.product_id
+        ORDER BY
+        <if test='type == 1'>
+            b.cur_price,
+        </if>
+        <if test='type == 2'>
+            b.cur_price desc,
+        </if>
+        <if test='volume == 1'>
+            sku_sales_volume,
+        </if>
+        <if test='volume == 2'>
+            sku_sales_volume DESC,
+        </if>
+        csp.update_time DESC, csp.create_time DESC
+    </select>
+
+    <select id="findSkuListBySkuIdList" resultType="com.shop.cereshop.app.page.cart.CartSku">
+        select
+            b.sku_id,
+            b.cur_price as price,
+            b.cur_original_price as original_price,
+
+            b.cur_original_price as sale_price,
+            b.activity_type,
+            b.activity_id,
+            b.start_time,
+            b.end_time,
+            b.if_enable - 1 as ifEnable,
+            b.person,
+
+            cps.stock_number,
+            b.limit_number as total,
+
+            if(b.activity_type = 4, b.activity_id, 0) as platform_seckill_id,
+            if(b.activity_type = 5, b.activity_id, 0) as platform_discount_id,
+            if(b.activity_type = 2, b.activity_id, 0) as shop_seckill_id,
+            if(b.activity_type = 3, b.activity_id, 0) as shop_discount_id,
+            if(b.activity_type = 1, b.activity_id, 0) as shop_group_work_id,
+            if(b.activity_type = 8, b.activity_id, 0) as scene_id
+
+        from cere_sku_member_real_info b
+        join cere_product_sku cps on cps.sku_id = b.sku_id
+        where b.member_level_id = #{memberLevelId}
+        and b.sku_id in
+        (
+            <foreach collection="skuIdList" separator="," item="skuId">
+                #{skuId}
+            </foreach>
+        )
+    </select>
+</mapper>

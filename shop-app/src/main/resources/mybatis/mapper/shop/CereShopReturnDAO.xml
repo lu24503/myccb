@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.shop.CereShopReturnDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CereShopReturn">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="return_adress" jdbcType="VARCHAR" property="returnAdress" />
+    <result column="return_person" jdbcType="VARCHAR" property="returnPerson" />
+    <result column="return_phone" jdbcType="VARCHAR" property="returnPhone" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.shop.CereShopReturn">
+    insert into cere_shop_return
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="returnAdress != null and returnAdress!=''">
+        return_adress,
+      </if>
+      <if test="returnPerson != null and returnPerson!=''">
+        return_person,
+      </if>
+      <if test="returnPhone != null and returnPhone!=''">
+        return_phone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="returnAdress != null and returnAdress!=''">
+        #{returnAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPerson != null and returnPerson!=''">
+        #{returnPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="returnPhone != null and returnPhone!=''">
+        #{returnPhone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CereShopReturn">
+    SELECT shop_id,return_adress, return_person, return_phone FROM cere_shop_return where shop_id=#{shopId}
+  </select>
+</mapper>

@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.order.CereShopOrderDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        <id column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="order_formid" jdbcType="VARCHAR" property="orderFormid"/>
+        <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+        <result column="coupon_id" jdbcType="BIGINT" property="couponId"/>
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="shop_seckill_id" jdbcType="BIGINT" property="shopSeckillId"/>
+        <result column="shop_group_work_id" jdbcType="BIGINT" property="shopGroupWorkId"/>
+        <result column="shop_discount_id" jdbcType="BIGINT" property="shopDiscountId"/>
+        <result column="shop_operate_id" jdbcType="BIGINT" property="shopOperateId"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="logistics_price" jdbcType="DECIMAL" property="logisticsPrice"/>
+        <result column="discount_price" jdbcType="DECIMAL" property="discountPrice"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="state" jdbcType="BIT" property="state"/>
+        <result column="payment_state" jdbcType="BIT" property="paymentState"/>
+        <result column="payment_mode" jdbcType="BIT" property="paymentMode"/>
+        <result column="payment_time" jdbcType="VARCHAR" property="paymentTime"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="customer_phone" jdbcType="VARCHAR" property="customerPhone"/>
+        <result column="receive_name" jdbcType="VARCHAR" property="receiveName"/>
+        <result column="receive_phone" jdbcType="VARCHAR" property="receivePhone"/>
+        <result column="receive_adress" jdbcType="VARCHAR" property="receiveAdress"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="receive_time" jdbcType="VARCHAR" property="receiveTime"/>
+        <result column="postal_code" jdbcType="VARCHAR" property="postalCode"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="after_state" jdbcType="BIT" property="afterState"/>
+        <result column="logistics_id" jdbcType="BIGINT" property="logisticsId"/>
+        <result column="distributor_id" jdbcType="BIGINT" property="distributorId"/>
+        <result column="direct_distributor_money" jdbcType="DECIMAL" property="directDistributorMoney"/>
+        <result column="indirect_distributor_money" jdbcType="DECIMAL" property="indirectDistributorMoney"/>
+        <result column="seckill_id" jdbcType="BIGINT" property="seckillId"/>
+        <result column="discount_id" jdbcType="BIGINT" property="discountId"/>
+        <result column="polite_id" jdbcType="BIGINT" property="politeId"/>
+        <result column="scene_id" jdbcType="BIGINT" property="sceneId"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_id, parent_id,shop_id, order_formid,
+        buyer_user_id,coupon_id,id,shop_seckill_id,shop_group_work_id,shop_discount_id,shop_operate_id,
+        order_price, logistics_price,discount_price, price,
+        `state`, payment_state, payment_mode, payment_time, customer_name, customer_phone,
+        receive_name, receive_phone, receive_adress,address,receive_time, postal_code, remark, after_state,
+        logistics_id,
+        distributor_id, direct_distributor_money,
+        indirect_distributor_money,seckill_id,discount_id,polite_id,scene_id,create_time,
+        update_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cere_shop_order
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from cere_shop_order
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSelective" keyColumn="order_id" keyProperty="orderId"
+            parameterType="com.shop.cereshop.commons.domain.order.CereShopOrder" useGeneratedKeys="true">
+        insert into cere_shop_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="orderFormid != null and orderFormid!=''">
+                order_formid,
+            </if>
+            <if test="buyerUserId != null">
+                buyer_user_id,
+            </if>
+            <if test="couponId != null">
+                coupon_id,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="shopSeckillId != null">
+                shop_seckill_id,
+            </if>
+            <if test="shopGroupWorkId != null">
+                shop_group_work_id,
+            </if>
+            <if test="shopDiscountId != null">
+                shop_discount_id,
+            </if>
+            <if test="shopOperateId != null">
+                shop_operate_id,
+            </if>
+            <if test="orderPrice != null">
+                order_price,
+            </if>
+            <if test="logisticsPrice != null">
+                logistics_price,
+            </if>
+            <if test="discountPrice != null">
+                discount_price,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="state != null">
+                `state`,
+            </if>
+            <if test="paymentState != null">
+                payment_state,
+            </if>
+            <if test="paymentMode != null">
+                payment_mode,
+            </if>
+            <if test="paymentTime != null and paymentTime!=''">
+                payment_time,
+            </if>
+            <if test="customerName != null and customerName!=''">
+                customer_name,
+            </if>
+            <if test="customerPhone != null and customerPhone!=''">
+                customer_phone,
+            </if>
+            <if test="receiveName != null and receiveName!=''">
+                receive_name,
+            </if>
+            <if test="receivePhone != null and receivePhone!=''">
+                receive_phone,
+            </if>
+            <if test="receiveAdress != null and receiveAdress!=''">
+                receive_adress,
+            </if>
+            <if test="address != null and address!=''">
+                address,
+            </if>
+            <if test="receiveTime != null and receiveTime!=''">
+                receive_time,
+            </if>
+            <if test="postalCode != null and postalCode!=''">
+                postal_code,
+            </if>
+            <if test="remark != null and remark!=''">
+                remark,
+            </if>
+            <if test="afterState != null">
+                after_state,
+            </if>
+            <if test="logisticsId != null">
+                logistics_id,
+            </if>
+            <if test="distributorId != null">
+                distributor_id,
+            </if>
+            <if test="directDistributorMoney != null">
+                direct_distributor_money,
+            </if>
+            <if test="indirectDistributorMoney != null">
+                indirect_distributor_money,
+            </if>
+            <if test="seckillId != null">
+                seckill_id,
+            </if>
+            <if test="discountId != null">
+                discount_id,
+            </if>
+            <if test="politeId != null">
+                polite_id,
+            </if>
+            <if test="sceneId != null">
+                scene_id,
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="orderFormid != null and orderFormid!=''">
+                #{orderFormid,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerUserId != null">
+                #{buyerUserId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="shopSeckillId != null">
+                #{shopSeckillId,jdbcType=BIGINT},
+            </if>
+            <if test="shopGroupWorkId != null">
+                #{shopGroupWorkId,jdbcType=BIGINT},
+            </if>
+            <if test="shopDiscountId != null">
+                #{shopDiscountId,jdbcType=BIGINT},
+            </if>
+            <if test="shopOperateId != null">
+                #{shopOperateId,jdbcType=BIGINT},
+            </if>
+            <if test="orderPrice != null">
+                #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="logisticsPrice != null">
+                #{logisticsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="discountPrice != null">
+                #{discountPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=BIT},
+            </if>
+            <if test="paymentState != null">
+                #{paymentState,jdbcType=BIT},
+            </if>
+            <if test="paymentMode != null">
+                #{paymentMode,jdbcType=BIT},
+            </if>
+            <if test="paymentTime != null and paymentTime!=''">
+                #{paymentTime,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null and customerName!=''">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPhone != null and customerPhone!=''">
+                #{customerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveName != null and receiveName!=''">
+                #{receiveName,jdbcType=VARCHAR},
+            </if>
+            <if test="receivePhone != null and receivePhone!=''">
+                #{receivePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveAdress != null and receiveAdress!=''">
+                #{receiveAdress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null and address!=''">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveTime != null and receiveTime!=''">
+                #{receiveTime,jdbcType=VARCHAR},
+            </if>
+            <if test="postalCode != null and postalCode!=''">
+                #{postalCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark!=''">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="afterState != null">
+                #{afterState,jdbcType=BIT},
+            </if>
+            <if test="logisticsId != null">
+                #{logisticsId,jdbcType=BIGINT},
+            </if>
+            <if test="distributorId != null">
+                #{distributorId,jdbcType=BIGINT},
+            </if>
+            <if test="directDistributorMoney != null">
+                #{directDistributorMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="indirectDistributorMoney != null">
+                #{indirectDistributorMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="seckillId != null">
+                #{seckillId,jdbcType=BIGINT},
+            </if>
+            <if test="discountId != null">
+                #{discountId,jdbcType=BIGINT},
+            </if>
+            <if test="politeId != null">
+                #{politeId,jdbcType=BIGINT},
+            </if>
+            <if test="sceneId != null">
+                #{sceneId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="saveBuyerProductRecord" >
+        insert ignore into cere_buyer_product_record
+        (
+          buyer_user_id, product_id, create_time, update_time
+        )
+        values
+        (
+          #{buyerUserId}, #{productId}, now(), now()
+        )
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        update cere_shop_order
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="orderFormid != null and orderFormid!=''">
+                order_formid = #{orderFormid,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerUserId != null">
+                buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+            </if>
+            <if test="couponId != null">
+                coupon_id = #{couponId,jdbcType=BIGINT},
+            </if>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="shopSeckillId != null">
+                shop_seckill_id = #{shopSeckillId,jdbcType=BIGINT},
+            </if>
+            <if test="shopGroupWorkId != null">
+                shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT},
+            </if>
+            <if test="shopDiscountId != null">
+                shop_discount_id = #{shopDiscountId,jdbcType=BIGINT},
+            </if>
+            <if test="shopOperateId != null">
+                shop_operate_id = #{shopOperateId,jdbcType=BIGINT},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="logisticsPrice != null">
+                logistics_price = #{logisticsPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="discountPrice != null">
+                discount_price = #{discountPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="state != null">
+                `state` = #{state,jdbcType=BIT},
+            </if>
+            <if test="paymentState != null">
+                payment_state = #{paymentState,jdbcType=BIT},
+            </if>
+            <if test="paymentMode != null">
+                payment_mode = #{paymentMode,jdbcType=BIT},
+            </if>
+            <if test="paymentTime != null and paymentTime!=''">
+                payment_time = #{paymentTime,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null and customerName!=''">
+                customer_name = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerPhone != null and customerPhone!=''">
+                customer_phone = #{customerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveName != null and receiveName!=''">
+                receive_name = #{receiveName,jdbcType=VARCHAR},
+            </if>
+            <if test="receivePhone != null and receivePhone!=''">
+                receive_phone = #{receivePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveAdress != null and receiveAdress!=''">
+                receive_adress = #{receiveAdress,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null and address!=''">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveTime != null and receiveTime!=''">
+                receive_time = #{receiveTime,jdbcType=VARCHAR},
+            </if>
+            <if test="postalCode != null and postalCode!=''">
+                postal_code = #{postalCode,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null and remark!=''">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="afterState != null">
+                after_state = #{afterState,jdbcType=BIT},
+            </if>
+            <if test="logisticsId != null">
+                logistics_id = #{logisticsId,jdbcType=BIGINT},
+            </if>
+            <if test="distributorId != null">
+                distributor_id = #{distributorId,jdbcType=BIGINT},
+            </if>
+            <if test="directDistributorMoney != null">
+                direct_distributor_money = #{directDistributorMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="indirectDistributorMoney != null">
+                indirect_distributor_money = #{indirectDistributorMoney,jdbcType=DECIMAL},
+            </if>
+            <if test="seckillId != null">
+                seckill_id = #{seckillId,jdbcType=BIGINT},
+            </if>
+            <if test="discountId != null">
+                discount_id = #{discountId,jdbcType=BIGINT},
+            </if>
+            <if test="politeId != null">
+                polite_id = #{politeId,jdbcType=BIGINT},
+            </if>
+            <if test="sceneId != null">
+                scene_id = #{sceneId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null and createTime!=''">
+                create_time = #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        update cere_shop_order
+        set parent_id = #{parentId,jdbcType=BIGINT},
+        shop_id = #{shopId,jdbcType=BIGINT},
+        order_formid = #{orderFormid,jdbcType=VARCHAR},
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+        coupon_id = #{couponId,jdbcType=BIGINT},
+        id = #{id,jdbcType=BIGINT},
+        shop_seckill_id = #{shopSeckillId,jdbcType=BIGINT},
+        shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT},
+        shop_discount_id = #{shopDiscountId,jdbcType=BIGINT},
+        shop_operate_id = #{shopOperateId,jdbcType=BIGINT},
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+        logistics_price = #{logisticsPrice,jdbcType=DECIMAL},
+        discount_price = #{discountPrice,jdbcType=DECIMAL},
+        price = #{price,jdbcType=DECIMAL},
+        `state` = #{state,jdbcType=BIT},
+        payment_state = #{paymentState,jdbcType=BIT},
+        payment_mode = #{paymentMode,jdbcType=BIT},
+        payment_time = #{paymentTime,jdbcType=VARCHAR},
+        customer_name = #{customerName,jdbcType=VARCHAR},
+        customer_phone = #{customerPhone,jdbcType=VARCHAR},
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+        receive_phone = #{receivePhone,jdbcType=VARCHAR},
+        receive_adress = #{receiveAdress,jdbcType=VARCHAR},
+        adress = #{address,jdbcType=VARCHAR},
+        receive_time = #{receiveTime,jdbcType=VARCHAR},
+        postal_code = #{postalCode,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
+        after_state = #{afterState,jdbcType=BIT},
+        logistics_id = #{logisticsId,jdbcType=BIGINT},
+        distributor_id = #{distributorId,jdbcType=BIGINT},
+        direct_distributor_money = #{directDistributorMoney,jdbcType=DECIMAL},
+        indirect_distributor_money = #{indirectDistributorMoney,jdbcType=DECIMAL},
+        seckill_id = #{seckillId,jdbcType=BIGINT},
+        discount_id = #{discountId,jdbcType=BIGINT},
+        polite_id = #{politeId,jdbcType=BIGINT},
+        scene_id = #{sceneId,jdbcType=BIGINT},
+        create_time = #{createTime,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=VARCHAR}
+        where order_id = #{orderId,jdbcType=BIGINT}
+    </update>
+
+    <!--<update id="updateAfterState" parameterType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+      update cere_shop_order
+      <set>
+        <if test="afterState != null">
+          after_state = #{afterState,jdbcType=BIT},
+        </if>
+        <if test="updateTime != null and updateTime!=''">
+          update_time = #{updateTime,jdbcType=VARCHAR},
+        </if>
+      </set>
+      where order_id = #{orderId,jdbcType=BIGINT}
+    </update>-->
+
+    <select id="findSettlementShop" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.app.page.settlement.SettlementShop">
+        SELECT shop_id,shop_name,shop_adress,shop_logo FROM cere_platform_shop where shop_id=#{shopId}
+    </select>
+
+    <select id="findSkuValues" parameterType="java.lang.Object" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(sku_value) from cere_sku_name
+        where sku_id=#{skuId}
+    </select>
+
+    <select id="findById" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_formid,price,shop_seckill_id,shop_group_work_id,shop_discount_id FROM cere_shop_order where
+        order_id=#{orderId}
+    </select>
+
+    <select id="findByParentFormid" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereOrderParent">
+        SELECT parent_id FROM cere_order_parent where parent_formid=#{orderFormId}
+    </select>
+
+    <select id="findByParentId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id, buyer_user_id, customer_phone, shop_id, price, order_formid, customer_name, shop_group_work_id,
+        shop_seckill_id, shop_discount_id, payment_mode, coupon_id
+        FROM cere_shop_order where parent_id=#{parentId}
+    </select>
+
+    <select id="findByFormid" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id, buyer_user_id, customer_phone, shop_id, price, order_formid, customer_name, shop_group_work_id,
+        shop_seckill_id, shop_discount_id, payment_mode, coupon_id
+        FROM cere_shop_order where order_formid=#{orderFormId}
+    </select>
+
+    <select id="findByOrderId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id,buyer_user_id,customer_phone,shop_id,price,order_formid,customer_name,
+        shop_seckill_id,shop_group_work_id,shop_discount_id
+        FROM cere_shop_order where order_id=#{orderId}
+    </select>
+
+    <select id="getAll" parameterType="com.shop.cereshop.app.param.order.OrderGetAllParam"
+            resultType="com.shop.cereshop.app.page.order.Orders">
+        select
+        a.order_id, a.shop_id, a.state, b.shop_name, a.receive_name, a.order_formid, a.shop_discount_id,
+        b.shop_logo, a.logistics_price, a.order_price, a.price, a.discount_price, a.create_time, a.shop_group_work_id,
+        a.shop_seckill_id,
+        a.payment_state, a.pricing_price,
+        g.transaction_id
+        from cere_shop_order a
+        join cere_order_product f on a.order_id = f.order_id
+        left join cere_platform_shop b on a.shop_id = b.shop_id
+        LEFT JOIN cere_pay_log g ON a.order_formid=g.order_formid
+        <if test="state != null and state == 4">
+            left join cere_shop_comment sc on sc.order_id = f.order_id and sc.sku_id = f.sku_id
+        </if>
+        where a.buyer_user_id = #{buyerUserId}
+        <if test="search != null and search != ''">
+            and
+            (
+            a.order_formid like concat('%', #{search}, '%')
+            or
+            f.product_name like concat('%', #{search}, '%')
+            )
+        </if>
+        <if test="state != null and state != ''">
+            and a.state = #{state}
+        </if>
+        <if test="state != null and state == 4">
+            and sc.comment_id is null
+        </if>
+        group by a.order_id
+        order by a.update_time desc, a.create_time desc
+    </select>
+
+    <select id="getAllInState" resultType="com.shop.cereshop.app.page.order.Orders">
+        SELECT a.order_id,a.shop_id,a.state,b.shop_name,c.after_state,a.receive_name,a.order_formid,a.shop_discount_id,
+        b.shop_logo,a.logistics_price,a.order_price,a.discount_price,a.create_time,a.shop_group_work_id,a.shop_seckill_id,
+        IF(a.payment_state=1,a.price,0) price,e.dict_name express,d.deliver_formid,g.collage_id,a.payment_state from
+        cere_shop_order a
+        LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+        LEFT JOIN (SELECT after_id,order_id,after_state FROM cere_order_after where after_id in (SELECT MAX(after_id)
+        FROM cere_order_after GROUP BY order_id)) c
+        ON a.order_id=c.order_id
+        LEFT JOIN cere_order_dilever d ON a.order_id=d.order_id
+        LEFT JOIN cere_platform_dict e ON d.express=e.dict_id
+        LEFT JOIN cere_order_product f ON a.order_id=f.order_id
+        LEFT JOIN cere_collage_order_detail g ON a.order_id=g.order_id
+        where buyer_user_id=#{buyerUserId}
+        <if test="state!=null">
+            and a.state IN
+            <foreach item="id" collection="state" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        GROUP BY a.order_id
+        ORDER BY a.update_time DESC,a.create_time DESC
+    </select>
+
+    <select id="selectOrderCount" resultType="com.shop.cereshop.app.page.order.OrderCountDTO">
+        select
+        count(id) as totalOrderCount,
+        ifnull(sum(case when state = 1 then 1 else 0 end), 0) as waitPayOrderCount,
+        ifnull(sum(case when state = 2 then 1 else 0 end), 0) as waitSendOrderCount,
+        ifnull(sum(case when state = 3 then 1 else 0 end), 0) as waitReceiveOrderCount
+        from cere_shop_order
+        where buyer_user_id = #{buyerUserId}
+    </select>
+
+    <select id="getById" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.order.OrderDetail">
+        SELECT
+        a.order_id,a.shop_id,a.payment_time,b.shop_name,a.state,a.receive_name,a.receive_phone,a.address,a.remark,
+        a.receive_adress,a.logistics_price,a.discount_price,a.order_formid,d.create_time dileveryTime,a.receive_time,
+        a.create_time,a.order_price,a.price,c.after_state,c.create_time as afterCreateTime,e.dict_name
+        express,d.deliver_formid,
+        b.charge_person_phone, IF(a.payment_mode=1,'微信支付','其他')
+        payment_mode,f.transaction_id,shop_group_work_id,g.collage_id,
+        a.payment_state,f.transaction_id FROM cere_shop_order a
+        LEFT JOIN cere_platform_shop b ON a.shop_id=b.shop_id
+        LEFT JOIN (SELECT order_id, after_state, create_time FROM cere_order_after ORDER BY create_time DESC LIMIT 1) c
+        ON a.order_id=c.order_id
+        LEFT JOIN cere_order_dilever d ON a.order_id=d.order_id
+        LEFT JOIN cere_platform_dict e ON d.express=e.dict_id
+        LEFT JOIN cere_pay_log f ON a.order_formid=f.order_formid
+        LEFT JOIN cere_collage_order_detail g ON a.order_id=g.order_id
+        where a.order_id=#{orderId}
+        GROUP BY a.order_id
+    </select>
+
+    <select id="findShopId" parameterType="java.lang.Object" resultType="java.lang.Long">
+        SELECT shop_id from cere_shop_order
+        where order_id=#{orderId}
+    </select>
+
+    <select id="findAfterByOrderId" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.after.CereOrderAfter">
+        SELECT * FROM cere_order_after where order_id=#{orderId}
+    </select>
+
+    <delete id="deleteAfterProducts" parameterType="java.util.List">
+        DELETE FROM cere_after_product where after_id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item.afterId}
+        </foreach>
+        )
+    </delete>
+
+    <delete id="deleteAfterProductSkus" parameterType="java.util.List">
+        DELETE FROM cere_after_product_attribute
+        where after_product_id in (SELECT after_product_id from cere_after_product
+        where after_id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item.afterId}
+        </foreach>
+        )
+        )
+    </delete>
+
+    <delete id="deleteOrderProductSkus" parameterType="java.lang.Object">
+        DELETE FROM cere_order_product_attribute
+        where order_product_id in (SELECT order_product_id from cere_order_product where order_id=#{orderId})
+    </delete>
+
+    <delete id="deleteAll" parameterType="java.lang.Object">
+        delete
+        t1,t2,t3,t4,t5,t6,t7,t8,t9,t10
+        FROM
+        cere_shop_order AS t1
+        LEFT JOIN cere_distribution_order AS t2 ON t1.order_id = t2.order_id
+        LEFT JOIN cere_order_after AS t3 ON t1.order_id = t3.order_id
+        LEFT JOIN cere_order_dilever AS t4 ON t1.order_id = t4.order_id
+        LEFT JOIN cere_order_product AS t5 ON t1.order_id = t5.order_id
+        LEFT JOIN cere_order_return AS t6 ON t1.order_id = t6.order_id
+        LEFT JOIN cere_shop_comment AS t7 ON t1.order_id = t7.order_id
+        LEFT JOIN cere_order_reconciliation AS t8 ON t1.order_id = t8.order_id
+        LEFT JOIN cere_pay_log AS t9 ON t1.order_formid = t9.order_formid
+        LEFT JOIN cere_order_parent AS t10 ON t1.parent_id = t10.parent_id
+        WHERE
+        t1.order_id=#{orderId}
+    </delete>
+
+    <update id="updateBatchStock" parameterType="java.util.List">
+        update cere_product_sku
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="stock_number =case" suffix="end,">
+                <foreach collection="skus" item="i" index="index">
+                    <if test="i.stockNumber!=null">
+                        when sku_id=#{i.skuId} then stock_number+#{i.stockNumber}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="skus" separator="or" item="i" index="index">
+            sku_id=#{i.skuId}
+        </foreach>
+    </update>
+
+    <select id="checkPayParent" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id FROM cere_shop_order where parent_id=#{orderId} and payment_state=1
+    </select>
+
+    <select id="checkPayOrder" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id FROM cere_shop_order where order_id=#{orderId} and payment_state=1
+    </select>
+
+    <select id="findAfterSkuIdsByOrderId" parameterType="java.lang.Object" resultType="java.lang.Long">
+        SELECT a.sku_id FROM cere_after_product a
+        LEFT JOIN cere_order_after b ON a.after_id=b.after_id
+        where b.order_id=#{orderId} and b.after_state NOT in (5,6,9)
+    </select>
+
+    <select id="checkState" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id FROM cere_shop_order where order_id=#{orderId} and state=#{state}
+    </select>
+
+    <select id="checkStateFinishAndCancel" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT order_id FROM cere_shop_order where order_id=#{orderId} and state in (4,5)
+    </select>
+
+    <select id="checkCancelState" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cere_shop_order where order_id=#{orderId} and state in (1,2,6)
+    </select>
+
+    <select id="findByOrderFormid" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.order.CereShopOrder">
+        SELECT a.* FROM cere_shop_order a
+        LEFT JOIN cere_pay_log b ON a.order_formid=b.order_formid
+        where b.out_trade_no LIKE CONCAT('%',#{orderFormid},'%') and b.state='支付'
+    </select>
+
+    <select id="findPayLog" parameterType="java.lang.Object"
+            resultType="com.shop.cereshop.commons.domain.pay.CerePayLog">
+        SELECT * FROM cere_pay_log where order_formid=#{orderFormid} and state = #{state}
+    </select>
+
+    <select id="findByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cere_shop_order where order_id in (
+        <foreach collection="ids" item="id" index="index" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
+
+    <select id="findOrderNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT number FROM cere_order_product where order_id=#{orderId}
+    </select>
+
+    <select id="selectSalesVolume" resultType="java.lang.Integer">
+        select ifnull(sum(number), 0) from cere_order_product a
+        join cere_shop_order b on a.order_id = b.order_id
+        and b.payment_state = 1 and a.product_id = #{productId}
+        <if test="skuId != null">
+            and a.sku_id = #{skuId}
+        </if>
+    </select>
+
+    <select id="findPayUsers" resultType="java.lang.Integer">
+        select count(distinct a.buyer_user_id) from cere_shop_order a
+        join cere_order_product b on b.order_id = a.order_id
+        where a.payment_state = 1 and b.product_id = #{productId}
+        <if test="skuId != null">
+            and b.sku_id = #{skuId}
+        </if>
+    </select>
+
+    <select id="findRecentOrder" resultType="com.shop.cereshop.app.page.product.BroadCastDTO">
+        select distinct a.buyer_user_id, a.name, a.head_image, 4 as type, b.create_time as time
+        from cere_buyer_user a join cere_shop_order b on b.buyer_user_id = a.buyer_user_id
+        join cere_order_product c on c.order_id = b.order_id
+        where b.create_time > #{oneHourAgo} and c.product_id = #{productId}
+        limit 10
+    </select>
+
+    <select id="selectSalesUserCount" resultType="java.lang.Integer">
+        select count(distinct buyer_user_id) from cere_shop_order a
+        join cere_order_product b on b.order_id = a.order_id
+        where b.product_id = #{productId}
+    </select>
+
+    <select id="findUserShopOrderCount" resultType="java.lang.Integer">
+        select count(*) from cere_shop_order
+        where shop_id = #{shopId}
+        and buyer_user_id = #{buyerUserId}
+        and payment_state = 1
+    </select>
+
+    <select id="findUserShopOrderConsumption" resultType="java.math.BigDecimal">
+        select sum(price) from cere_shop_order
+        where shop_id = #{shopId}
+        and buyer_user_id = #{buyerUserId}
+        and payment_state = 1
+    </select>
+
+    <update id="updateBatch" parameterType="java.lang.Object">
+        UPDATE cere_shop_order SET state=#{state},update_time=#{time}
+        where order_id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item.orderId}
+        </foreach>
+        )
+    </update>
+
+    <update id="updateBuyerData" parameterType="java.lang.Object">
+        UPDATE cere_shop_order SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+    </update>
+</mapper>

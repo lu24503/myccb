@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.risk.CereRiskRuleDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.risk.CereRiskRule">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="rule_name" jdbcType="VARCHAR" property="ruleName"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="rule_type" jdbcType="INTEGER" property="ruleType"/>
+        <result column="rule_place_order_limit" jdbcType="VARCHAR" property="rulePlaceOrderLimit"/>
+        <result column="rule_wait_pay_limit" jdbcType="VARCHAR" property="ruleWaitPayLimit"/>
+        <result column="rule_sku_limit" jdbcType="VARCHAR" property="ruleSkuLimit"/>
+        <result column="rule_post_sale_limit" jdbcType="VARCHAR" property="rulePostSaleLimit"/>
+        <result column="rule_switch_post_sale" jdbcType="INTEGER" property="ruleSwitchPostSale"/>
+        <result column="rule_switch_sku" jdbcType="INTEGER" property="ruleSwitchSku"/>
+        <result column="rule_switch_place_order" jdbcType="INTEGER" property="ruleSwitchPlaceOrder"/>
+        <result column="rule_switch_wait_pay" jdbcType="INTEGER" property="ruleSwitchWaitPay"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rule_name, status, rule_type, rule_place_order_limit, rule_wait_pay_limit,
+        rule_sku_limit, rule_post_sale_limit, rule_switch_post_sale, rule_switch_sku,
+        rule_switch_place_order, rule_switch_wait_pay, create_time, update_time
+    </sql>
+
+</mapper>

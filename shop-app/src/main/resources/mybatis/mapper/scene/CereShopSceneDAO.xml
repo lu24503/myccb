@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.scene.CereShopSceneDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.scene.CereShopScene">
+    <id column="scene_id" jdbcType="BIGINT" property="sceneId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="scene_type" jdbcType="BIT" property="sceneType" />
+    <result column="scene_name" jdbcType="VARCHAR" property="sceneName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="scene_rule" jdbcType="BIT" property="sceneRule" />
+    <result column="scene_time_type" jdbcType="BIT" property="sceneTimeType" />
+    <result column="scene_time" jdbcType="VARCHAR" property="sceneTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    scene_id, shop_id, scene_type, scene_name, start_time, end_time, scene_rule, scene_time_type,
+    scene_time,`state`,create_time,
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_scene
+    where scene_id = #{sceneId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_scene
+    where scene_id = #{sceneId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="scene_id" keyProperty="sceneId" parameterType="com.shop.cereshop.commons.domain.scene.CereShopScene" useGeneratedKeys="true">
+    insert into cere_shop_scene
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="sceneType != null">
+        scene_type,
+      </if>
+      <if test="sceneName != null">
+        scene_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="sceneRule != null">
+        scene_rule,
+      </if>
+      <if test="sceneTimeType != null">
+        scene_time_type,
+      </if>
+      <if test="sceneTime != null">
+        scene_time,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="sceneType != null">
+        #{sceneType,jdbcType=BIT},
+      </if>
+      <if test="sceneName != null">
+        #{sceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneRule != null">
+        #{sceneRule,jdbcType=BIT},
+      </if>
+      <if test="sceneTimeType != null">
+        #{sceneTimeType,jdbcType=BIT},
+      </if>
+      <if test="sceneTime != null">
+        #{sceneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.scene.CereShopScene">
+    update cere_shop_scene
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="sceneType != null">
+        scene_type = #{sceneType,jdbcType=BIT},
+      </if>
+      <if test="sceneName != null">
+        scene_name = #{sceneName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneRule != null">
+        scene_rule = #{sceneRule,jdbcType=BIT},
+      </if>
+      <if test="sceneTimeType != null">
+        scene_time_type = #{sceneTimeType,jdbcType=BIT},
+      </if>
+      <if test="sceneTime != null">
+        scene_time = #{sceneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scene_id = #{sceneId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.scene.CereShopScene">
+    update cere_shop_scene
+    set shop_id = #{shopId,jdbcType=BIGINT},
+    scene_type = #{sceneType,jdbcType=BIT},
+    scene_name = #{sceneName,jdbcType=VARCHAR},
+    start_time = #{startTime,jdbcType=VARCHAR},
+    end_time = #{endTime,jdbcType=VARCHAR},
+    scene_rule = #{sceneRule,jdbcType=BIT},
+    scene_time_type = #{sceneTimeType,jdbcType=BIT},
+    scene_time = #{sceneTime,jdbcType=VARCHAR},
+    `state` = #{state,jdbcType=INTEGER},
+    create_time = #{createTime,jdbcType=VARCHAR},
+    update_time = #{updateTime,jdbcType=VARCHAR}
+    where scene_id = #{sceneId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectOnGoingFestivalMarketing" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_scene
+    where scene_type = 1 and state = 1
+    and end_time > now() and now() >= start_time
+  </select>
+
+  <select id="selectOnGoingHolidayMarketing" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_scene
+    where scene_type = 2 and state = 1
+    and end_time > now() and now() >= start_time
+  </select>
+  <select id="selectOnGoingBirthDayMarketing" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_scene
+    where scene_type = 3 and state = 1
+    and end_time > now() and now() >= start_time
+  </select>
+  <select id="selectOnGoingMarketingByShopId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_scene
+    where shop_id = #{shopId} and state = 1
+    and end_time > now() and now() >= start_time
+  </select>
+  <select id="selectOnGoingMarketing" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_shop_scene
+    where state = 1
+    and end_time > now() and now() >= start_time
+  </select>
+</mapper>

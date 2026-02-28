@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.activity.CerePlatformActivityDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.activity.CerePlatformActivityDetail">
+    <id column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
+    <result column="reduce_money" jdbcType="DECIMAL" property="reduceMoney" />
+  </resultMap>
+  <insert id="insertSelective" keyColumn="coupon_id" keyProperty="couponId" parameterType="com.shop.cereshop.commons.domain.activity.CerePlatformActivityDetail" useGeneratedKeys="true">
+    insert into cere_platform_activity_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="fullMoney != null">
+        full_money,
+      </if>
+      <if test="reduceMoney != null">
+        reduce_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
+      </if>
+      <if test="fullMoney != null">
+        #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="reduceMoney != null">
+        #{reduceMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByCouponId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.activity.CereBuyerCoupon">
+    SELECT a.coupon_id,a.activity_id,b.activity_name,b.activity_start_time startTime,b.activity_end_time endTime,b.image,
+    a.full_money,a.reduce_money,c.shop_id,b.discount_mode,b.discount_programme,3 as state from cere_platform_activity_detail a
+    LEFT JOIN cere_platform_activity b ON a.activity_id=b.activity_id
+    LEFT JOIN cere_activity_sign c ON b.activity_id=c.activity_id
+    LEFT JOIN cere_sign_product d ON c.sign_id=d.sign_id
+    where a.coupon_id=#{couponId} and c.state=1 and b.activity_start_time&lt;=NOW()
+    and b.activity_end_time&gt;=NOW()
+    GROUP BY a.coupon_id
+    ORDER BY CASE a.full_money when 0 THEN 1 END,a.full_money DESC
+  </select>
+</mapper>

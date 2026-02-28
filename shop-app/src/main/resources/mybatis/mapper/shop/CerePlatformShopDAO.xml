@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.shop.CerePlatformShopDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    <id column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="shop_code" jdbcType="VARCHAR" property="shopCode" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_brief" jdbcType="VARCHAR" property="shopBrief" />
+    <result column="shop_phone" jdbcType="VARCHAR" property="shopPhone" />
+    <result column="shop_password" jdbcType="VARCHAR" property="shopPassword" />
+    <result column="charge_person_name" jdbcType="VARCHAR" property="chargePersonName" />
+    <result column="charge_person_phone" jdbcType="VARCHAR" property="chargePersonPhone" />
+    <result column="shop_adress" jdbcType="VARCHAR" property="shopAdress" />
+    <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
+    <result column="effective_year" jdbcType="INTEGER" property="effectiveYear" />
+    <result column="contract_state" jdbcType="BIT" property="contractState" />
+    <result column="authentication_state" jdbcType="BIT" property="authenticationState" />
+    <result column="check_state" jdbcType="BIT" property="checkState" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="authen_type" jdbcType="BIT" property="authenType" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+
+  <resultMap type="com.shop.cereshop.app.page.shop.Shop" id="shopMap">
+    <result property="shopId"  column="shop_id"/>
+    <result property="shopName"  column="shop_name"/>
+    <result property="shopLogo"  column="shop_logo"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    shop_id, shop_code, shop_name, shop_brief, shop_phone, shop_password, charge_person_name,
+    charge_person_phone, shop_adress, effective_date, effective_year, contract_state,
+    authentication_state, check_state, `state`,authen_type, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="shop_id" keyProperty="shopId" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop" useGeneratedKeys="true">
+    insert into cere_platform_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopCode != null and shopCode!=''">
+        shop_code,
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name,
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        shop_brief,
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        shop_phone,
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        shop_password,
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        charge_person_name,
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        charge_person_phone,
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        shop_adress,
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        effective_date,
+      </if>
+      <if test="effectiveYear != null">
+        effective_year,
+      </if>
+      <if test="contractState != null">
+        contract_state,
+      </if>
+      <if test="authenticationState != null">
+        authentication_state,
+      </if>
+      <if test="checkState != null">
+        check_state,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="authenType != null">
+        authen_type,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopCode != null and shopCode!=''">
+        #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        #{shopBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        #{shopPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        #{chargePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        #{chargePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        #{shopAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        #{effectiveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveYear != null">
+        #{effectiveYear,jdbcType=INTEGER},
+      </if>
+      <if test="contractState != null">
+        #{contractState,jdbcType=BIT},
+      </if>
+      <if test="authenticationState != null">
+        #{authenticationState,jdbcType=BIT},
+      </if>
+      <if test="checkState != null">
+        #{checkState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="authenType != null">
+        #{authenType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    <set>
+      <if test="shopCode != null and shopCode!=''">
+        shop_code = #{shopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null and shopName!=''">
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopBrief != null and shopBrief!=''">
+        shop_brief = #{shopBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null and shopPhone!=''">
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPassword != null and shopPassword!=''">
+        shop_password = #{shopPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonName != null and chargePersonName!=''">
+        charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargePersonPhone != null and chargePersonPhone!=''">
+        charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAdress != null and shopAdress!=''">
+        shop_adress = #{shopAdress,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null and effectiveDate!=''">
+        effective_date = #{effectiveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveYear != null">
+        effective_year = #{effectiveYear,jdbcType=INTEGER},
+      </if>
+      <if test="contractState != null">
+        contract_state = #{contractState,jdbcType=BIT},
+      </if>
+      <if test="authenticationState != null">
+        authentication_state = #{authenticationState,jdbcType=BIT},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="authenType != null">
+        authen_type = #{authenType,jdbcType=BIT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    set shop_code = #{shopCode,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_brief = #{shopBrief,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_password = #{shopPassword,jdbcType=VARCHAR},
+      charge_person_name = #{chargePersonName,jdbcType=VARCHAR},
+      charge_person_phone = #{chargePersonPhone,jdbcType=VARCHAR},
+      shop_adress = #{shopAdress,jdbcType=VARCHAR},
+      effective_date = #{effectiveDate,jdbcType=VARCHAR},
+      effective_year = #{effectiveYear,jdbcType=INTEGER},
+      contract_state = #{contractState,jdbcType=BIT},
+      authentication_state = #{authenticationState,jdbcType=BIT},
+      check_state = #{checkState,jdbcType=BIT},
+      `state` = #{state,jdbcType=BIT},
+      authen_type = #{authenType,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findRecommendShop" resultType="com.shop.cereshop.app.page.index.RecommendShop">
+    SELECT a.shop_id,a.shop_name from cere_platform_shop a
+    LEFT JOIN cere_shop_order b ON a.shop_id=b.shop_id and b.state in (1,2,3,4)
+    where YEARWEEK( date_format(  a.create_time,'%Y-%m-%d' ) ) = YEARWEEK( now() )
+    GROUP BY a.shop_id
+    ORDER BY SUM(b.price) DESC LIMIT 10
+  </select>
+
+  <select id="findVolumeProductByShopId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.index.RecommendShop">
+    SELECT a.product_id,a.product_name,b.original_price,b.price,IF(f.image IS NULL,e.product_image,f.image) image,c.sku_id from cere_shop_product a
+    LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+    LEFT JOIN cere_order_product c ON b.sku_id=c.sku_id
+    LEFT JOIN cere_shop_order d ON c.order_id=d.order_id and d.state in (1,2,3,4)
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+    GROUP BY a.product_id) e ON a.product_id=e.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id GROUP BY a.sku_id) f ON c.sku_id=f.sku_id
+    where a.shop_id=#{shopId} and a.shelve_state=1
+    GROUP BY c.sku_id
+    ORDER BY SUM(c.number) DESC LIMIT 1
+  </select>
+
+  <select id="findRecommendProducts" resultType="com.shop.cereshop.app.page.index.RecommendShop">
+    SELECT a.product_id,
+       a.product_name,
+       IFNULL(f.image, e.product_image) image,
+       c.sku_id,
+       b.original_price,
+       b.price,
+       0 as activityType
+    from cere_shop_product a
+    LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+    LEFT JOIN cere_order_product c ON b.sku_id=c.sku_id
+    LEFT JOIN cere_shop_order d ON c.order_id=d.order_id and d.state in (1,2,3,4)
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b where a.product_id=b.product_id
+        GROUP BY a.product_id) e ON a.product_id=e.product_id
+    LEFT JOIN (SELECT a.sku_id,a.image from cere_sku_name a,cere_product_sku b where a.sku_id=b.sku_id
+        GROUP BY a.sku_id) f ON c.sku_id=f.sku_id
+    where a.shelve_state=1
+    GROUP BY c.sku_id
+    ORDER BY SUM(c.number) DESC LIMIT 1
+  </select>
+
+  <select id="findPayUsers" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT COUNT(*) users, a.product_id from (SELECT a.order_id,a.product_id,b.buyer_user_id FROM cere_order_product a,cere_shop_order b
+    where a.order_id=b.order_id and a.product_id=#{productId} and b.payment_state = 1 GROUP BY b.buyer_user_id) a
+  </select>
+
+  <select id="getShopProducts" parameterType="com.shop.cereshop.app.param.shop.ShopParam" resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT a.shop_id,
+        d.shop_name,
+        a.product_id,
+        a.product_name,
+        c.product_image image,
+        b.sku_id,
+        b.original_price,
+        b.price,
+        ifnull(f.number, 0) + a.fictitious_number as number,
+        a.product_brief,
+        0 as activityType
+    from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN cere_shop_group sg ON a.shop_group_id = sg.shop_group_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+    cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shop_id=#{shopId} and a.shelve_state=1 and d.state=1
+    <if test="search!=null and search!=''">
+      and a.product_name like concat('%',#{search},'%')
+    </if>
+    <if test="classifyId!=null">
+      <choose>
+        <when test="classifyLevel != null">
+          <if test="classifyLevel == 1">
+            and a.classify_id1 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 2">
+            and a.classify_id2 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 3">
+            and a.classify_id3 = #{classifyId}
+          </if>
+        </when>
+        <otherwise>
+          and (
+            a.classify_id1 = #{classifyId}
+            OR a.classify_id2 = #{classifyId}
+            OR a.classify_id3 = #{classifyId}
+          )
+        </otherwise>
+      </choose>
+    </if>
+    <if test="groupId != null">
+      and sg.shop_group_id = #{groupId}
+    </if>
+    <if test="minMoney!=null">
+      and price&gt;=#{minMoney}
+    </if>
+    <if test="maxMoney!=null">
+      and price&lt;=#{maxMoney}
+    </if>
+    GROUP BY a.product_id
+    ORDER BY
+    <if test='type=="1"'>
+      price,
+    </if>
+    <if test='type=="2"'>
+      price DESC,
+    </if>
+    <if test='volume=="1"'>
+      f.number,
+    </if>
+    <if test='volume=="2"'>
+      f.number DESC,
+    </if>
+    a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="getExtensionProduct" parameterType="com.shop.cereshop.app.param.shop.ShopParam" resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT a.shop_id,
+           d.shop_name,
+           a.product_id,
+           a.product_name,
+           c.product_image image,
+           b.sku_id,
+           ifnull(f.number, 0) + a.fictitious_number as number,
+           a.product_brief,
+           b.original_price,
+           b.price,
+           0 as activityType
+    from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+        cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shop_id=#{shopId} and a.shelve_state=1 and d.state=1
+    GROUP BY a.product_id
+    ORDER BY a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findNumber" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.Shop">
+    SELECT a.shop_id,a.shop_name,a.shop_logo,IF(SUM(c.number) IS NULL,0,SUM(c.number)) number from cere_platform_shop a
+    LEFT JOIN cere_shop_order b ON b.shop_id = a.shop_id
+    LEFT JOIN cere_order_product c ON c.order_id = b.order_id and b.state in (2,3,4)
+    where a.shop_id=#{shopId}
+  </select>
+
+  <select id="findShopNumber" parameterType="java.lang.Object" resultType="java.lang.Integer">
+    SELECT IF(SUM(a.number) IS NULL, c.sale_number, SUM(a.number) + c.sale_number) FROM cere_order_product a
+    JOIN (select ifnull(sum(fictitious_number), 0) as sale_number from cere_shop_product where shop_id = #{shopId}) c
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where b.shop_id=#{shopId} and b.state in (2,3,4)
+  </select>
+
+  <select id="getShopClassify" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopClassify">
+    SELECT shop_group_id as classify_id, group_name as classify_name from cere_shop_group
+    where shop_id=#{shopId}
+  </select>
+
+  <select id="findShopToolByProductId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductCoupon">
+    SELECT a.coupon_id,a.activity_id,b.activity_name,b.activity_start_time startTime,b.activity_end_time endTime,b.image,
+    a.full_money,a.reduce_money,c.shop_id,b.discount_mode,b.discount_programme,3 as state from cere_platform_activity_detail a
+    LEFT JOIN cere_platform_activity b ON a.activity_id=b.activity_id
+    LEFT JOIN cere_activity_sign c ON b.activity_id=c.activity_id
+    LEFT JOIN cere_sign_product d ON c.sign_id=d.sign_id
+    where c.shop_id=#{shopId} and c.state=1 and b.activity_start_time&lt;=NOW()
+    and b.activity_end_time&gt;=NOW() and d.product_id=#{productId}
+    ORDER BY CASE a.full_money when 0 THEN 1 END,a.full_money DESC
+  </select>
+
+  <select id="getShopBanner" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.banner.ShopBanner">
+    SELECT shop_id,banner_style,banner_image,banner_url FROM cere_shop_banner where shop_id=#{shopId} and state=1
+  </select>
+
+  <select id="getShops" parameterType="com.shop.cereshop.app.param.shop.ShopParam" resultType="com.shop.cereshop.app.page.settlement.SettlementShop">
+    SELECT a.shop_id,a.shop_name,a.shop_adress,a.shop_logo,IF(c.price IS NULL,0,c.price) price,
+    IF(f.number IS NULL,0,f.number) number FROM cere_platform_shop a
+    LEFT JOIN cere_shop_product b ON a.shop_id=b.shop_id
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+    cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON c.sku_id=f.sku_id
+    where a.check_state=1 and a.state=1
+    <if test="search!=null and search!=''">
+      and a.shop_name like concat('%',#{search},'%')
+    </if>
+    <if test="minMoney!=null">
+      and price&gt;=#{minMoney}
+    </if>
+    <if test="maxMoney!=null">
+      and price&lt;=#{maxMoney}
+    </if>
+    GROUP BY a.shop_id
+    ORDER BY
+    <if test='type=="1"'>
+      price,
+    </if>
+    <if test='type=="2"'>
+      price DESC,
+    </if>
+    <if test='volume=="1"'>
+      number,
+    </if>
+    <if test='volume=="2"'>
+      number DESC,
+    </if>
+    a.update_time DESC,a.create_time DESC
+  </select>
+
+  <select id="findSkuByShopParam" parameterType="com.shop.cereshop.app.param.shop.ShopParam" resultType="com.shop.cereshop.app.page.cart.CartSku">
+    SELECT a.product_id,
+        a.product_name,
+        c.product_image image,
+        b.sku_id,
+        f.number,
+        a.shop_id,
+        a.product_brief,
+        b.original_price,
+        b.price,
+        0 as activityType
+    from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+        cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shop_id=#{shopId}
+    and a.shelve_state = 1
+    <if test="minMoney!=null">
+      and b.price&gt;=#{minMoney}
+    </if>
+    <if test="maxMoney!=null">
+      and b.price&lt;=#{maxMoney}
+    </if>
+    GROUP BY a.product_id
+    ORDER BY
+    <if test='type=="1"'>
+      price,
+    </if>
+    <if test='type=="2"'>
+      price DESC,
+    </if>
+    <if test='volume=="1"'>
+      f.number,
+    </if>
+    <if test='volume=="2"'>
+      f.number DESC,
+    </if>
+    a.update_time DESC,a.create_time DESC
+    limit 10
+  </select>
+
+  <update id="updateState" parameterType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    update cere_platform_shop
+    <set>
+      <if test="contractState != null">
+        contract_state = #{contractState,jdbcType=BIT},
+      </if>
+      <if test="authenticationState != null">
+        authentication_state = #{authenticationState,jdbcType=BIT},
+      </if>
+      <if test="checkState != null">
+        check_state = #{checkState,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.PlatformShop">
+    SELECT shop_id,shop_logo,shop_name,shop_adress,shop_brief,shop_phone,authen_type,authentication_state
+    FROM cere_platform_shop where shop_id = #{shopId}
+  </select>
+
+  <select id="findByShopName" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName}
+  </select>
+
+  <select id="findByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone}
+  </select>
+
+  <select id="checkShopIdByName" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_name=#{shopName} and shop_id<![CDATA[!= ]]>#{shopId}
+  </select>
+
+  <select id="checkShopIdByPhone" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT shop_id FROM cere_platform_shop where shop_phone=#{shopPhone} and shop_id<![CDATA[!= ]]>#{shopId}
+  </select>
+
+  <select id="check" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.shop.CerePlatformShop">
+    SELECT a.shop_id,a.check_state,b.reason shopBrief from cere_platform_shop a
+    LEFT JOIN (SELECT shop_id,reason FROM cere_shop_check ORDER BY create_time DESC LIMIT 1) b ON a.shop_id=b.shop_id
+    where a.shop_phone=#{shopPhone}
+  </select>
+
+  <select id="findShopIndex" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopIndex">
+    SELECT shop_id,shop_logo,shop_name,shop_adress FROM cere_platform_shop where shop_id=#{shopId}
+  </select>
+
+  <select id="findShopCoupons" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopCoupon">
+    SELECT shop_coupon_id,coupon_type,threshold,coupon_content,0 as state,frequency,stock_number FROM cere_shop_coupon
+    where shop_id=#{shopId} and state=1
+  </select>
+
+  <select id="findGroupWork" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopGroupWork">
+    SELECT shop_group_work_id,group_name,start_time,end_time FROM cere_shop_group_work where shop_id=#{shopId} and state in (0,1)
+  </select>
+
+  <select id="findGroupProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT a.shop_group_work_id,e.shop_id,e.shop_name,a.product_id,c.sku_id,b.product_name,
+    d.product_image image,c.original_price,a.price FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT b.product_id,b.sku_id,b.original_price FROM cere_shop_product a,cere_product_sku b where
+    a.product_id=b.product_id GROUP BY b.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_platform_shop e ON b.shop_id=e.shop_id
+    where a.shop_group_work_id=#{shopGroupWorkId} LIMIT 4
+  </select>
+
+  <select id="findSeckill" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopSeckill">
+    SELECT shop_seckill_id,seckill_name,effective_start,effective_end from cere_shop_seckill where shop_id=#{shopId} and state in (0,1)
+  </select>
+
+  <select id="findSeckillProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT a.shop_seckill_id,e.shop_id,e.shop_name,a.product_id,c.sku_id,b.product_name,
+    d.product_image image,c.original_price,a.seckill_price price,a.total FROM cere_shop_seckill_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT b.product_id,b.sku_id,b.original_price FROM cere_shop_product a,cere_product_sku b where
+    a.product_id=b.product_id GROUP BY b.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_platform_shop e ON b.shop_id=e.shop_id
+    where a.shop_seckill_id=#{shopSeckillId} LIMIT 4
+  </select>
+
+  <select id="findDiscount" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.shop.ShopDiscount">
+    SELECT shop_discount_id,discount_name,start_time,end_time from cere_shop_discount where shop_id=#{shopId} and state in (0,1)
+  </select>
+
+  <select id="findDiscountProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT a.shop_discount_id,e.shop_id,e.shop_name,a.product_id,c.sku_id,b.product_name,
+    d.product_image image,c.original_price,a.price,a.total FROM cere_shop_discount_detail a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT b.product_id,b.sku_id,b.original_price FROM cere_shop_product a,cere_product_sku b where
+    a.product_id=b.product_id GROUP BY b.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON a.product_id=d.product_id
+    LEFT JOIN cere_platform_shop e ON b.shop_id=e.shop_id
+    where a.shop_discount_id=#{shopDiscountId} LIMIT 4
+  </select>
+
+  <select id="getClaasifyShop" parameterType="java.util.List" resultMap="shopMap">
+    SELECT
+      d.shop_id,
+      d.shop_name,
+      d.shop_logo
+    from cere_platform_shop d
+    where d.state=1 and d.shop_id in (
+      <foreach collection="list" item="i" index="index" separator=",">
+        #{i.shopId}
+      </foreach>
+    )
+  </select>
+
+</mapper>

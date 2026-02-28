@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereSkuRealInfoDAO">
+
+  <update id="updateSelective">
+    update cere_sku_real_info
+    <set>
+      <if test="realInfo.activityType != null">
+        activity_type = #{realInfo.activityType},
+      </if>
+      <if test="realInfo.activityId != null">
+        activity_id = #{realInfo.activityId},
+      </if>
+      <if test="realInfo.curPrice != null">
+        cur_price = #{realInfo.curPrice},
+      </if>
+      <if test="realInfo.curOriginalPrice != null">
+        cur_original_price = #{realInfo.curOriginalPrice},
+      </if>
+      <if test="realInfo.minPrice != null">
+        min_price = #{realInfo.minPrice},
+      </if>
+      <if test="realInfo.maxPrice != null">
+        max_price = #{realInfo.maxPrice},
+      </if>
+      <if test="realInfo.limitNumber != null">
+        limit_number = #{realInfo.limitNumber},
+      </if>
+      <if test="realInfo.updateTime != null">
+        update_time = #{realInfo.updateTime},
+      </if>
+      <if test="resetSalesVolume">
+        sales_volume = product_sales_volume
+      </if>
+    </set>
+    where sku_id = #{realInfo.skuId}
+  </update>
+
+  <update id="increSalesVolumeBy">
+    update cere_sku_real_info
+    set sales_volume = sales_volume + #{addedNumber},
+    sku_sales_volume = sku_sales_volume + #{addedNumber},
+    product_sales_volume = product_sales_volume + #{addedNumber}
+    where product_id = #{productId}
+  </update>
+
+  <update id="updateSalesUserCount">
+    update cere_sku_real_info a join (
+      select b.product_id, count(distinct buyer_user_id) as cnt from cere_shop_order a join cere_order_product b on b.order_id = a.order_id
+      where b.product_id in
+      <foreach collection="list" item="productId" open="(" separator="," close=")">
+        #{productId}
+      </foreach>
+      group by b.product_id
+    ) b on b.product_id = a.product_id
+    set a.sales_user_count = b.cnt
+  </update>
+
+  <select id="selectCombineMemberInfo" resultType="com.shop.cereshop.commons.domain.product.CereSkuRealInfo">
+    select a.product_id, a.sku_id, a.min_price, a.max_price, a.limit_number,
+    if(a.activity_type in (8, 9) and b.sku_id is not null, b.cur_price, a.cur_price) as cur_price,
+    if(a.activity_type in (8, 9) and b.sku_id is not null, b.cur_original_price, a.cur_original_price) as cur_original_price,
+    a.limit_number, a.activity_type, a.activity_id, a.sales_volume
+    from cere_sku_real_info a
+    left join cere_sku_member_real_info b on b.sku_id = a.sku_id
+    where a.sku_id = #{skuId} and b.member_level_id = #{memberLevelId}
+  </select>
+
+</mapper>

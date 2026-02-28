@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.express.CerePlatformExpressDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.express.CerePlatformExpress">
+    <result column="platform_user_id" jdbcType="BIGINT" property="platformUserId" />
+    <result column="express_type" jdbcType="BIT" property="expressType" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.express.CerePlatformExpress">
+    insert into cere_platform_express
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="platformUserId != null">
+        platform_user_id,
+      </if>
+      <if test="expressType != null">
+        express_type,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="platformUserId != null">
+        #{platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="expressType != null">
+        #{expressType,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findExpress"  resultType="java.lang.Integer">
+    SELECT express_type FROM cere_platform_express
+  </select>
+</mapper>

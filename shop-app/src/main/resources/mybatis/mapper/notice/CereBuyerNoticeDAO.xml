@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.notice.CereBuyerNoticeDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.notice.CereBuyerNotice">
+    <result column="notice_id" jdbcType="BIGINT" property="noticeId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.notice.CereBuyerNotice">
+    insert into cere_buyer_notice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        notice_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="noticeId != null">
+        #{noticeId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateStatus">
+    update cere_buyer_notice
+    set status = #{status}
+    where notice_id = #{noticeId} and buyer_user_id = #{buyerUserId}
+  </update>
+  <select id="selectBuyerNotice" resultMap="BaseResultMap">
+    select notice_id, buyer_user_id
+    from cere_buyer_notice
+    where notice_id = #{noticeId} and buyer_user_id = #{buyerUserId}
+    limit 1
+  </select>
+</mapper>

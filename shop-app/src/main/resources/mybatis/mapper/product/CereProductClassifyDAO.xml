@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereProductClassifyDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductClassify">
+    <id column="classify_id" jdbcType="BIGINT" property="classifyId" />
+    <result column="classify_pid" jdbcType="BIGINT" property="classifyPid" />
+    <result column="classify_hierarchy" jdbcType="VARCHAR" property="classifyHierarchy" />
+    <result column="classify_level" jdbcType="TINYINT" property="classifyLevel" />
+    <result column="classify_level_hierarchy" jdbcType="VARCHAR" property="classifyLevelHierarchy" />
+    <result column="classify_name" jdbcType="VARCHAR" property="classifyName" />
+    <result column="classify_image" jdbcType="VARCHAR" property="classifyImage" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="link" jdbcType="BIGINT" property="link" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="mapProductImage" type="com.shop.cereshop.app.page.index.ProductImage" >
+    <result property="productId" column="product_id" javaType="java.lang.Long"/>
+    <result property="image" column="image" javaType="java.lang.String"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    classify_id, classify_pid, classify_hierarchy, classify_level, classify_level_hierarchy,
+    classify_name, classify_image, sort, link, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_product_classify
+    where classify_id = #{classifyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_product_classify
+    where classify_id = #{classifyId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="classify_id" keyProperty="classifyId" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify" useGeneratedKeys="true">
+    insert into cere_product_classify
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classifyPid != null">
+        classify_pid,
+      </if>
+      <if test="classifyHierarchy != null and classifyHierarchy!=''">
+        classify_hierarchy,
+      </if>
+      <if test="classifyLevel != null">
+        classify_level,
+      </if>
+      <if test="classifyLevelHierarchy != null and classifyLevelHierarchy!=''">
+        classify_level_hierarchy,
+      </if>
+      <if test="classifyName != null and classifyName!=''">
+        classify_name,
+      </if>
+      <if test="classifyImage != null and classifyImage!=''">
+        classify_image,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="link != null and link!=''">
+        link,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classifyPid != null">
+        #{classifyPid,jdbcType=BIGINT},
+      </if>
+      <if test="classifyHierarchy != null and classifyHierarchy!=''">
+        #{classifyHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyLevel != null">
+        #{classifyLevel,jdbcType=TINYINT},
+      </if>
+      <if test="classifyLevelHierarchy != null and classifyLevelHierarchy!=''">
+        #{classifyLevelHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyName != null and classifyName!=''">
+        #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyImage != null and classifyImage!=''">
+        #{classifyImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="link != null and link!=''">
+        #{link,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify">
+    update cere_product_classify
+    <set>
+      <if test="classifyPid != null">
+        classify_pid = #{classifyPid,jdbcType=BIGINT},
+      </if>
+      <if test="classifyHierarchy != null and classifyHierarchy!=''">
+        classify_hierarchy = #{classifyHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyLevel != null">
+        classify_level = #{classifyLevel,jdbcType=TINYINT},
+      </if>
+      <if test="classifyLevelHierarchy != null and classifyLevelHierarchy!=''">
+        classify_level_hierarchy = #{classifyLevelHierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyName != null and classifyName!=''">
+        classify_name = #{classifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="classifyImage != null and classifyImage!=''">
+        classify_image = #{classifyImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="link != null and link!=''">
+        link = #{link,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where classify_id = #{classifyId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.product.CereProductClassify">
+    update cere_product_classify
+    set classify_pid = #{classifyPid,jdbcType=BIGINT},
+      classify_hierarchy = #{classifyHierarchy,jdbcType=VARCHAR},
+      classify_level = #{classifyLevel,jdbcType=TINYINT},
+      classify_level_hierarchy = #{classifyLevelHierarchy,jdbcType=VARCHAR},
+      classify_name = #{classifyName,jdbcType=VARCHAR},
+      classify_image = #{classifyImage,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      link = #{link,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where classify_id = #{classifyId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAll" resultType="com.shop.cereshop.app.page.index.ProductClassify">
+    SELECT classify_id,classify_name from cere_product_classify where classify_level=1
+  </select>
+
+  <select id="getFirstClassify" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.classify.Classify">
+    SELECT classify_id,classify_name,classify_image from cere_product_classify
+    where 1=1
+    <if test="classifyId!=null">
+      and classify_pid=#{classifyId}
+    </if>
+    <if test="classifyId==null">
+      and classify_pid=0
+    </if>
+  </select>
+
+  <select id="findThreeClassify" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.classify.Classify">
+    SELECT classify_id,classify_pid,classify_name,classify_image from cere_product_classify where classify_level=3
+  </select>
+
+  <select id="getClaasifyProducts" parameterType="com.shop.cereshop.app.param.classify.ClassifyProductParam" resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT
+        a.shop_id,
+        d.shop_name,
+        d.shop_logo,
+        a.product_id,
+        a.product_name,
+        c.product_image image,
+        b.sku_id,
+        b.original_price,
+        b.price,
+        0 as activityType,
+        ifnull(f.number, 0) + a.fictitious_number as number
+    from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+        where a.product_id=b.product_id GROUP BY a.product_id) c ON a.product_id=c.product_id
+    LEFT JOIN cere_platform_shop d ON a.shop_id=d.shop_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shelve_state=1 and d.state=1
+    <include refid="CommonCondition"/>
+  </select>
+
+  <select id="getClassifyProducts2" parameterType="com.shop.cereshop.app.param.classify.ClassifyProductParam"
+          resultType="com.shop.cereshop.app.page.index.Product">
+    SELECT
+      a.shop_id,
+      a.product_id,
+      a.product_name,
+      b.sku_id,
+      b.original_price,
+      b.price,
+      0 as activityType,
+      ifnull(f.number, 0) + a.fictitious_number as number
+    from cere_shop_product a
+    LEFT JOIN (SELECT a.product_id,a.price,a.sku_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) b ON a.product_id=b.product_id
+    LEFT JOIN cere_product_classify e ON a.classify_id=e.classify_id
+    LEFT JOIN (SELECT SUM(number) number,sku_id,order_id from cere_order_product GROUP BY sku_id) f ON b.sku_id=f.sku_id
+    where a.shelve_state=1
+    <include refid="CommonCondition"/>
+  </select>
+
+  <select id="getClassifyImage" parameterType="java.util.List"
+          resultMap="mapProductImage">
+    SELECT
+      c.product_id,
+      c.product_image image
+    from (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+      where a.product_id=b.product_id GROUP BY a.product_id) c
+    where c.product_id in
+    (
+    <foreach collection="list" item="i" index="index" separator=",">
+      #{i.productId}
+    </foreach>
+    )
+  </select>
+
+  <sql id="CommonCondition">
+    <if test="classifyId!=null">
+      <choose>
+        <when test="classifyLevel != null">
+          <if test="classifyLevel == 1">
+            and a.classify_id1 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 2">
+            and a.classify_id2 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 3">
+            and a.classify_id3 = #{classifyId}
+          </if>
+        </when>
+        <otherwise>
+          and (
+            a.classify_id1 = #{classifyId}
+            OR a.classify_id2 = #{classifyId}
+            OR a.classify_id3 = #{classifyId}
+          )
+        </otherwise>
+      </choose>
+    </if>
+    <if test="productName!=null and productName!=''">
+      and a.product_name like concat('%',#{productName},'%')
+    </if>
+    ORDER BY
+    <if test='type=="1"'>
+      price,
+    </if>
+    <if test='type=="2"'>
+      price DESC,
+    </if>
+    <if test='volume=="1"'>
+      f.number,
+    </if>
+    <if test='volume=="2"'>
+      f.number DESC,
+    </if>
+    a.update_time DESC,a.create_time DESC
+  </sql>
+</mapper>

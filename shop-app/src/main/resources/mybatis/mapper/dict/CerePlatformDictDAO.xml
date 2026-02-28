@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.dict.CerePlatformDictDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    <id column="dict_id" jdbcType="BIGINT" property="dictId" />
+    <result column="dict_pid" jdbcType="BIGINT" property="dictPid" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+    <result column="dict_describe" jdbcType="VARCHAR" property="dictDescribe" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dict_id, dict_pid, dict_name, dict_describe, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_platform_dict
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_platform_dict
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="dict_id" keyProperty="dictId" parameterType="com.shop.cereshop.commons.domain.dict.CerePlatformDict" useGeneratedKeys="true">
+    insert into cere_platform_dict
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dictPid != null">
+        dict_pid,
+      </if>
+      <if test="dictName != null and dictName!=''">
+        dict_name,
+      </if>
+      <if test="dictDescribe != null and dictDescribe!=''">
+        dict_describe,
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dictPid != null">
+        #{dictPid,jdbcType=BIGINT},
+      </if>
+      <if test="dictName != null and dictName!=''">
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictDescribe != null and dictDescribe!=''">
+        #{dictDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    update cere_platform_dict
+    <set>
+      <if test="dictPid != null">
+        dict_pid = #{dictPid,jdbcType=BIGINT},
+      </if>
+      <if test="dictName != null and dictName!=''">
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictDescribe != null and dictDescribe!=''">
+        dict_describe = #{dictDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null and createTime!=''">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    update cere_platform_dict
+    set dict_pid = #{dictPid,jdbcType=BIGINT},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      dict_describe = #{dictDescribe,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where dict_id = #{dictId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findExpress" resultType="java.lang.Integer">
+    SELECT express_type from cere_platform_express
+  </select>
+
+  <select id="findExpressSelect" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    SELECT dict_id,dict_name FROM cere_platform_dict where dict_pid=#{dictId}
+  </select>
+
+  <select id="getReasonSelect" resultType="java.lang.String">
+    SELECT dict_name from cere_platform_dict
+    where dict_pid=(SELECT dict_id from cere_platform_dict where dict_name='退款原因')
+  </select>
+
+  <select id="findByCompany" parameterType="java.lang.Object" resultType="java.lang.String">
+    SELECT dict_describe FROM cere_platform_dict where dict_name=#{express} and dict_pid=#{dictPid}
+  </select>
+  <select id="getByName" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List"/>
+    from cere_platform_dict
+    where dict_name = #{name}
+    limit 1
+  </select>
+
+  <select id="getSelect" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    SELECT dict_name,dict_id from cere_platform_dict
+    where dict_pid=(SELECT dict_id from cere_platform_dict where dict_name=#{dictName})
+  </select>
+
+  <select id="getByNameList" resultType="com.shop.cereshop.commons.domain.dict.CerePlatformDict">
+    select
+      <include refid="Base_Column_List"/>
+    from cere_platform_dict
+    where dict_name in
+    (
+      <foreach collection="list" separator="," item="name">
+        #{name}
+      </foreach>
+    )
+  </select>
+</mapper>
+

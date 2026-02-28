@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.live.CereLiveDAO">
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.live.CereLive">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="anchor_nickname" jdbcType="VARCHAR" property="anchorNickname" />
+        <result column="anchor_wechat" jdbcType="VARCHAR" property="anchorWechat" />
+        <result column="anchor_head_img" jdbcType="VARCHAR" property="anchorHeadImg" />
+        <result column="live_type" jdbcType="INTEGER" property="liveType" />
+        <result column="screen_type" jdbcType="INTEGER" property="screenType" />
+        <result column="close_like" jdbcType="INTEGER" property="closeLike" />
+        <result column="close_goods_shelf" jdbcType="INTEGER" property="closeGoodsShelf" />
+        <result column="close_comment" jdbcType="INTEGER" property="closeComment" />
+        <result column="close_playback" jdbcType="INTEGER" property="closePlayback" />
+        <result column="close_share" jdbcType="INTEGER" property="closeShare" />
+        <result column="close_service" jdbcType="INTEGER" property="closeService" />
+        <result column="close_appointment" jdbcType="INTEGER" property="closeAppointment" />
+        <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+        <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+        <result column="cover_img" jdbcType="VARCHAR" property="coverImg" />
+        <result column="share_img" jdbcType="VARCHAR" property="shareImg" />
+        <result column="feeds_img" jdbcType="VARCHAR" property="feedsImg" />
+        <result column="cover_media_id" jdbcType="VARCHAR" property="coverMediaId"/>
+        <result column="share_media_id" jdbcType="VARCHAR" property="shareMediaId"/>
+        <result column="feeds_media_id" jdbcType="VARCHAR" property="feedsMediaId"/>
+        <result column="room_id" jdbcType="INTEGER" property="roomId"/>
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, shop_id, title, anchor_nickname, anchor_wechat, anchor_head_img, live_type, screen_type,
+        close_like, close_goods_shelf, close_comment, close_playback, close_share,
+        close_service, close_appointment, start_time, end_time, cover_img,
+        share_img, feeds_img, cover_media_id, share_media_id, feeds_media_id, room_id,
+        state, remark, create_time, update_time
+    </sql>
+    <select id="selectLiveList" resultType="com.shop.cereshop.app.page.live.CereLivePage">
+        select a.id, anchor_nickname, anchor_head_img, start_time, feeds_img,
+            room_id
+        from cere_live a
+        where state = 1 and room_id is not null and end_time > #{nowTime}
+        order by start_time
+    </select>
+</mapper>

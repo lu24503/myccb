@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.credit.CereCreditRecordDAO">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.credit.CereCreditRecord">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+        <result column="record_type" jdbcType="INTEGER" property="recordType"/>
+        <result column="opt_type" jdbcType="INTEGER" property="optType"/>
+        <result column="record_content" jdbcType="VARCHAR" property="recordContent"/>
+        <result column="credit" jdbcType="INTEGER" property="credit"/>
+        <result column="remain_credit" jdbcType="INTEGER" property="remainCredit"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, buyer_user_id, record_type, opt_type, record_content,
+        credit, remain_credit, create_time, update_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.advert.CereCloseAdvertDAO">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.advert.CereCloseAdvert">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId"/>
+        <result column="device_id" jdbcType="VARCHAR" property="deviceId"/>
+        <result column="close_date" jdbcType="DATE" property="closeDate"/>
+        <result column="trigger_condition" jdbcType="INTEGER" property="triggerCondition"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, buyer_user_id, device_id, close_date, trigger_condition, create_time, update_time
+    </sql>
+
+</mapper>

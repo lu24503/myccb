@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.groupwork.CereCollageOrderDetailDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.collage.CereCollageOrderDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="collage_id" jdbcType="BIGINT" property="collageId" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="state" jdbcType="BIT" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, collage_id, order_id, `state`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_collage_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_collage_order_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrderDetail" useGeneratedKeys="true">
+    insert into cere_collage_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="collageId != null">
+        collage_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="collageId != null">
+        #{collageId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrderDetail">
+    update cere_collage_order_detail
+    <set>
+      <if test="collageId != null">
+        collage_id = #{collageId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.collage.CereCollageOrderDetail">
+    update cere_collage_order_detail
+    set collage_id = #{collageId,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      `state` = #{state,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateInvalid" parameterType="java.util.List">
+    UPDATE cere_collage_order_detail SET state=0 where order_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <select id="findKaituan" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.collage.CereCollageOrderDetail">
+    SELECT * FROM cere_collage_order_detail where collage_id=#{collageId} LIMIT 1
+  </select>
+
+  <select id="findCollagePerson" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.order.CollagePerson">
+    SELECT c.buyer_user_id, IF(c.wechat_name IS NULL,c.`name`,c.wechat_name) `name`,c.head_image FROM cere_collage_order_detail a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    LEFT JOIN cere_buyer_user c ON b.buyer_user_id=c.buyer_user_id
+    where a.collage_id=#{collageId}
+  </select>
+</mapper>

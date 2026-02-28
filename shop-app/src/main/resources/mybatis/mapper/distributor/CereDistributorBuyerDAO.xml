@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.distributor.CereDistributorBuyerDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="distributor_id" jdbcType="BIGINT" property="distributorId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="if_bind" jdbcType="BIT" property="ifBind" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    insert into cere_distributor_buyer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="distributorId != null">
+        distributor_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="ifBind != null">
+        if_bind,
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="distributorId != null">
+        #{distributorId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ifBind != null">
+        #{ifBind,jdbcType=BIT},
+      </if>
+      <if test="updateTime != null and updateTime!=''">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="findByUserId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.order.ShopDistributor">
+    SELECT a.distributor_id,d.direct_proportion,d.indirect_proportion,b.Invitees,
+    b.distributor_name,b.distributor_phone,c.distributor_name InviteesName,c.distributor_phone InviteesPhone
+    FROM cere_distributor_buyer a
+    LEFT JOIN cere_shop_distributor b ON a.distributor_id=b.distributor_id
+    LEFT JOIN cere_shop_distributor c ON b.Invitees=c.distributor_id
+    LEFT JOIN cere_shop_distribution_level d ON b.distributor_level_id=d.distributor_level_id
+    where a.buyer_user_id=#{buyerUserId} and a.shop_id = #{shopId} and a.if_bind=1
+  </select>
+
+  <select id="findByDisAndUser" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    SELECT * FROM cere_distributor_buyer where buyer_user_id=#{buyerUserId} and distributor_id=#{distributorId}
+  </select>
+
+  <select id="checkUser" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    SELECT * FROM cere_distributor_buyer where buyer_user_id=#{buyerUserId} and distributor_id<![CDATA[!= ]]>#{distributorId}
+    and if_bind=1
+  </select>
+
+  <update id="updateIfBind" parameterType="com.shop.cereshop.commons.domain.distributor.CereDistributorBuyer">
+    UPDATE cere_distributor_buyer SET if_bind=#{ifBind},update_time=#{updateTime}
+    where buyer_user_id=#{buyerUserId} and distributor_id=#{distributorId}
+  </update>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_distributor_buyer SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

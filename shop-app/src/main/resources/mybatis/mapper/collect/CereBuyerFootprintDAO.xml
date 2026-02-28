@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.collect.CereBuyerFootprintDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.collect.CereBuyerFootprint">
+    <id column="footprint_id" jdbcType="BIGINT" property="footprintId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="sku_id" jdbcType="BIGINT" property="skuId" />
+    <result column="buyer_user_id" jdbcType="BIGINT" property="buyerUserId" />
+    <result column="selected" jdbcType="BIT" property="selected" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    footprint_id,shop_id, product_id,sku_id, buyer_user_id,selected, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_buyer_footprint
+    where footprint_id = #{footprintId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_buyer_footprint
+    where footprint_id = #{footprintId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="footprint_id" keyProperty="footprintId" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerFootprint" useGeneratedKeys="true">
+    insert into cere_buyer_footprint
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="skuId != null">
+        sku_id,
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id,
+      </if>
+      <if test="selected != null">
+        selected,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="selected != null">
+        #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerFootprint">
+    update cere_buyer_footprint
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="skuId != null">
+        sku_id = #{skuId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerUserId != null">
+        buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="selected != null">
+        selected = #{selected,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where footprint_id = #{footprintId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.collect.CereBuyerFootprint">
+    update cere_buyer_footprint
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      sku_id = #{skuId,jdbcType=BIGINT},
+      buyer_user_id = #{buyerUserId,jdbcType=BIGINT},
+      selected = #{selected,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where footprint_id = #{footprintId,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByIds" parameterType="java.lang.Object">
+    DELETE FROM cere_buyer_footprint where
+    buyer_user_id=#{buyerUserId} and product_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+    <if test="times!=null">
+      and (
+      <foreach collection="times" item="time" index="index" separator="OR">
+        create_time like concat('%',#{time},'%')
+    </foreach>
+      )
+    </if>
+  </delete>
+
+  <update id="updateSelected" parameterType="java.util.List">
+    UPDATE cere_buyer_footprint SET selected=1 where footprint_id in (
+    <foreach collection="ids" item="id" index="index" separator=",">
+      #{id}
+    </foreach>
+    )
+  </update>
+
+  <select id="getAll" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.collect.BuyerFootprint">
+    SELECT LEFT(create_time,10) create_time FROM cere_buyer_footprint
+    where buyer_user_id=#{buyerUserId} GROUP BY LEFT(create_time,10) ORDER BY create_time DESC
+  </select>
+
+  <select id="findProducts" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.collect.FootprintProduct">
+    SELECT a.footprint_id,a.product_id,b.product_name,b.shelve_state,c.price,d.product_image image,
+    a.selected,c.original_price,a.shop_id,a.sku_id from cere_buyer_footprint a
+    LEFT JOIN cere_shop_product b ON a.product_id=b.product_id
+    LEFT JOIN (SELECT a.price,b.product_id,a.original_price from cere_product_sku a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) c ON b.product_id=c.product_id
+    LEFT JOIN (SELECT a.product_image,b.product_id from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) d ON b.product_id=d.product_id
+    where a.buyer_user_id=#{buyerUserId} and a.create_time LIKE CONCAT('%',#{createTime},'%')
+    GROUP BY a.product_id
+    ORDER BY a.create_time DESC
+  </select>
+
+  <update id="updateBuyerData" parameterType="java.lang.Object">
+    UPDATE cere_buyer_footprint SET buyer_user_id=#{buyerUserId} where buyer_user_id=#{id}
+  </update>
+</mapper>

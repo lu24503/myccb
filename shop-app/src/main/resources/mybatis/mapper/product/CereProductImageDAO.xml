@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.product.CereProductImageDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.product.CereProductImage">
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_image" jdbcType="VARCHAR" property="productImage" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    product_id, product_image, sort
+  </sql>
+  <insert id="insertSelective" parameterType="com.shop.cereshop.commons.domain.product.CereProductImage">
+    insert into cere_product_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productImage != null and productImage!=''">
+        product_image,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productImage != null and productImage!=''">
+        #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectByProductId" resultType="com.shop.cereshop.commons.domain.product.CereProductImage">
+    select
+    <include refid="Base_Column_List"/>
+    from cere_product_image
+    where product_id = #{productId}
+    order by sort
+  </select>
+</mapper>

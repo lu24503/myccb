@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.cereshop.app.dao.groupwork.CereShopGroupWorkDAO">
+  <resultMap id="BaseResultMap" type="com.shop.cereshop.commons.domain.tool.CereShopGroupWork">
+    <id column="shop_group_work_id" jdbcType="BIGINT" property="shopGroupWorkId" />
+    <result column="shop_id" jdbcType="BIGINT" property="shopId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="person" jdbcType="INTEGER" property="person" />
+    <result column="effective_time" jdbcType="INTEGER" property="effectiveTime" />
+    <result column="if_limit" jdbcType="BIT" property="ifLimit" />
+    <result column="limit_number" jdbcType="INTEGER" property="limitNumber" />
+    <result column="if_enable" jdbcType="BIT" property="ifEnable" />
+    <result column="enable_time" jdbcType="INTEGER" property="enableTime" />
+    <result column="if_add" jdbcType="BIT" property="ifAdd" />
+    <result column="state" jdbcType="BIT" property="state" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    shop_group_work_id, shop_id, group_name, remark, start_time, end_time, person, effective_time,
+    if_limit, limit_number, if_enable, enable_time, if_add, `state`, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cere_shop_group_work
+    where shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cere_shop_group_work
+    where shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSelective" keyColumn="shop_group_work_id" keyProperty="shopGroupWorkId" parameterType="com.shop.cereshop.commons.domain.tool.CereShopGroupWork" useGeneratedKeys="true">
+    insert into cere_shop_group_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="person != null">
+        person,
+      </if>
+      <if test="effectiveTime != null">
+        effective_time,
+      </if>
+      <if test="ifLimit != null">
+        if_limit,
+      </if>
+      <if test="limitNumber != null">
+        limit_number,
+      </if>
+      <if test="ifEnable != null">
+        if_enable,
+      </if>
+      <if test="enableTime != null">
+        enable_time,
+      </if>
+      <if test="ifAdd != null">
+        if_add,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        #{person,jdbcType=INTEGER},
+      </if>
+      <if test="effectiveTime != null">
+        #{effectiveTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifLimit != null">
+        #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifEnable != null">
+        #{ifEnable,jdbcType=BIT},
+      </if>
+      <if test="enableTime != null">
+        #{enableTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shop.cereshop.commons.domain.tool.CereShopGroupWork">
+    update cere_shop_group_work
+    <set>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null">
+        person = #{person,jdbcType=INTEGER},
+      </if>
+      <if test="effectiveTime != null">
+        effective_time = #{effectiveTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifLimit != null">
+        if_limit = #{ifLimit,jdbcType=BIT},
+      </if>
+      <if test="limitNumber != null">
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="ifEnable != null">
+        if_enable = #{ifEnable,jdbcType=BIT},
+      </if>
+      <if test="enableTime != null">
+        enable_time = #{enableTime,jdbcType=INTEGER},
+      </if>
+      <if test="ifAdd != null">
+        if_add = #{ifAdd,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shop.cereshop.commons.domain.tool.CereShopGroupWork">
+    update cere_shop_group_work
+    set shop_id = #{shopId,jdbcType=BIGINT},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      person = #{person,jdbcType=INTEGER},
+      effective_time = #{effectiveTime,jdbcType=INTEGER},
+      if_limit = #{ifLimit,jdbcType=BIT},
+      limit_number = #{limitNumber,jdbcType=INTEGER},
+      if_enable = #{ifEnable,jdbcType=BIT},
+      enable_time = #{enableTime,jdbcType=INTEGER},
+      if_add = #{ifAdd,jdbcType=BIT},
+      `state` = #{state,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where shop_group_work_id = #{shopGroupWorkId,jdbcType=BIGINT}
+  </update>
+
+  <select id="findShop" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.groupwork.GroupWorkIndex">
+    SELECT shop_id,shop_name,shop_logo from cere_platform_shop where shop_id=#{shopId}
+  </select>
+
+  <select id="findProducts" parameterType="com.shop.cereshop.app.param.groupwork.GroupWorkParam" resultType="com.shop.cereshop.app.page.tool.ToolProduct">
+    SELECT a.shop_group_work_id,b.shop_id,c.product_name,c.product_id,d.sku_id,e.product_image image,
+    d.price original_price,a.price FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    LEFT JOIN cere_shop_product c ON a.product_id=c.product_id
+    LEFT JOIN cere_product_sku d ON a.sku_id=d.sku_id
+    LEFT JOIN (SELECT a.product_id,a.product_image from cere_product_image a,cere_shop_product b
+    where a.product_id=b.product_id GROUP BY a.product_id) e ON a.product_id=e.product_id
+    LEFT JOIN cere_product_classify f ON c.classify_id=f.classify_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.sku_id,a.order_id from cere_order_product a,
+    cere_shop_order b where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY sku_id) f ON a.sku_id=f.sku_id
+    where (b.state=1 or b.state=0)
+    <if test="shopGroupWorkId!=null">
+      and a.shop_group_work_id=#{shopGroupWorkId}
+    </if>
+    <if test="shopId!=null">
+      and b.shop_id=#{shopId}
+    </if>
+    <if test="search!=null and search!=''">
+      and c.product_name like concat('%',#{search},'%')
+    </if>
+    <if test="classifyId!=null">
+      <choose>
+        <when test="classifyLevel != null">
+          <if test="classifyLevel == 1">
+            and c.classify_id1 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 2">
+            and c.classify_id2 = #{classifyId}
+          </if>
+          <if test="classifyLevel == 3">
+            and c.classify_id3 = #{classifyId}
+          </if>
+        </when>
+        <otherwise>
+          and (
+            c.classify_id1 = #{classifyId}
+            OR c.classify_id2 = #{classifyId}
+            OR c.classify_id3 = #{classifyId}
+          )
+        </otherwise>
+      </choose>
+    </if>
+    GROUP BY c.product_id
+    ORDER BY
+    <if test='type=="1"'>
+      a.price,
+    </if>
+    <if test='type=="2"'>
+      a.price DESC,
+    </if>
+    <if test='volume=="1"'>
+      f.number,
+    </if>
+    <if test='volume=="2"'>
+      f.number DESC,
+    </if>
+    c.update_time DESC,c.create_time DESC
+  </select>
+
+  <select id="findBySkuId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.product.ProductDetail">
+    SELECT a.shop_id,a.product_id,a.product_name,a.product_text text,b.original_price,d.price,
+    c.shop_name,c.shop_logo,a.product_brief,a.classify_id,g.users,x.number from cere_shop_product a
+    LEFT JOIN cere_product_sku b ON a.product_id=b.product_id
+    LEFT JOIN cere_platform_shop c ON a.shop_id=c.shop_id
+    LEFT JOIN cere_shop_group_work_detail d ON b.sku_id=d.sku_id
+    LEFT JOIN (SELECT COUNT(a.buyer_user_id) users,a.product_id FROM (SELECT b.buyer_user_id,a.product_id FROM cere_order_product a,cere_shop_order b
+    where a.order_id=b.order_id and b.state in (2,3,4) GROUP BY a.product_id,b.buyer_user_id) a GROUP BY a.product_id) g ON a.product_id=g.product_id
+    LEFT JOIN (SELECT SUM(a.number) number,a.product_id from cere_order_product a
+    LEFT JOIN cere_shop_order b ON a.order_id=b.order_id
+    where a.sku_id=#{skuId} and b.state in (2,3,4)) x ON a.product_id=x.product_id
+    where b.sku_id=#{skuId} and d.shop_group_work_id=#{shopGroupWorkId}
+  </select>
+
+  <select id="findByProductId" parameterType="java.lang.Object" resultType="java.lang.Long">
+    SELECT a.shop_group_work_id FROM cere_shop_group_work_detail a
+    LEFT JOIN cere_shop_group_work b ON a.shop_group_work_id=b.shop_group_work_id
+    where a.sku_id=#{skuId} and b.state=1
+    GROUP BY a.shop_group_work_id
+  </select>
+
+  <select id="findProductByOrderId" parameterType="java.lang.Object" resultType="com.shop.cereshop.app.page.groupwork.GroupInvite">
+    SELECT a.product_name,a.image,a.product_price price,b.price as original_price,d.head_image,c.state as orderState FROM cere_order_product a
+    LEFT JOIN cere_product_sku b ON a.sku_id=b.sku_id
+    LEFT JOIN cere_shop_order c ON a.order_id=c.order_id
+    LEFT JOIN cere_buyer_user d ON c.buyer_user_id=d.buyer_user_id
+    where a.order_id=#{orderId} LIMIT 1
+  </select>
+
+  <select id="findByCollageId" parameterType="java.lang.Object" resultType="com.shop.cereshop.commons.domain.tool.CereShopGroupWork">
+    SELECT a.shop_group_work_id,a.person,a.state,a.start_time,a.enable_time,a.effective_time FROM cere_shop_group_work a
+    LEFT JOIN cere_collage_order b ON a.shop_group_work_id=b.shop_group_work_id
+    where b.collage_id=#{collageId}
+  </select>
+
+  <select id="getGroupWorks" parameterType="com.shop.cereshop.app.param.renovation.RenovationParam" resultType="com.shop.cereshop.app.page.groupwork.ShopGroupWorkUDetail">
+    SELECT shop_group_work_id, shop_id, group_name, remark, start_time, end_time, person, effective_time,
+    if_limit, limit_number, if_enable, enable_time, if_add, `state`,shop_id FROM cere_shop_group_work
+    where shop_id=#{shopId} and state in (0,1)
+    <if test="ids!=null and ids.size()>0">
+      and shop_group_work_id in (
+      <foreach collection="ids" item="id" index="index" separator=",">
+        #{id}
+      </foreach>
+      )
+    </if>
+  </select>
+  <select id="selectByProductId" resultType="com.shop.cereshop.commons.domain.tool.CereShopGroupWork">
+    select a.shop_group_work_id, shop_id, group_name, remark, start_time, end_time, person, effective_time,
+           if_limit, limit_number, if_enable, enable_time, if_add, `state`, create_time, update_time
+    from cere_shop_group_work a join cere_shop_group_work_detail b on b.shop_group_work_id = a.shop_group_work_id
+    and a.state in (0,1) and b.product_id = #{productId}
+    limit 1
+  </select>
+</mapper>
